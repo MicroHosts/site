@@ -2,6 +2,7 @@ import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import {classNames} from "../../utils/utils";
 import Link from "next/link";
+import { Tab } from '@headlessui/react'
 
 export default function Billing() {
     return(
@@ -62,7 +63,7 @@ export default function Billing() {
                         </div>
                     </div>
                 </nav>
-                <div className="container flex h-screen">
+                <div className="container md:flex h-screen">
                     <div className="w-64">
                             <div className="overflow-y-auto py-4 px-3">
                                 <ul className="space-y-2">
@@ -137,12 +138,93 @@ export default function Billing() {
                                 </ul>
                             </div>
                     </div>
-                    <div>
+                    <div className="w-full mx-auto ml-4">
                        <div>
                            Мои заказы
                        </div>
                         <div>
-
+                            <Tab.Group>
+                                <Tab.List className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 justify-center">
+                                    <Tab className="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">Хосты</Tab>
+                                    <Tab className="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Услуги</Tab>
+                                    <Tab className="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Неоплаченные</Tab>
+                                </Tab.List>
+                                <Tab.Panels>
+                                    <Tab.Panel>
+                                        <div className="overflow-x-auto relative">
+                                            <table
+                                                className="w-full text-sm text-left text-gray-400">
+                                                <thead
+                                                    className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" className="py-3 px-6">
+                                                        Хост
+                                                    </th>
+                                                    <th scope="col" className="py-3 px-6">
+                                                        Цена в месяц
+                                                    </th>
+                                                    <th scope="col" className="py-3 px-6">
+                                                        Оплатить до
+                                                    </th>
+                                                    <th scope="col" className="py-3 px-6">
+                                                        Управление
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr className="border-b dark:border-gray-700">
+                                                    <th scope="row"
+                                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        VDS 1
+                                                    </th>
+                                                    <td className="py-4 px-6">
+                                                        390 руб
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        31.12.12
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        Войти
+                                                    </td>
+                                                </tr>
+                                                <tr className="border-b dark:border-gray-700">
+                                                    <th scope="row"
+                                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        VDS 1
+                                                    </th>
+                                                    <td className="py-4 px-6">
+                                                        390 руб
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        31.12.12
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        Войти
+                                                    </td>
+                                                </tr>
+                                                <tr className="border-b dark:border-gray-700">
+                                                    <th scope="row"
+                                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        VDS 1
+                                                    </th>
+                                                    <td className="py-4 px-6">
+                                                        390 руб
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        31.12.12
+                                                    </td>
+                                                    <td className="py-4 px-6">
+                                                        Войти
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </Tab.Panel>
+                                    <Tab.Panel>Content 2</Tab.Panel>
+                                    <Tab.Panel>Content 3</Tab.Panel>
+                                </Tab.Panels>
+                            </Tab.Group>
                         </div>
                     </div>
                 </div>
