@@ -125,6 +125,11 @@ export default function Home() {
                         <VDSCard/>
                         <VDSCard/>
                     </div>
+                    <div className="flex justify-center mt-4">
+                        <button type="button"
+                                className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Посмотреть больше
+                        </button>
+                    </div>
                     <div className="text-center text-3xl font-bold mt-12">
                         Почему мы?
                     </div>

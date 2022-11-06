@@ -1,15 +1,17 @@
 import styles from "../../styles/Home.module.css";
 import Head from "next/head";
-import {classNames} from "../../utils/utils";
 import Link from "next/link";
-import { Tab } from '@headlessui/react'
-import HostList from "../../components/billing/hosts/HostList";
-import ServiceList from "../../components/billing/services/ServiceList";
-import NoPayList from "../../components/billing/nopay/NoPayList";
-import {Fragment} from "react";
+import {classNames} from "../../utils/utils";
 import Header from "../../components/billing/header/Header";
+import {Tab} from "@headlessui/react";
+import {Fragment} from "react";
+import BuyHostCard from "../../components/billing/buy/hosts/BuyHostCard";
+import BuyServiceCard from "../../components/billing/buy/services/BuyServiceCard";
+import NoPayList from "../../components/billing/nopay/NoPayList";
+import MainProfile from "../../components/billing/profile/main/MainProfile";
+import SecureProfile from "../../components/billing/profile/main/SecureProfile";
 
-export default function Billing() {
+export default function Profile(){
     return(
         <div className={styles.container}>
             <Head>
@@ -72,9 +74,9 @@ export default function Billing() {
                 <div className="container md:flex h-screen">
                     <Header/>
                     <div className="w-full mx-auto ml-4">
-                       <div>
-                           Мои заказы
-                       </div>
+                        <div>
+                            Профиль
+                        </div>
                         <div>
                             <Tab.Group>
                                 <Tab.List className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 justify-center">
@@ -86,8 +88,8 @@ export default function Billing() {
                                                         ? 'inline-block p-4 rounded-t-lg text-indigo-600 dark:border-indigo-600 dark:text-indigo-400'
                                                         : 'inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300')
                                                 }
-                                                >Хосты</button>
-                                            )}
+                                            >Мои данные</button>
+                                        )}
                                     </Tab>
                                     <Tab as={Fragment}>
                                         {({ selected }) => (
@@ -97,28 +99,15 @@ export default function Billing() {
                                                         ? 'inline-block p-4 rounded-t-lg text-indigo-600 dark:border-indigo-600 dark:text-indigo-400'
                                                         : 'inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300')
                                                 }
-                                            >Услуги</button>
-                                        )}</Tab>
-                                    <Tab as={Fragment}>
-                                        {({ selected }) => (
-                                            <button
-                                                className={classNames(
-                                                    selected
-                                                        ? 'inline-block p-4 rounded-t-lg text-indigo-600 dark:border-indigo-600 dark:text-indigo-400'
-                                                        : 'inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300')
-                                                }
-                                            >Неоплаченные</button>
+                                            >Безопасность и доступ</button>
                                         )}</Tab>
                                 </Tab.List>
                                 <Tab.Panels>
                                     <Tab.Panel>
-                                        <HostList/>
+                                        <MainProfile/>
                                     </Tab.Panel>
                                     <Tab.Panel>
-                                        <ServiceList/>
-                                    </Tab.Panel>
-                                    <Tab.Panel>
-                                        <NoPayList/>
+                                        <SecureProfile/>
                                     </Tab.Panel>
                                 </Tab.Panels>
                             </Tab.Group>
