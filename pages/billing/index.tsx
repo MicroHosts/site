@@ -8,11 +8,12 @@ import ServiceList from "../../components/billing/services/ServiceList";
 import NoPayList from "../../components/billing/nopay/NoPayList";
 import {Fragment} from "react";
 import Header from "../../components/billing/header/Header";
-import {useSession} from "next-auth/react";
+import {signOut} from "next-auth/react";
+import Image from "next/image";
+import logo from "../../assets/logo.svg";
 
 export default function Billing() {
-    const {data: session} = useSession();
-    console.log(session);
+    console.log("lol")
     return(
         <div className={styles.container}>
             <Head>
@@ -23,15 +24,15 @@ export default function Billing() {
                 <nav className="md:px-2 py-2.5">
                     <div className="flex flex-wrap justify-between items-center mx-auto mt-4 md:mt-0">
                         <Link href="/" className="flex items-center">
-                            <img src="" className="mr-3 h-6 sm:h-9"
-                                 alt="Logo"/>
+                            <Image className="w-12 h-12 mr-2"
+                                   src={logo} alt="logo"/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
                         </Link>
                         <div className={classNames( "md:block md:w-auto")}>
-                            <Link href={"/billing"}
+                            <button onClick={() => signOut({callbackUrl: "/", redirect: true})}
                                   className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Выйти
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </nav>

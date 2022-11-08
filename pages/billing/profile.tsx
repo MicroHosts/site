@@ -7,6 +7,8 @@ import {Tab} from "@headlessui/react";
 import {Fragment} from "react";
 import MainProfile from "../../components/billing/profile/main/MainProfile";
 import SecureProfile from "../../components/billing/profile/main/SecureProfile";
+import Image from "next/image";
+import logo from "../../assets/logo.svg";
 
 export default function Profile(){
     return(
@@ -19,8 +21,8 @@ export default function Profile(){
                 <nav className="md:px-2 py-2.5">
                     <div className="flex flex-wrap justify-between items-center mx-auto mt-4 md:mt-0">
                         <Link href="/" className="flex items-center">
-                            <img src="" className="mr-3 h-6 sm:h-9"
-                                 alt="Logo"/>
+                            <Image className="w-12 h-12 mr-2"
+                                   src={logo} alt="logo"/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
                         </Link>
@@ -80,3 +82,18 @@ export default function Profile(){
         </div>
     )
 }
+
+// export async function getServerSideProps(context:any) {
+//     const { req } = context;
+//     const session = await getSession({ req });
+//
+//     if (!session) {
+//         return {
+//             redirect: { destination: "/auth/login" },
+//         };
+//     }
+//
+//     return {
+//         props: {}
+//     }
+// }

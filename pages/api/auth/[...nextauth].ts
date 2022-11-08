@@ -1,27 +1,35 @@
 import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
+import {PrismaAdapter} from "@next-auth/prisma-adapter";
+import prisma from "../../../lib/prismadb"
 
-export default NextAuth({
+const authOptions = {
+    pages: {
+        signIn: '/auth/login',
+        newUser: '/auth/register',
+        error: '/auth/error',
+    },
+    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
-                name: "Credentials",
-                credentials: {
-                    username: {
-                        label: "Username",
-                        type: "text",
-                        placeholder: "jsmith",
-                    },
-                    password: { label: "Password", type: "password" },
+            name: "Credentials",
+            credentials: {
+                email: {
+                    type: "email",
                 },
-                async authorize() {
-                    return {
-                        id: 1,
-                        name: "J Smith",
-                        email: "jsmith@example.com",
-                        image: "https://i.pravatar.cc/150?u=jsmith@example.com",
-                    }
-                },
-            }),
+                password: {type: "password" },
+            },
+            async authorize() {
+                return {
+                    id: 1,
+                    name: "J Smith",
+                    email: "jsmith@example.com",
+                    image: "https://i.pravatar.cc/150?u=jsmith@example.com",
+                }
+            },
+        }),
     ],
-})
+}
+export default NextAuth(authOptions)
+
+export {authOptions}

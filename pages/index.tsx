@@ -6,6 +6,7 @@ import VDSCard from "../components/main/VDSCard";
 import {useState} from "react";
 import {classNames} from "../utils/utils";
 import Link from "next/link";
+import logo from "../assets/logo.svg";
 
 export default function Home() {
   const[open, setOpen] = useState(false);
@@ -20,8 +21,8 @@ export default function Home() {
                 <nav className="px-2 sm:px-4 py-2.5">
                     <div className="container flex flex-wrap justify-between items-center mx-auto">
                         <a href="https://flowbite.com/" className="flex items-center">
-                            <img src="" className="mr-3 h-6 sm:h-9"
-                                 alt="Logo"/>
+                            <Image className="w-12 h-12 mr-2"
+                                   src={logo} alt="logo"/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
                         </a>

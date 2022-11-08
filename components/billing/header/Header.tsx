@@ -2,8 +2,11 @@ import {RiBillFill} from "react-icons/ri";
 import {AiFillInfoCircle, AiFillTag} from "react-icons/ai";
 import {FaUserAlt, FaWallet} from "react-icons/fa";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
 
 const Header = () => {
+    const {data: session} = useSession();
+    console.log(session)
     return(
         <div className="md:w-64 w-full">
             <div className="overflow-y-auto py-4 px-3">
