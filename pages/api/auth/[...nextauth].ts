@@ -3,16 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { getPasswordByUserId, getUserByEmail } from "../../../models/user";
 const bcrypt = require('bcrypt');
 
+// @ts-ignore
 const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/login',
-        newUser: '/auth/register',
         error: '/auth/error',
-    },
-    events: {
-        createUser(message) {
-            
-        },
     },
     providers: [
         CredentialsProvider({
@@ -27,34 +22,29 @@ const authOptions: NextAuthOptions = {
                 if (credentials && credentials.email && credentials.password) {
                     const user = await getUserByEmail(credentials.email);
                     if(!user){
-                        return null;
+                       throw new Error("Пользователь не найден");
                     }
                     if(!user?.emailVerified){
-                        throw new Error("Email not verified");
+                        throw new Error("Почта не подтверждена");
                     }
                     const password = await getPasswordByUserId(user.id);
                     if (password === null){
-                        throw new Error("Password not found");
+                        throw new Error("Пароль не найден");
                     }
                     const passwordValid = await bcrypt.compare(credentials.password, password.hashed);
                     if (passwordValid) {
                         return user;
                     }else{
-                        throw new Error("Invalid password");
+                        // return null;
+                        throw new Error("Неверный пароль");
                     }
                 }else{
                     return null;
                 }
 
-                return {
-                    id: 1,
-                    name: "J Smith",
-                    email: "jsmith@example.com",
-                    image: "https://i.pravatar.cc/150?u=jsmith@example.com",
-                }
             },
         }),
-    ],
+    ]
 }
 export default NextAuth(authOptions)
 

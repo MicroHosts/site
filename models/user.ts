@@ -34,6 +34,11 @@ export const getUserByName = async (name: string) => {
 }
 
 export const createUser = async (name: string, email: string, password: string) => {
+    //check exists
+    const user1 = await getUserByEmail(email);
+    if(user1){
+        return null;
+    }
     const salt = await bcrypt.genSalt(10);
     const passwordHashed = await bcrypt.hash(password, salt);
     const user = await prisma.user.create({
@@ -65,7 +70,7 @@ export const createUser = async (name: string, email: string, password: string) 
             }
         }
     });
-    return token;                  
+    return token;
 }
 
 export const verifyUser = async (token: string) => {
@@ -81,6 +86,12 @@ export const verifyUser = async (token: string) => {
             },
             data: {
                 emailVerified: true
+            }
+        });
+        //delete token
+        await prisma.verificationToken.delete({
+            where: {
+                token: token
             }
         });
         return true;

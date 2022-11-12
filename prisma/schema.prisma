@@ -8,14 +8,6 @@ generator client {
 }
 
 //Users
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
 // model Session {
 //   id           String   @id @default(cuid())
@@ -31,7 +23,6 @@ model User {
   email         String?   @unique
   emailVerified Boolean   @default(false)
   // image         String?
-  accounts      Account[]
   // sessions      Session[]
   password      Password[]
   token        VerificationToken[]

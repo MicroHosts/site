@@ -10,10 +10,10 @@ const errors = {
     EmailSignin: "Check your email address.",
     CredentialsSignin:
         "Sign in failed. Check the details you provided are correct.",
+    InvalidPassword: "Неправильный пароль",
     default: "Unable to sign in.",
 };
 const SignInError = ({ error }) => {
-    console.log(error)
     const errorMessage = error && (errors[error] ?? errors.default);
     return <div>{errorMessage}</div>;
 };

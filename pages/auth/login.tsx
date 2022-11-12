@@ -1,40 +1,57 @@
 import logo from '../../assets/logo.svg'
 import Image from "next/image";
 import Link from "next/link";
-import { getProviders, signIn, getSession, getCsrfToken } from "next-auth/react";
-import {useState} from "react";
+import { signIn, getSession, getCsrfToken } from "next-auth/react";
+import {MouseEvent, useState} from "react";
+import {classNames} from "../../utils/utils";
+import Router from 'next/router'
 
 const Login = ({csrfToken}:any) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState<string>('')
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email))) {
+            setError('Некорректный email')
             return;
         }
         if(password.trim().length === 0){
+            setError('Пароль не может быть пустым')
             return;
         }
-       await signIn("credentials", {email: email, password: password, callbackUrl: "/billing", redirect: true})
+       const data = await signIn("credentials", {email: email, password: password, redirect: false})
+        if(!data){
+            setError('Неудалось подключится к серверу')
+            return;
+        }
+        if(data.error){
+            setError(data.error)
+            return
+        }
+        return Router.push("/billing")
     }
 
     return(
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <Image className="w-12 h-12 mr-2"
                            src={logo} alt="logo"/>
                     MicroHost
-                </a>
+                </Link>
                 <div
                     className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Вход в аккаунт
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#">
+                        <div className={classNames(error ? "text-red-600" : "hidden")}>
+                            {error}
+                        </div>
+                        <div className="space-y-4 md:space-y-6">
                             <div>
                                 <label htmlFor="email"
                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ваша почта</label>
@@ -63,7 +80,7 @@ const Login = ({csrfToken}:any) => {
                                 У вас нет аккаунта? <Link href="/auth/register"
                                                               className="font-medium text-primary-600 hover:underline dark:text-primary-500">Зарегистрироваться</Link>
                             </p>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

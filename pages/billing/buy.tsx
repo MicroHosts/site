@@ -10,7 +10,6 @@ import BuyHostCard from "../../components/billing/buy/hosts/BuyHostCard";
 import BuyServiceCard from "../../components/billing/buy/services/BuyServiceCard";
 import Image from "next/image";
 import logo from "../../assets/logo.svg";
-import {getSession} from "next-auth/react";
 
 export default function Billing() {
   return(
