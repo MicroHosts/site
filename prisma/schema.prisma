@@ -25,7 +25,15 @@ model User {
   // image         String?
   // sessions      Session[]
   password      Password[]
-  token        VerificationToken[]
+  token         VerificationToken[]
+  balance      Balance[]
+}
+
+model Balance {
+    id        String   @id @default(cuid())
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
+    balance   Int
 }
 
 model Password {

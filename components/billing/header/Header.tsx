@@ -6,7 +6,7 @@ import {useSession} from "next-auth/react";
 
 const Header = () => {
     const {data: session} = useSession();
-    console.log(session)
+
     return(
         <div className="md:w-64 w-full">
             <div className="overflow-y-auto py-4 px-3">

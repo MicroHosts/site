@@ -13,7 +13,6 @@ import Image from "next/image";
 import logo from "../../assets/logo.svg";
 
 export default function Billing() {
-    console.log("lol")
     return(
         <div className={styles.container}>
             <Head>

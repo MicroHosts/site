@@ -1,10 +1,11 @@
 import prisma from "../lib/prismadb";
-import { makeid } from "../utils/utils";
+import {makeid} from "../utils/utils";
+
 const bcrypt = require('bcrypt');
 
 
 export const getUserByEmail = async (email: string) => {
-    const user = await prisma.user.findFirst({
+    return await prisma.user.findFirst({
         where: {
             email
         },
@@ -15,7 +16,6 @@ export const getUserByEmail = async (email: string) => {
             emailVerified: true,
         }
     });
-    return user;
 }
 
 export const getUserByName = async (name: string) => {
