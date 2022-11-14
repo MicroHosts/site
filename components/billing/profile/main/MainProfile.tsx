@@ -1,4 +1,8 @@
-const MainProfile = () => {
+import useUserInfo from "../../../hooks/useUserInfo";
+
+const MainProfile = ({id}) => {
+    const {info, isLoading: isl, isError: ise} = useUserInfo(id);
+    console.log(id)
     return(
         <form className="mt-4">
             <div className="grid gap-6 mb-6 md:grid-cols-2">

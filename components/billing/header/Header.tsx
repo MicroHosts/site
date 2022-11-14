@@ -4,8 +4,7 @@ import {FaUserAlt, FaWallet} from "react-icons/fa";
 import Link from "next/link";
 import {useSession} from "next-auth/react";
 
-const Header = () => {
-    const {data: session} = useSession();
+const Header = ({user}) => {
 
     return(
         <div className="md:w-64 w-full">
@@ -49,7 +48,7 @@ const Header = () => {
                             <FaWallet className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"/>
                             <span className="flex-1 ml-3 whitespace-nowrap">Баланс</span>
                             <span
-                                className="inline-flex justify-center items-center p-3 ml-3 w-10 h-10 text-sm font-medium rounded-full ">100р</span>
+                                className="inline-flex justify-center items-center p-3 ml-3 w-10 h-10 text-sm font-medium rounded-full ">{user.balance.balance ? user.balance.balance : 0}р</span>
                         </div>
                     </li>
                     <li className="flex justify-center">

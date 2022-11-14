@@ -24,15 +24,26 @@ model User {
   emailVerified Boolean   @default(false)
   // image         String?
   // sessions      Session[]
-  password      Password[]
-  token         VerificationToken[]
-  balance      Balance[]
+  password      Password?
+  token         VerificationToken?
+  balance       Balance?
+  info          UserInfo?
+}
+
+model UserInfo{
+  id           String    @id @default(cuid())
+  first_name   String
+  second_name  String
+  last_name    String
+  phone_number String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @unique
 }
 
 model Balance {
     id        String   @id @default(cuid())
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId    String
+    userId    String   @unique
     balance   Int
 }
 
@@ -47,11 +58,11 @@ model Password {
 }
 
 model VerificationToken {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   token      String   @unique
   expires    DateTime
-  userId     String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([id, token])
 }

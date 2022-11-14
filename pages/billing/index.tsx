@@ -11,8 +11,18 @@ import Header from "../../components/billing/header/Header";
 import {signOut} from "next-auth/react";
 import Image from "next/image";
 import logo from "../../assets/logo.svg";
+import useUser from "../../components/hooks/useUser";
+
 
 export default function Billing() {
+    const { user, isLoading, isError } = useUser();
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if(isError){
+        return <div>Error</div>;
+    }
     return(
         <div className={styles.container}>
             <Head>
@@ -36,7 +46,7 @@ export default function Billing() {
                     </div>
                 </nav>
                 <div className="md:flex">
-                    <Header/>
+                    <Header user={user}/>
                     <div className="w-full mx-auto md:ml-4">
                        <div>
                            Мои заказы
@@ -98,3 +108,4 @@ export default function Billing() {
         </div>
     )
 }
+

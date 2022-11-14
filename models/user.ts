@@ -19,7 +19,7 @@ export const getUserByEmail = async (email: string) => {
 }
 
 export const getUserByName = async (name: string) => {
-    const user = await prisma.user.findUnique({
+    return await prisma.user.findUnique({
         where: {
             name,
         },
@@ -28,9 +28,29 @@ export const getUserByName = async (name: string) => {
             name: true,
             email: true,
             emailVerified: true,
-        }
+            balance: {
+                select: {
+                    balance: true,
+                }
+            },
+
+        },
     });
-    return user;
+}
+
+export const getUserInfo = async (id: string) => {
+    return await prisma.userInfo.findFirst({
+        where: {
+            userId: id
+        },
+        select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            second_name: true,
+            phone_number: true,
+        },
+    });
 }
 
 export const createUser = async (name: string, email: string, password: string) => {
@@ -88,6 +108,15 @@ export const verifyUser = async (token: string) => {
                 emailVerified: true
             }
         });
+        await prisma.userInfo.create({
+            data:{
+                userId: verificationToken.userId,
+                second_name: "",
+                first_name: "",
+                last_name: "",
+                phone_number: "",
+            }
+        })
         //delete token
         await prisma.verificationToken.delete({
             where: {

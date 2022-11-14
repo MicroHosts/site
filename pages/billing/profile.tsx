@@ -9,8 +9,18 @@ import MainProfile from "../../components/billing/profile/main/MainProfile";
 import SecureProfile from "../../components/billing/profile/main/SecureProfile";
 import Image from "next/image";
 import logo from "../../assets/logo.svg";
+import useUser from "../../components/hooks/useUser";
 
 export default function Profile(){
+    const { user, isLoading, isError } = useUser();
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if(isError){
+        return <div>Error</div>;
+    }
+
     return(
         <div className={styles.container}>
             <Head>
@@ -34,7 +44,7 @@ export default function Profile(){
                     </div>
                 </nav>
                 <div className="md:flex">
-                    <Header/>
+                    <Header user={user}/>
                     <div className="w-full mx-auto md:ml-4">
                         <div>
                             Профиль
@@ -68,7 +78,7 @@ export default function Profile(){
                                 </Tab.List>
                                 <Tab.Panels>
                                     <Tab.Panel>
-                                        <MainProfile/>
+                                        <MainProfile id={user.id}/>
                                     </Tab.Panel>
                                     <Tab.Panel>
                                         <SecureProfile/>
