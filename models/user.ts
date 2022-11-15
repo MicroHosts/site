@@ -30,7 +30,7 @@ export const getUserByName = async (name: string) => {
             emailVerified: true,
             balance: {
                 select: {
-                    balance: true,
+                    amount: true,
                 }
             },
 
@@ -125,7 +125,7 @@ export const verifyUser = async (token: string) => {
         });
         await prisma.balance.create({
             data: {
-                balance: 0,
+                amount: 0,
                 user: {
                     connect: {
                         id: verificationToken.userId

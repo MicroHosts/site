@@ -1,9 +1,11 @@
 import useUserServiceHosts from "../../hooks/useUserServiceHosts";
 import HostCard from "./HostCard";
+import {useUserStore} from "../../../store/user";
 
-const HostList = ({id}:{id:string}) => {
-    const {hosts, isLoading, isError} = useUserServiceHosts(id);
-    console.log(hosts)
+const HostList = () => {
+    const user = useUserStore((state) => state.user);
+    const {hosts, isLoading, isError} = useUserServiceHosts(user.id);
+    //todo skeleton loading
     return(
         <div className="overflow-x-auto relative">
             <table
@@ -26,7 +28,7 @@ const HostList = ({id}:{id:string}) => {
                 </tr>
                 </thead>
                 <tbody>
-                    {isLoading ? <div>Загрузка...</div> : isError ? <div>Ошибка</div> : hosts.map((host:HostUser) => (
+                    {isLoading ? <></> : isError ? <></> : hosts.map((host:HostUser) => (
                         <HostCard host={host}/>
                     ))}
                 </tbody>

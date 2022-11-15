@@ -8,17 +8,18 @@ import useUser from "../../components/hooks/useUser";
 import Header from "../../components/billing/header/Header";
 import { classNames } from "../../utils/utils";
 import { NextPageWithLayout } from "../../pages/_app";
+import {useUserStore} from "../../store/user";
 
 
 export default function BillingLayout({children}:{children: NextPageWithLayout}) {
     const { user, isLoading, isError } = useUser();
-
     if (isLoading) {
         return <div>Loading...</div>;
     }
     if(isError){
         return <div>Ошибка</div>;
     }
+    useUserStore.setState({user: user});
     return(
         <div className={styles.container}>
             <Head>

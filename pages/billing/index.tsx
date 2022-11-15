@@ -4,23 +4,9 @@ import ServiceList from "../../components/billing/services/ServiceList";
 import NoPayList from "../../components/billing/nopay/NoPayList";
 import {Fragment, ReactElement} from "react";
 import BillingLayout from "../../components/billing/billingLayout";
-import { NextPageWithLayout } from "../_app";
-import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
-import { GetServerSideProps } from "next";
-import { SessionUser } from "../../types/user";
+import HostList from "../../components/billing/hosts/HostList";
 
-
-const Billing = ({session_user}:{session_user:SessionUser}) =>{
-    console.log(session_user)
-    // const { user, isLoading, isError } = useUser();
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-    // if(isError){
-    //     return <div>Ошибка</div>;
-    // }
+const Billing = () =>{
     return(
                     <div className="w-full mx-auto md:ml-4">
                        <div>
@@ -66,7 +52,7 @@ const Billing = ({session_user}:{session_user:SessionUser}) =>{
                                 </Tab.List>
                                 <Tab.Panels>
                                     <Tab.Panel>
-                                        {/* <HostList id={user.id}/> */}
+                                         <HostList/>
                                     </Tab.Panel>
                                     <Tab.Panel>
                                         <ServiceList/>
@@ -82,6 +68,7 @@ const Billing = ({session_user}:{session_user:SessionUser}) =>{
 }
 
 Billing.getLayout = function getLayout(page: ReactElement) {
+    // @ts-ignore
     return (
       <BillingLayout>
         {page}
@@ -89,29 +76,5 @@ Billing.getLayout = function getLayout(page: ReactElement) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async(context) => {
-    const session = await unstable_getServerSession(context.req, context.res, authOptions)
-  
-    if (!session) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      }
-    }
-    const session_user:SessionUser = {
-        user: {
-            name: session.user!.name!,
-            email: session.user!.email!,
-        },
-        expires: session.expires,
-    }
-    return {
-      props: {
-        session_user
-      },
-    }
-}
 
 export default Billing;
