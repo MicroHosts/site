@@ -1,3 +1,5 @@
+import { ISODateString } from "next-auth";
+
 export interface User{
     id: string;
     name: string;
@@ -6,6 +8,12 @@ export interface User{
         balance: number;
     }
     emailVerified: boolean,
-
 }
 
+export interface SessionUser{
+    user: {
+        name: string,
+        email: string,
+    },
+    expires: ISODateString,
+}

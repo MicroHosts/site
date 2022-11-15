@@ -64,7 +64,7 @@ export default function Home() {
                         </div>
                         <div className={classNames(open ? "" : "hidden", "w-full md:block md:w-auto")}>
                             <Link href={"/billing"}
-                                    className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Биллинг
+                                    className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Биллинг
                             </Link>
                         </div>
                     </div>
@@ -97,7 +97,7 @@ export default function Home() {
                                 <div className="md:w-2/3 mx-auto">
                                     <div className="flex md:w-3/4 mt-12 mb-4 md:flex-row flex-col">
                                         <div
-                                            className="border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 mr-2 md:mb-2 mb-6 text-white border-white mr-6 md:w-max w-full">Виртуализация
+                                            className="border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 md:mb-2 mb-6 text-white border-white mr-6 md:w-max w-full">Виртуализация
                                             KVM
                                         </div>
                                         <div
@@ -128,7 +128,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-center mt-4">
                         <button type="button"
-                                className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Посмотреть больше
+                                className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Посмотреть больше
                         </button>
                     </div>
                     <div className="text-center text-3xl font-bold mt-12">

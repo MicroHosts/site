@@ -1,52 +1,27 @@
-import styles from "../../styles/Home.module.css";
-import Head from "next/head";
 import {classNames} from "../../utils/utils";
-import Link from "next/link";
 import { Tab } from '@headlessui/react'
-import HostList from "../../components/billing/hosts/HostList";
 import ServiceList from "../../components/billing/services/ServiceList";
 import NoPayList from "../../components/billing/nopay/NoPayList";
-import {Fragment} from "react";
-import Header from "../../components/billing/header/Header";
-import {signOut} from "next-auth/react";
-import Image from "next/image";
-import logo from "../../assets/logo.svg";
-import useUser from "../../components/hooks/useUser";
+import {Fragment, ReactElement} from "react";
+import BillingLayout from "../../components/billing/billingLayout";
+import { NextPageWithLayout } from "../_app";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { GetServerSideProps } from "next";
+import { SessionUser } from "../../types/user";
 
 
-export default function Billing() {
-    const { user, isLoading, isError } = useUser();
+const Billing = ({session_user}:{session_user:SessionUser}) =>{
+    console.log(session_user)
+    // const { user, isLoading, isError } = useUser();
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-    if(isError){
-        return <div>Ошибка</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
+    // if(isError){
+    //     return <div>Ошибка</div>;
+    // }
     return(
-        <div className={styles.container}>
-            <Head>
-                <title>Биллинг</title>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
-            <div>
-                <nav className="md:px-2 py-2.5">
-                    <div className="flex flex-wrap justify-between items-center mx-auto mt-4 md:mt-0">
-                        <Link href="/" className="flex items-center">
-                            <Image className="w-12 h-12 mr-2"
-                                   src={logo} alt="logo"/>
-                            <span
-                                className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
-                        </Link>
-                        <div className={classNames( "md:block md:w-auto")}>
-                            <button onClick={() => signOut({callbackUrl: "/", redirect: true})}
-                                  className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Выйти
-                            </button>
-                        </div>
-                    </div>
-                </nav>
-                <div className="md:flex">
-                    <Header user={user}/>
                     <div className="w-full mx-auto md:ml-4">
                        <div>
                            Мои заказы
@@ -91,7 +66,7 @@ export default function Billing() {
                                 </Tab.List>
                                 <Tab.Panels>
                                     <Tab.Panel>
-                                        <HostList id={user.id}/>
+                                        {/* <HostList id={user.id}/> */}
                                     </Tab.Panel>
                                     <Tab.Panel>
                                         <ServiceList/>
@@ -103,9 +78,40 @@ export default function Billing() {
                             </Tab.Group>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
     )
 }
 
+Billing.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <BillingLayout>
+        {page}
+      </BillingLayout>
+    )
+}
+
+export const getServerSideProps: GetServerSideProps = async(context) => {
+    const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+    }
+    const session_user:SessionUser = {
+        user: {
+            name: session.user!.name!,
+            email: session.user!.email!,
+        },
+        expires: session.expires,
+    }
+    return {
+      props: {
+        session_user
+      },
+    }
+}
+
+export default Billing;

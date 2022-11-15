@@ -12,7 +12,7 @@ const authOptions: NextAuthOptions = {
         error: '/auth/error',
     },
     secret: process.env.NEXTAUTH_SECRET,
-    adapter: PrismaAdapter(prisma),
+    // adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             name: "Credentials",
