@@ -7,7 +7,7 @@ const SecureProfile = () => {
                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Новый пароль</label>
                     <input type="password" id="first_name"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="********"/>
+                           placeholder="••••••••"/>
                 </div>
             </div>
             <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -16,7 +16,7 @@ const SecureProfile = () => {
                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Старый пароль</label>
                     <input type="password" id="first_name"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="********"/>
+                           placeholder="••••••••"/>
                 </div>
             </div>
             <button type="submit"

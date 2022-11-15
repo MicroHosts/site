@@ -19,8 +19,8 @@ generator client {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?   @unique
-  email         String?   @unique
+  name          String   @unique
+  email         String   @unique
   emailVerified Boolean   @default(false)
   // image         String?
   // sessions      Session[]
@@ -28,6 +28,7 @@ model User {
   token         VerificationToken?
   balance       Balance?
   info          UserInfo?
+  services      Services[]
 }
 
 model UserInfo{
@@ -70,22 +71,38 @@ model VerificationToken {
 
 //Hosts
 model Host{
-  id String @id @default(cuid())
-  name String
-  description String @db.LongText
-  cpu String
-  ram String
-  storage String
-  price String
-  vimid Int
-  login String
+  id       String @id @default(cuid())
+  name     String
+  cpu      String
+  ram      String
+  storage  String
+  vimid    Int
+  login    String
   password String
+  service  Services?
+}
+
+model Services{
+  id          String    @id @default(cuid())
+  name        String
+  description String    @db.LongText
+  price       String
+  category    Category 
+  host        Host?     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId      String?   @unique
+  userId      String?   @unique
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 //Cupon
 model Coupons{
-  id String @id @default(cuid())
-  name String
+  id      String @id @default(cuid())
+  name    String
   percent Int
-  limit Int
+  limit   Int
+}
+
+enum Category {
+  HOST
+  SERVICE
 }

@@ -21,7 +21,7 @@ export default function Billing() {
         return <div>Loading...</div>;
     }
     if(isError){
-        return <div>Error</div>;
+        return <div>Ошибка</div>;
     }
     return(
         <div className={styles.container}>
@@ -40,7 +40,7 @@ export default function Billing() {
                         </Link>
                         <div className={classNames( "md:block md:w-auto")}>
                             <button onClick={() => signOut({callbackUrl: "/", redirect: true})}
-                                  className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Выйти
+                                  className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Выйти
                             </button>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ export default function Billing() {
                                 </Tab.List>
                                 <Tab.Panels>
                                     <Tab.Panel>
-                                        <HostList/>
+                                        <HostList id={user.id}/>
                                     </Tab.Panel>
                                     <Tab.Panel>
                                         <ServiceList/>

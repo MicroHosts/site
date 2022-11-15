@@ -1,6 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaAdapter } from "../../../lib/adapter/prisma";
 import { getPasswordByUserId, getUserByEmail } from "../../../models/user";
+import prisma from "../../../lib/prismadb";
 const bcrypt = require('bcrypt');
 
 // @ts-ignore
@@ -9,6 +11,8 @@ const authOptions: NextAuthOptions = {
         signIn: '/auth/login',
         error: '/auth/error',
     },
+    secret: process.env.NEXTAUTH_SECRET,
+    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -43,7 +47,14 @@ const authOptions: NextAuthOptions = {
                 }
             },
         }),
-    ]
+    ],
+    jwt: {
+        secret: process.env.NEXTAUTH_SECRET,
+        maxAge: 14 * 24 * 60 * 60, // 14 days
+    },
+    session:{
+        strategy: "jwt",
+    },
 }
 export default NextAuth(authOptions)
 

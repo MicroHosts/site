@@ -1,8 +1,40 @@
+import { LegacyRef, MouseEvent, useRef, useState, } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
 
-const MainProfile = ({id}) => {
-    const {info, isLoading: isl, isError: ise} = useUserInfo(id);
-    console.log(id)
+const MainProfile = ({id}:{id:string}) => {
+    const {info, isLoading, isError} = useUserInfo(id);
+    const first_name: LegacyRef<HTMLInputElement>  = useRef(null);
+    const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
+    const second_name: LegacyRef<HTMLInputElement>  = useRef(null);
+    const phone: LegacyRef<HTMLInputElement>  = useRef(null);
+    if(isError){
+        return <div>Ошибка</div>
+    }
+    if(isLoading){
+        return <div>Загрузка...</div>
+    }
+    const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if(!first_name.current || !last_name.current || !second_name.current || !phone.current){
+            return
+        }
+        const data = {
+            first_name: first_name.current.value,
+            last_name: last_name.current.value,
+            second_name: second_name.current.value,
+            phone_number: phone.current.value,
+        }
+        const res = await fetch(`http://localhost:3000/api/user/info?id=${info.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        console.log(json);
+    }
+
     return(
         <form className="mt-4">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -11,30 +43,43 @@ const MainProfile = ({id}) => {
                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Фамилия</label>
                     <input type="text" id="first_name"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Иванов"/>
+                           placeholder="Иванов"
+                           ref={first_name}
+                           defaultValue={info.first_name}
+                           />
                 </div>
                 <div>
                     <label htmlFor="last_name"
                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Имя</label>
                     <input type="text" id="last_name"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Иван"/>
+                           placeholder="Иван"
+                           ref={last_name}
+                           defaultValue={info.last_name}
+                           />
                 </div>
                 <div>
                     <label htmlFor="last_name"
                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Отчество</label>
                     <input type="text" id="last_name"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Иванович"/>
+                           placeholder="Иванович"
+                           ref={second_name}
+                           defaultValue={info.second_name}
+                           />
                 </div>
                 <div>
                     <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Контактый телефон</label>
                     <input type="tel" id="phone"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="+7 495 1111111" pattern="^\+[0-9]{1,3} [0-9]{1,6} [0-9]{3,10}$"/>
+                           placeholder="+7 495 1111111" pattern="^\+[0-9]{1,3} [0-9]{1,6} [0-9]{3,10}$"
+                           ref={phone}
+                           defaultValue={info.phone_number}
+                           />
                 </div>
             </div>
             <button type="submit"
+                    onClick={onSubmit}
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Сохранить
             </button>
         </form>

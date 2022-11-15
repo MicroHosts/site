@@ -53,6 +53,21 @@ export const getUserInfo = async (id: string) => {
     });
 }
 
+export const updateUserInfo = async (id: string, {data}: any) => {
+    console.log(data.phone_number)
+    return await prisma.userInfo.update({
+        where: {
+            id,
+        },
+        data:{
+            first_name: data.first_name,
+            last_name: data.last_name,
+            second_name: data.second_name,
+            phone_number: data.phone_number,
+        },
+ })
+};
+
 export const createUser = async (name: string, email: string, password: string) => {
     //check exists
     const user1 = await getUserByEmail(email);
@@ -108,9 +123,23 @@ export const verifyUser = async (token: string) => {
                 emailVerified: true
             }
         });
+        await prisma.balance.create({
+            data: {
+                balance: 0,
+                user: {
+                    connect: {
+                        id: verificationToken.userId
+                    }
+                }
+            }
+        })
         await prisma.userInfo.create({
             data:{
-                userId: verificationToken.userId,
+                user: {
+                    connect: {
+                        id: verificationToken.userId
+                    }
+                },
                 second_name: "",
                 first_name: "",
                 last_name: "",

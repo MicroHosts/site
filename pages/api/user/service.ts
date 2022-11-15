@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../auth/[...nextauth]"
 import {getUserByName, getUserInfo, updateUserInfo} from "../../../models/user";
+import { getServiceByUserId, getServiceByUserIdHost } from '../../../models/service';
 
 export default async function handler(
     req: NextApiRequest,
@@ -16,18 +17,26 @@ export default async function handler(
         res.status(400).json({ message: "Bad request." });
         return;
     }
-    const id = req.query.id as string;
-    if(req.method === "PUT"){
-        const data = req.body;
-        const res1 = await updateUserInfo(id, {data})
-        console.log(req.query.id)
-        res.status(201).json({ message: "User info updated." });
-        return;
-    }
     if(req.method !== "GET"){
         res.status(405).json({ message: "Method not allowed." });
         return;
     }
-    const userInfo = await getUserInfo(id);
-    res.status(201).json(userInfo);
+    const category = req.query.category;
+    const id = req.query.id as string;
+    if(!category){
+        res.status(400).json({ message: "Bad request." });
+        return;
+    }
+    if(category === "service"){
+        const service = await getServiceByUserId(id);
+        res.status(201).json(service);
+        return;
+    }else if(category === "host"){
+        const userInfo = await getServiceByUserIdHost(id);
+        res.status(201).json(userInfo);
+        return;
+    }else{
+        res.status(400).json({ message: "Bad request." });
+        return;
+    }
 }

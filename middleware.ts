@@ -3,7 +3,8 @@ import {getToken} from "next-auth/jwt";
 
 
 export async function middleware(req: NextRequest){
-    const session = await getToken({ req, secret: process.env.SECRET });
+    const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    console.log(session)
     if(!session){
         return NextResponse.rewrite(new URL('/auth/login', req.url));
     }

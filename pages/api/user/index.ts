@@ -17,5 +17,9 @@ export default async function handler(
         return;
     }
     const user = await getUserByName(session.user?.name);
+    if(user === null){
+        res.status(404).json({ message: "User not found." });
+        return;
+    }
     res.status(201).json(user);
 }

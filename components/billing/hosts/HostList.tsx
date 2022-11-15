@@ -1,6 +1,9 @@
+import useUserServiceHosts from "../../hooks/useUserServiceHosts";
 import HostCard from "./HostCard";
 
-const HostList = () => {
+const HostList = ({id}:{id:string}) => {
+    const {hosts, isLoading, isError} = useUserServiceHosts(id);
+    console.log(hosts)
     return(
         <div className="overflow-x-auto relative">
             <table
@@ -23,8 +26,9 @@ const HostList = () => {
                 </tr>
                 </thead>
                 <tbody>
-                    <HostCard/>
-                    <HostCard/>
+                    {isLoading ? <div>Загрузка...</div> : isError ? <div>Ошибка</div> : hosts.map((host:HostUser) => (
+                        <HostCard host={host}/>
+                    ))}
                 </tbody>
             </table>
         </div>

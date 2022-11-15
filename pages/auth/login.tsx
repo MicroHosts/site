@@ -28,6 +28,7 @@ const Login = ({csrfToken}:any) => {
             return;
         }
         if(data.error){
+            console.log(data.error)
             setError(data.error)
             return
         }

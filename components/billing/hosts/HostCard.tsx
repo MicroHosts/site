@@ -1,12 +1,12 @@
-const HostCard = () => {
+const HostCard = ({host}:{host:HostUser}) => {
     return(
         <tr className="border-b dark:border-gray-700">
             <th scope="row"
                 className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                VDS 1
+                {host.name}
             </th>
             <td className="py-4 px-6">
-                390 руб
+                {host.price} руб
             </td>
             <td className="py-4 px-6">
                 31.12.12
@@ -17,5 +17,7 @@ const HostCard = () => {
         </tr>
     )
 }
+
+
 
 export default HostCard
