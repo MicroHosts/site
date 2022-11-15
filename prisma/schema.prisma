@@ -45,7 +45,7 @@ model Balance {
     id        String   @id @default(cuid())
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String   @unique
-    balance   Int
+    amount    Int
 }
 
 model Password {
@@ -68,7 +68,6 @@ model VerificationToken {
   @@unique([id, token])
 }
 
-
 //Hosts
 model Host{
   id       String @id @default(cuid())
@@ -81,7 +80,7 @@ model Host{
   password String
   service  Services?
 }
-
+//TODO создать отдельный services для пользователя, чтобы указывать период оплаты
 model Services{
   id          String    @id @default(cuid())
   name        String
