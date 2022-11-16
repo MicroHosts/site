@@ -1,8 +1,9 @@
-import logo from '../../assets/logo.svg'
-import Image from "next/image";
 import Link from "next/link";
-import {LegacyRef, MouseEvent, useRef, useState} from "react";
+import {LegacyRef, MouseEvent, ReactElement, useRef, useState} from "react";
 import {classNames, validateEmail} from "../../utils/utils";
+import AuthLayout from "../../components/auth/layout";
+import Input from "../../components/input/Input";
+import {getCsrfToken, getSession} from "next-auth/react";
 
 const Register = () => {
     const [username, setUsername] = useState<string>('')
@@ -60,74 +61,52 @@ const Register = () => {
     }
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                    <Image className="w-12 h-12 mr-2"
-                           src={logo} alt="logo"/>
-                    MicroHost
-                </Link>
-                <div
-                    className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                             Создать аккаунт
                         </h1>
                         <div className={classNames(error ? "text-red-600" : "hidden")}>
                             {error}
                         </div>
                         <div className="space-y-4 md:space-y-6">
-                            <div>
-                                <label htmlFor="username"
-                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Имя пользователя
-                                </label>
-                                <input type="text" name="username" id="username" placeholder={"Имя пользователя"}
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       required
-                                       value={username}
-                                       onChange={e => setUsername(e.target.value)}/>
-                            </div>
-                            <div>
-                                <label htmlFor="email"
-                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ваша
-                                    почта</label>
-                                <input type="email" name="email" id="email"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="name@gmail.com" required
+                            <Input name={"Имя пользователя"}
+                                   value={username}
+                                   onChange={(e) => setUsername(e.target.value)}
+                                   type={"text"}
+                                   id={"username"}
+                                   placeholder={"Имя пользователя"}
+                            />
+                            <Input name={"Ваша почта"}
                                        value={email}
-                                       onChange={e => setEmail(e.target.value)}/>
-                            </div>
-                            <div>
-                                <label htmlFor="password"
-                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Пароль</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       required
-                                       value={password}
-                                       onChange={e => setPassword(e.target.value)}/>
-                            </div>
-                            <div>
-                                <label htmlFor="confirm-password"
-                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Повторите
-                                    пароль</label>
-                                <input type="password" name="confirm-password" id="confirm-password"
-                                       placeholder="••••••••"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       required
-                                       value={passwordConfirm}
-                                       onChange={e => setPasswordConfirm(e.target.value)}/>
-                            </div>
+                                       onChange={(e) => setEmail(e.target.value)}
+                                       type={"email"}
+                                       id={"email"}
+                                       placeholder={"name@gmail.com"}
+                            />
+                            <Input name={"Пароль"}
+                                   value={password}
+                                   onChange={(e) => setPassword(e.target.value)}
+                                   type={"password"}
+                                   id={"password"}
+                                   placeholder={"••••••••"}
+                            />
+                            <Input name={"Пароль"}
+                                   value={passwordConfirm}
+                                   onChange={(e) => setPasswordConfirm(e.target.value)}
+                                   type={"password"}
+                                   id={"confirm-password"}
+                                   placeholder={"••••••••"}
+                            />
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
                                     <input id="terms" aria-describedby="terms" type="checkbox"
-                                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                                           className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 bg-gray-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
                                            required
                                            ref={checked}
                                            />
                                 </div>
                                 <div className="ml-3 text-sm">
-                                    <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">Я
+                                    <label htmlFor="terms" className="font-light text-gray-500 text-gray-300">Я
                                         принимаю <a
                                             className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                                             href="#">условия обработки персональных данных</a></label>
@@ -135,18 +114,41 @@ const Register = () => {
                             </div>
                             <button type="submit"
                                     onClick={onSubmit}
-                                    className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Зарегистрироваться
+                                    className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">Зарегистрироваться
                             </button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                            <p className="text-sm font-light  text-gray-400">
                                 У вас уже есть аккаунт? <Link href="/auth/login"
-                                                              className="font-medium text-primary-600 hover:underline dark:text-primary-500">Войти</Link>
+                                                              className="font-medium hover:underline text-primary-500">Войти</Link>
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
     )
 };
+
+Register.getLayout = function getLayout(page: ReactElement) {
+    // @ts-ignore
+    return (
+        <AuthLayout>
+            {page}
+        </AuthLayout>
+    )
+}
+
+export async function getServerSideProps(context:any) {
+    const { req } = context;
+    const session = await getSession({ req });
+
+    if (session) {
+        return {
+            redirect: { destination: "/" },
+        };
+    }
+
+    return {
+        props: {
+            csrfToken: await getCsrfToken(context),
+        },
+    };
+}
 
 export default Register;

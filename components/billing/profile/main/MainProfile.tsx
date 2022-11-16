@@ -1,8 +1,11 @@
 import { LegacyRef, MouseEvent, useRef, useState, } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
+import {useUserStore} from "../../../../store/user";
 
-const MainProfile = ({id}:{id:string}) => {
-    const {info, isLoading, isError} = useUserInfo(id);
+const MainProfile = () => {
+    // @ts-ignore
+    const user = useUserStore((state) => state.user);
+    const {info, isLoading, isError} = useUserInfo(user.id);
     const first_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const second_name: LegacyRef<HTMLInputElement>  = useRef(null);

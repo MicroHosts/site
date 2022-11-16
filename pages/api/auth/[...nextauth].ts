@@ -1,8 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "../../../lib/adapter/prisma";
 import { getPasswordByUserId, getUserByEmail } from "../../../models/user";
-import prisma from "../../../lib/prismadb";
 const bcrypt = require('bcrypt');
 
 // @ts-ignore
@@ -12,7 +10,6 @@ const authOptions: NextAuthOptions = {
         error: '/auth/error',
     },
     secret: process.env.NEXTAUTH_SECRET,
-    // adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -39,7 +36,6 @@ const authOptions: NextAuthOptions = {
                     if (passwordValid) {
                         return user;
                     }else{
-                        // return null;
                         throw new Error("Неверный пароль");
                     }
                 }else{

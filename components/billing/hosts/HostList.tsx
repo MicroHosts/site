@@ -3,6 +3,7 @@ import HostCard from "./HostCard";
 import {useUserStore} from "../../../store/user";
 
 const HostList = () => {
+    // @ts-ignore
     const user = useUserStore((state) => state.user);
     const {hosts, isLoading, isError} = useUserServiceHosts(user.id);
     //todo skeleton loading

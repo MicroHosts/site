@@ -3,15 +3,13 @@ import Head from "next/head";
 import Link from "next/link";
 import {signOut} from "next-auth/react";
 import Image from "next/image";
-import logo from "../../assets/logo.svg";
 import useUser from "../../components/hooks/useUser";
 import Header from "../../components/billing/header/Header";
 import { classNames } from "../../utils/utils";
-import { NextPageWithLayout } from "../../pages/_app";
 import {useUserStore} from "../../store/user";
 
 
-export default function BillingLayout({children}:{children: NextPageWithLayout}) {
+export default function BillingLayout({children}:any) {
     const { user, isLoading, isError } = useUser();
     if (isLoading) {
         return <div>Loading...</div>;
@@ -31,7 +29,7 @@ export default function BillingLayout({children}:{children: NextPageWithLayout})
                     <div className="flex flex-wrap justify-between items-center mx-auto mt-4 md:mt-0">
                         <Link href="/" className="flex items-center">
                             <Image className="w-12 h-12 mr-2"
-                                   src={logo} alt="logo"/>
+                                   src="/logo.png" alt="logo"/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
                         </Link>
@@ -43,7 +41,7 @@ export default function BillingLayout({children}:{children: NextPageWithLayout})
                     </div>
                 </nav>
                 <div className="md:flex">
-                    <Header user={user}/>
+                    <Header/>
                     <>{children}</>
                 </div>
             </div>

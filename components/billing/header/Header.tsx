@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useUserStore} from "../../../store/user";
 
 const Header = () => {
+    // @ts-ignore
     const user = useUserStore((state) => state.user);
     return(
         <div className="md:w-64 w-full">

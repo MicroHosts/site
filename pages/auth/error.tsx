@@ -13,7 +13,7 @@ const errors = {
     InvalidPassword: "Неправильный пароль",
     default: "Unable to sign in.",
 };
-const SignInError = ({ error }) => {
+const SignInError = ({ error }:any) => {
     const errorMessage = error && (errors[error] ?? errors.default);
     return <div>{errorMessage}</div>;
 };
