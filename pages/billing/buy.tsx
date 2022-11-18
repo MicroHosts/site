@@ -29,7 +29,6 @@ function BuyBilling() {
 }
 
 BuyBilling.getLayout = function getLayout(page: ReactElement) {
-  // @ts-ignore
   return (
       <BillingLayout>
         {page}

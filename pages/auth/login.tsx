@@ -1,5 +1,4 @@
 // @ts-ignore
-import Image from "next/image";
 import Link from "next/link";
 import { signIn, getSession, getCsrfToken } from "next-auth/react";
 import {MouseEvent, ReactElement, useState} from "react";

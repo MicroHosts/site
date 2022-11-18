@@ -29,7 +29,6 @@ function Profile(){
 }
 
 Profile.getLayout = function getLayout(page: ReactElement) {
-    // @ts-ignore
     return (
         <BillingLayout>
             {page}
