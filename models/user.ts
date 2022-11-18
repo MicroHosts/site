@@ -1,5 +1,5 @@
-import prisma from "../lib/prismadb";
-import {makeid} from "../utils/utils";
+import prisma from "@/lib/prismadb";
+import {makeid} from "@/utils/utils";
 
 const bcrypt = require('bcrypt');
 
@@ -54,7 +54,6 @@ export const getUserInfo = async (id: string) => {
 }
 
 export const updateUserInfo = async (id: string, {data}: any) => {
-    console.log(data.phone_number)
     return await prisma.userInfo.update({
         where: {
             id,
@@ -69,7 +68,6 @@ export const updateUserInfo = async (id: string, {data}: any) => {
 };
 
 export const createUser = async (name: string, email: string, password: string) => {
-    //check exists
     const user1 = await getUserByEmail(email);
     if(user1){
         return null;
@@ -146,7 +144,6 @@ export const verifyUser = async (token: string) => {
                 phone_number: "",
             }
         })
-        //delete token
         await prisma.verificationToken.delete({
             where: {
                 token: token

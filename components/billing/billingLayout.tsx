@@ -1,12 +1,12 @@
-import styles from "../../styles/Home.module.css";
+import styles from "@/styles/Home.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import {signOut} from "next-auth/react";
 import Image from "next/image";
-import useUser from "../../components/hooks/useUser";
-import Header from "../../components/billing/header/Header";
-import { classNames } from "../../utils/utils";
-import {useUserStore} from "../../store/user";
+import useUser from "@/hooks/useUser";
+import Header from "@/billing/header/Header";
+import { classNames } from "@/utils/utils";
+import {useUserStore} from "@/store/user";
 
 
 export default function BillingLayout({children}:any) {
@@ -31,7 +31,7 @@ export default function BillingLayout({children}:any) {
                             <Image className="w-12 h-12 mr-2"
                                    src="/logo.png" alt="logo"/>
                             <span
-                                className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
+                                className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                         </Link>
                         <div className={classNames( "md:block md:w-auto")}>
                             <button onClick={() => signOut({callbackUrl: "/", redirect: true})}

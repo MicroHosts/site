@@ -1,6 +1,6 @@
 import { LegacyRef, MouseEvent, useRef, useState, } from "react";
-import useUserInfo from "../../../hooks/useUserInfo";
-import {useUserStore} from "../../../../store/user";
+import useUserInfo from "@/hooks/useUserInfo";
+import {useUserStore} from "@/store/user";
 
 const MainProfile = () => {
     // @ts-ignore
@@ -27,7 +27,7 @@ const MainProfile = () => {
             second_name: second_name.current.value,
             phone_number: phone.current.value,
         }
-        const res = await fetch(`http://localhost:3000/api/user/info?id=${info.id}`, {
+        const res = await fetch(`/api/user/info?id=${info.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,9 +43,9 @@ const MainProfile = () => {
             <div className="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                     <label htmlFor="first_name"
-                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Фамилия</label>
+                           className="block mb-2 text-sm font-medium text-gray-300">Фамилия</label>
                     <input type="text" id="first_name"
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иванов"
                            ref={first_name}
                            defaultValue={info.first_name}
@@ -53,9 +53,9 @@ const MainProfile = () => {
                 </div>
                 <div>
                     <label htmlFor="last_name"
-                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Имя</label>
+                           className="block mb-2 text-sm font-medium text-gray-300">Имя</label>
                     <input type="text" id="last_name"
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иван"
                            ref={last_name}
                            defaultValue={info.last_name}
@@ -63,18 +63,18 @@ const MainProfile = () => {
                 </div>
                 <div>
                     <label htmlFor="last_name"
-                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Отчество</label>
+                           className="block mb-2 text-sm font-medium text-gray-300">Отчество</label>
                     <input type="text" id="last_name"
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иванович"
                            ref={second_name}
                            defaultValue={info.second_name}
                            />
                 </div>
                 <div>
-                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Контактый телефон</label>
+                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-300">Контактый телефон</label>
                     <input type="tel" id="phone"
-                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="+7 495 1111111" pattern="^\+[0-9]{1,3} [0-9]{1,6} [0-9]{3,10}$"
                            ref={phone}
                            defaultValue={info.phone_number}
@@ -83,7 +83,7 @@ const MainProfile = () => {
             </div>
             <button type="submit"
                     onClick={onSubmit}
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Сохранить
+                    className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Сохранить
             </button>
         </form>
     )

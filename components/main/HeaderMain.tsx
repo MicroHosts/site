@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {classNames} from "../../utils/utils";
+import {classNames} from "@/utils/utils";
 import Link from "next/link";
 import {useState} from "react";
 
@@ -12,7 +12,7 @@ export default function HeaderMain(){
                     <Image className="w-12 h-12 mr-2"
                            src="/logo.svg" alt="logo"/>
                     <span
-                        className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
+                        className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                 </a>
                 <button data-collapse-toggle="navbar-default" type="button"
                         className="inline-flex items-center p-2 ml-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"

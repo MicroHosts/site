@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createUser} from "../../../models/user";
-import {validateEmail} from "../../../utils/utils";
+import {createUser} from "@/models/user";
+import {validateEmail} from "@/utils/utils";
 
 export default async function handler(
     req: NextApiRequest,

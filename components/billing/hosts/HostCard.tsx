@@ -2,7 +2,7 @@ const HostCard = ({host}:{host:HostUser}) => {
     return(
         <tr className="border-b dark:border-gray-700">
             <th scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                className="py-4 px-6 font-medium whitespace-nowrap text-white">
                 {host.name}
             </th>
             <td className="py-4 px-6">

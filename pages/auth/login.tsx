@@ -2,11 +2,11 @@
 import Link from "next/link";
 import { signIn, getSession, getCsrfToken } from "next-auth/react";
 import {MouseEvent, ReactElement, useState} from "react";
-import {classNames, validateEmail} from "../../utils/utils";
+import {classNames, validateEmail} from "@/utils/utils";
 import Router from 'next/router'
-import AuthLayout from "../../components/auth/layout";
+import AuthLayout from "@/auth/layout";
 import Register from "./register";
-import Input from "../../components/input/Input";
+import Input from "@/components/input/Input";
 
 const Login = ({csrfToken}:any) => {
 

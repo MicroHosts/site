@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { getPasswordByUserId, getUserByEmail } from "../../../models/user";
+import { getPasswordByUserId, getUserByEmail } from "@/models/user";
 const bcrypt = require('bcrypt');
 
 // @ts-ignore

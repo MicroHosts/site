@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import VDSCard from "../components/main/VDSCard";
-import HeaderMain from "../components/main/HeaderMain";
-import FooterMain from "../components/main/FooterMain";
+import styles from '@/styles/Home.module.css'
+import VDSCard from "@/components/main/VDSCard";
+import HeaderMain from "@/components/main/HeaderMain";
+import FooterMain from "@/components/main/FooterMain";
 
 export default function Home() {
     return (

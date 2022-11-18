@@ -1,5 +1,5 @@
 import { Category } from "@prisma/client";
-import prisma from "../lib/prismadb";
+import prisma from "@/lib/prismadb";
 
 export const createService = async (data: any) => {
     return await prisma.services.create(data);

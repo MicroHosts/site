@@ -10,21 +10,21 @@ export default function FooterMain(){
                             <img src="" className="mr-3 h-8"
                                  alt="Microhost Logo"/>
                             <span
-                                className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MicroHost</span>
+                                className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                         </Link>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 mt-4">© 2022 MicroHost
+                        <span className="text-smtext-gray-400 mt-4">© 2022 MicroHost
                           </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 mt-4">Кого-то ИП
+                        <span className="text-smtext-gray-400 mt-4">Кого-то ИП
                           </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 mt-4">Почта для обращений:
+                        <span className="text-smtext-gray-400 mt-4">Почта для обращений:
                           </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">support@microhost.ru
+                        <span className="text-smtext-gray-400">support@microhost.ru
                           </span>
                     </div>
                 </div>
                 <div>
-                    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Услуги</h2>
-                    <ul className="text-gray-600 dark:text-gray-400">
+                    <h2 className="mb-6 text-sm font-semibold uppercase text-white">Услуги</h2>
+                    <ul className="text-gray-600">
                         <li className="mb-4">
                             <Link href="/" className="hover:underline">VDS Low</Link>
                         </li>
@@ -34,12 +34,12 @@ export default function FooterMain(){
                     </ul>
                 </div>
                 <div>
-                    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Полезные
+                    <h2 className="mb-6 text-sm font-semibold uppercase text-white">Полезные
                         ссылки</h2>
-                    <ul className="text-gray-600 dark:text-gray-400">
+                    <ul className="text-gray-400">
                         <li className="mb-4">
                             <Link href="/"
-                               className="hover:underline ">Условия пользования</Link>
+                               className="hover:underline">Условия пользования</Link>
                         </li>
                         <li className="mb-4">
                             <Link href="/" className="hover:underline">Политика
