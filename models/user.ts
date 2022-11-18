@@ -18,7 +18,10 @@ export const getUserByEmail = async (email: string) => {
     });
 }
 
-export const getUserByName = async (name: string) => {
+export const getUserByName = async (name: string | null | undefined) => {
+    if(!name){
+        return null;
+    }
     return await prisma.user.findUnique({
         where: {
             name,

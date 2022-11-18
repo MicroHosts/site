@@ -21,7 +21,7 @@ export default function Home() {
                             Лучший облачный хостинг
                             для любых задач
                         </div>
-                        <Image src="/hero.svg" alt={"hero"} width={1000} height={500} className="md:w-2/4 mx-auto mt-4"/>
+                        <Image src="/hero1.svg" alt={"hero"} width={1000} height={500} className="md:w-2/4 mx-auto mt-4"/>
                     </div>
                     <div className="pt-12">
                         <div className="text-center text-4xl font-bold">

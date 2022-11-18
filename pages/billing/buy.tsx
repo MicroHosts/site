@@ -7,7 +7,7 @@ import TabList from "@/components/tab/TabList";
 const tabs = [
   {
     name: "Хосты",
-   component: <BuyHostCard/>
+    component: <BuyHostCard/>
   },
   {
     name: "Услуги",

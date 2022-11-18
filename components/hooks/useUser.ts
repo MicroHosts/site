@@ -22,7 +22,6 @@ const fetcher = async(url:string) => {
 
 function useUser () {
     const { data, error } = useSWR(`/api/user`, fetcher)
-    console.log(error)
     return {
         user: data,
         isLoading: !error && !data,

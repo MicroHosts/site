@@ -10,7 +10,7 @@ export default function HeaderMain(){
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <a href="https://flowbite.com/" className="flex items-center">
                     <Image className="w-12 h-12 mr-2"
-                           src="/logo.svg" alt="logo"/>
+                           src="/logo.svg" alt="logo" width={400} height={400}/>
                     <span
                         className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                 </a>

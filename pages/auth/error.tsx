@@ -14,6 +14,7 @@ const errors = {
     default: "Unable to sign in.",
 };
 const SignInError = ({ error }:any) => {
+    // @ts-ignore
     const errorMessage = error && (errors[error] ?? errors.default);
     return <div>{errorMessage}</div>;
 };

@@ -29,7 +29,7 @@ export default function BillingLayout({children}:any) {
                     <div className="flex flex-wrap justify-between items-center mx-auto mt-4 md:mt-0">
                         <Link href="/" className="flex items-center">
                             <Image className="w-12 h-12 mr-2"
-                                   src="/logo.png" alt="logo"/>
+                                   src="/logo.svg" alt="logo" height={400} width={400}/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                         </Link>

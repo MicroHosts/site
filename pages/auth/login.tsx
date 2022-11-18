@@ -30,7 +30,6 @@ const Login = ({csrfToken}:any) => {
             return;
         }
         if(data.error){
-            console.log(data.error)
             setError(data.error)
             return
         }
@@ -75,7 +74,7 @@ const Login = ({csrfToken}:any) => {
     )
 }
 
-Register.getLayout = function getLayout(page: ReactElement) {
+Login.getLayout = function getLayout(page: ReactElement) {
     // @ts-ignore
     return (
         <AuthLayout>
