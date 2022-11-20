@@ -51,6 +51,14 @@ const authOptions: NextAuthOptions = {
     session:{
         strategy: "jwt",
     },
+    callbacks: {
+        async session({session, user, token}) {
+            if(user.email === "admin@microhost1.ru"){
+                session.user.role = "admin";
+            }
+            return session;
+        }
+    }
 }
 export default NextAuth(authOptions)
 

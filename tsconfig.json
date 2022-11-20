@@ -26,6 +26,7 @@
       "@/types/*": ["types/*"],
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
+      "@/admin/*": ["components/admin/*", "pages/admin/*"],
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
