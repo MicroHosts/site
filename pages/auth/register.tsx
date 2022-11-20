@@ -4,6 +4,7 @@ import {classNames, validateEmail} from "@/utils/utils";
 import AuthLayout from "@/auth/layout";
 import Input from "@/components/input/Input";
 import {getCsrfToken, getSession} from "next-auth/react";
+import Router from "next/router";
 
 const Register = () => {
     const [username, setUsername] = useState<string>('')
@@ -39,7 +40,6 @@ const Register = () => {
             setError('Некорректный email')
             return
         }
-        setError('')
         const res = await fetch('/api/auth/signup', {
             headers:{
                 'Content-Type': 'application/json'
@@ -58,6 +58,7 @@ const Register = () => {
             setError('')
             console.log(data)
         }
+        return Router.push("/auth/checkmail")
     }
 
     return (

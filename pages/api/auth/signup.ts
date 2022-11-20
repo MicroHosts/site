@@ -1,6 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {createUser} from "@/models/user";
 import {validateEmail} from "@/utils/utils";
+import client from "@/lib/mail";
 
 export default async function handler(
     req: NextApiRequest,
@@ -30,6 +31,23 @@ export default async function handler(
             return;
         }
         //Отправить письмо с токеном
+        const mailData ={
+            from: 'no-reply@microhost1.ru',
+            to: email,
+            subject: 'Подтверждение почты',
+            html: `<h1>Подтвердите почту</h1>
+            <p>Для подтверждения перейдите по ссылке</p>
+            <a href="http://localhost:3000/auth/verification?token=${token}">Подтвердить почту</a>
+            `,
+            text: 'Подтвердите почту',
+        }
+        client.sendMail(mailData, (err, info) => {
+            if(err){
+                console.log(err)
+            }else{
+                console.log(info)
+            }
+        });
         res.status(201).json({ message: 'Created user', token: token });
     } else {
         res.status(500).json({ message: 'Route not valid' });

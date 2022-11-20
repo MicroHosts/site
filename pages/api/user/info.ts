@@ -19,8 +19,7 @@ export default async function handler(
     const id = req.query.id as string;
     if(req.method === "PUT"){
         const data = req.body;
-        const res1 = await updateUserInfo(id, {data})
-        console.log(req.query.id)
+        await updateUserInfo(id, {data})
         res.status(201).json({ message: "User info updated." });
         return;
     }
