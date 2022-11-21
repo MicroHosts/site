@@ -153,6 +153,12 @@ export const verifyUser = async (token: string) => {
             }
         });
         return true;
+    }else if(verificationToken && verificationToken.expires < new Date()){
+        await prisma.verificationToken.delete({
+            where: {
+                token: token
+            }
+        });
     }
     return false;
 }

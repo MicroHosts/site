@@ -1,7 +1,7 @@
 import {verifyUser} from "@/models/user";
 import Link from "next/link";
 
-export default function Verify({error}){
+export default function Verify({error}:{error?:string}) {
     if(error){
         return (
             <div
@@ -25,7 +25,7 @@ export default function Verify({error}){
     )
 }
 
-export async function getServerSideProps(context){
+export async function getServerSideProps(context:any){
     const { req } = context;
     const token = req.url.split('token=')[1];
     if(!token || typeof token !== "string"){
