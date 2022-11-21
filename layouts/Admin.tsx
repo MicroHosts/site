@@ -1,23 +1,12 @@
 import styles from "@/styles/Home.module.css";
 import Head from "next/head";
 import Link from "next/link";
-import {signOut} from "next-auth/react";
 import Image from "next/image";
-import useUser from "@/hooks/useUser";
-import Header from "@/billing/header/Header";
-import { classNames } from "@/utils/utils";
-import {useUserStore} from "@/store/user";
+import {classNames} from "@/utils/utils";
+import {signOut} from "next-auth/react";
+import AdminHeader from "@/admin/header/header";
 
-
-export default function BillingLayout({children}:any) {
-    const { user, isLoading, isError } = useUser();
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-    if(isError){
-        return <div>Ошибка</div>;
-    }
-    useUserStore.setState({user: user});
+export default function AdminLayout({children}:any) {
     return(
         <div className={styles.container}>
             <Head>
@@ -35,17 +24,16 @@ export default function BillingLayout({children}:any) {
                         </Link>
                         <div className={classNames( "md:block md:w-auto")}>
                             <button onClick={() => signOut({callbackUrl: "/", redirect: true})}
-                                  className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Выйти
+                                    className="md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Выйти
                             </button>
                         </div>
                     </div>
                 </nav>
                 <div className="md:flex">
-                    <Header/>
+                    <AdminHeader/>
                     <>{children}</>
                 </div>
             </div>
         </div>
     )
 }
-

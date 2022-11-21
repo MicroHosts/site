@@ -1,6 +1,6 @@
 import NoPayList from "@/billing/nopay/NoPayList";
 import { ReactElement} from "react";
-import BillingLayout from "@/billing/billingLayout";
+import BillingLayout from "@/layouts/Billing";
 import BuyHostCard from "@/billing/buy/hosts/BuyHostCard";
 import BuyServiceCard from "@/billing/buy/services/BuyServiceCard";
 import TabList from "@/components/tab/TabList";

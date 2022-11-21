@@ -4,7 +4,7 @@ import { signIn, getSession, getCsrfToken } from "next-auth/react";
 import {MouseEvent, ReactElement, useState} from "react";
 import {classNames, validateEmail} from "@/utils/utils";
 import Router from 'next/router'
-import AuthLayout from "@/auth/layout";
+import AuthLayout from "@/layouts/Auth";
 import Input from "@/components/input/Input";
 
 const Login = ({csrfToken}:any) => {
@@ -74,7 +74,6 @@ const Login = ({csrfToken}:any) => {
 }
 
 Login.getLayout = function getLayout(page: ReactElement) {
-    // @ts-ignore
     return (
         <AuthLayout>
             {page}

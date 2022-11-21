@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {LegacyRef, MouseEvent, ReactElement, useRef, useState} from "react";
 import {classNames, validateEmail} from "@/utils/utils";
-import AuthLayout from "@/auth/layout";
+import AuthLayout from "@/layouts/Auth";
 import Input from "@/components/input/Input";
 import {getCsrfToken, getSession} from "next-auth/react";
 import Router from "next/router";

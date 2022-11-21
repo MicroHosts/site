@@ -1,7 +1,7 @@
 import {ReactElement} from "react";
 import MainProfile from "@/billing/profile/main/MainProfile";
 import SecureProfile from "@/billing/profile/main/SecureProfile";
-import BillingLayout from "@/billing/billingLayout";
+import BillingLayout from "@/layouts/Billing";
 import TabList from "@/components/tab/TabList";
 
 const tabs = [
