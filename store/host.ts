@@ -1,6 +1,11 @@
-import create from "zustand";
+import {atom} from "recoil";
 
-export const useHostStore = create((set) => ({
-    host: null,
-    open: false,
-}))
+export const editOpen = atom({
+    key: 'editOpen',
+    default: false,
+});
+
+export const hostState = atom({
+    key: 'host',
+    default: null,
+});

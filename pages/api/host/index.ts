@@ -1,8 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createUser} from "@/models/user";
-import {validateEmail} from "@/utils/utils";
-import client from "@/lib/mail";
-import {createHost, getHosts} from "@/models/hosts";
+import {createHost, getHostById, getHosts, updateHost} from "@/models/hosts";
 
 export default async function handler(
     req: NextApiRequest,
@@ -59,10 +56,7 @@ export default async function handler(
         const host = await createHost(hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
         res.status(201).json({ message: 'Хост успешно создан'});
     }else if(req.method === 'PUT') {
-        if(!req.query.id){
-            res.status(400).json({ message: "Bad request." });
-            return;
-        }
+        console.log(req.body);
         const { hostName,  cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price } = req.body;
         if(!password || password.length < 6){
             res.status(422).json({ message: 'Пароль должен быть больше 6 символов'});
@@ -110,9 +104,19 @@ export default async function handler(
             res.status(422).json({ message: 'Цена не может быть 0'});
             return;
         }
-        const host = await createHost(hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
-        res.status(201).json({ message: 'Хост успешно создан'});
+        if(!req.query.id){
+            res.status(422).json({ message: 'ID не может быть пустым'});
+            return;
+        }
+        const id = req.query.id as string;
+        const host = await updateHost(id, hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
+        res.status(201).json({ message: 'Хост успешно обновлен'});
     }else if(req.method === 'GET') {
+        if(req.query.id){
+            const host = await getHostById(req.query.id as string);
+            res.status(200).json(host);
+            return;
+        }
         const hosts = await getHosts();
         res.status(200).json(hosts);
     }else {

@@ -4,9 +4,13 @@ import HostCardSkeleton from "@/admin/hosts/HostCardSkeleton";
 import useHost from "@/hooks/admin/useHost";
 import HostCard from "@/admin/hosts/HostCard";
 import EditHostModal from "@/admin/modals/EditHostModal";
+import {useRecoilValue} from "recoil";
+import {editOpen} from "@/store/host";
 
 export default function HostList() {
     const {hosts, isLoading, isError} = useHost();
+    const open = useRecoilValue(editOpen)
+
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="overflow-x-auto relative w-full">
@@ -16,7 +20,7 @@ export default function HostList() {
                 </button>
             </div>
             <CreateHostModal setOpen={setIsOpen} open={isOpen}/>
-            <EditHostModal/>
+            {open && <EditHostModal/>}
             <table
                 className="w-full text-sm text-left text-gray-400">
                 <thead

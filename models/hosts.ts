@@ -44,7 +44,7 @@ export const updateHost = async(
     desciption: string,
     price: number,
 ) => {
-    return await prisma.host.updateMany({
+    return await prisma.host.update({
         where: {
             id: id,
         },
@@ -68,6 +68,15 @@ export const getHosts = async() => {
     return await prisma.host.findMany({
     });
 }
+
+export const getHostById = async(id: string) => {
+    return await prisma.host.findUnique({
+        where:{
+            id: id,
+        }
+    });
+}
+
 
 //TODO UpdateHost
 //TODO DeleteHost

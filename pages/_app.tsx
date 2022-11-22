@@ -5,6 +5,7 @@ import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
 import {ToastContainer} from "react-toastify";
+import {RecoilRoot} from "recoil";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -21,6 +22,7 @@ export default function App({
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
+      <RecoilRoot>
           <SessionProvider session={session}>
               <ToastContainer
                   position="top-right"
@@ -34,7 +36,8 @@ export default function App({
                   pauseOnHover
                   theme="dark"
               />
-            {getLayout(<Component {...pageProps} />)}
+              {getLayout(<Component {...pageProps} />)}
           </SessionProvider>
+      </RecoilRoot>
       )
 }

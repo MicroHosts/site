@@ -2,40 +2,28 @@ import Input from "@/components/input/Input";
 import TextArea from "@/components/input/textarea";
 import { classNames } from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
-import {MouseEvent, useEffect, useState} from "react";
+import {MouseEvent, useState} from "react";
 import {FiTrash} from "react-icons/fi";
-import {useHostStore} from "@/store/host";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {editOpen, hostState} from "@/store/host";
+import {mutate} from "swr";
 
 export default function EditHostModal() {
+    const [open, setOpen] = useRecoilState(editOpen)
+    const host1 = useRecoilValue(hostState)
 
-    const {open, host} = useHostStore((state) => ({open: state.open, host: state.host}));
-    useEffect(() => {
-        console.log(host.name)
-        // if(host){
-            setHostName(host.name);
-        //     setCpuInfo(host.cpu);
-        //     setRamInfo(host.ram);
-        //     setStorageInfo(host.storage);
-        //     setIdProxmox(host.vimid);
-        //     setLogin(host.login);
-        //     setPassword(host.password);
-        //     setIP(host.ip);
-        //     setDescription(host.description);
-        //     setPrice(host.price);
-        //     setError('')
-        // }
-    }, [host])
-    const [hostName, setHostName] = useState<string>("");
-    const [cpuInfo, setCpuInfo] = useState<string>("");
-    const [ramInfo, setRamInfo] = useState<string>("");
-    const [storageInfo, setStorageInfo] = useState<string>("");
-    const [idproxmox, setIdProxmox] = useState<string>("");
-    const [login, setLogin] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [ip, setIP] = useState<string>("");
-    const [desciption, setDescription] = useState<string>("");
-    const [price, setPrice] = useState<string>("");
+    const [hostName, setHostName] = useState<string>(host1.name);
+    const [cpuInfo, setCpuInfo] = useState<string>(host1.cpu);
+    const [ramInfo, setRamInfo] = useState<string>(host1.ram);
+    const [storageInfo, setStorageInfo] = useState<string>(host1.storage);
+    const [idproxmox, setIdProxmox] = useState<string>(host1.vimid);
+    const [login, setLogin] = useState<string>(host1.login);
+    const [password, setPassword] = useState<string>(host1.password);
+    const [ip, setIP] = useState<string>(host1.ip);
+    const [desciption, setDescription] = useState<string>(host1.description);
+    const [price, setPrice] = useState<string>(host1.price);
     const [error, setError] = useState<string>('');
+
 
     const onSubmit = async(e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -53,7 +41,7 @@ export default function EditHostModal() {
                 desciption,
                 price
             }
-            const res = await fetch(`/api/host?id=`+host.id, {
+            const res = await fetch(`/api/host?id=`+host1.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,13 +53,17 @@ export default function EditHostModal() {
                 setError(json.message);
                 return;
             }
+            if(res.status === 201){
+                await mutate('/api/host');
+                setOpen(false);
+            }
         } else {
             setError('Не все поля заполнены');
         }
     }
 
     return (
-        <Dialog open={open} onClose={() => useHostStore.setState({open: false})} as="div" className="relative z-10" >
+        <Dialog open={open} onClose={() => setOpen(false)} as="div" className="relative z-10" >
             <div className="fixed inset-0 overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 text-center">
                     <Dialog.Panel>
