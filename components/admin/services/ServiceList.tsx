@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CreateServiceModal from "../modals/CreateServiceModal";
-import HostCard from "./HostCard";
+import HostCard from "../hosts/HostCard";
+import ServiceCard from "@/admin/services/ServiceCard";
 
 export default function ServiceList() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,21 +19,18 @@ export default function ServiceList() {
                     className="text-xs uppercase text-gray-400">
                     <tr>
                         <th scope="col" className="py-3 px-6">
-                            Хост
+                            Название
                         </th>
                         <th scope="col" className="py-3 px-6">
                             Цена в месяц
                         </th>
                         <th scope="col" className="py-3 px-6">
-                            Статус
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Управление
+                            Редактирование
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <HostCard />
+                    <ServiceCard />
                 </tbody>
             </table>
         </div>

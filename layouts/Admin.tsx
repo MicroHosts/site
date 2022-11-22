@@ -5,6 +5,7 @@ import Image from "next/image";
 import {classNames} from "@/utils/utils";
 import {signOut} from "next-auth/react";
 import AdminHeader from "@/admin/header/header";
+import {ToastContainer} from "react-toastify";
 
 export default function AdminLayout({children}:any) {
     return(
