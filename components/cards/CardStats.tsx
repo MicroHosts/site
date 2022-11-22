@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 export default function CardStats({
                                       statSubtitle,
                                       statTitle,
@@ -36,15 +37,14 @@ export default function CardStats({
                     </div>
                     <p className="text-sm text-blueGray-400 mt-4">
             <span className={statPercentColor + " mr-2"}>
-              <i
-                  className={
+              {
                       statArrow === "up"
-                          ? "fas fa-arrow-up"
-                          : statArrow === "down"
-                              ? "fas fa-arrow-down"
-                              : ""
-                  }
-              ></i>{" "}
+                      ? <AiOutlineArrowUp/>
+                      : statArrow === "down"
+                          ? <AiOutlineArrowDown/>
+                          : ""
+              }
+              {" "}
                 {statPercent}%
             </span>
                         <span className="whitespace-nowrap">{statDescripiron}</span>

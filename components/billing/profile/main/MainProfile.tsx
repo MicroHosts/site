@@ -10,12 +10,14 @@ const MainProfile = () => {
     const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const second_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const phone: LegacyRef<HTMLInputElement>  = useRef(null);
+    
     if(isError){
         return <div>Ошибка</div>
     }
     if(isLoading){
         return <div>Загрузка...</div>
     }
+
     const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if(!first_name.current || !last_name.current || !second_name.current || !phone.current){

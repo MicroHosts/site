@@ -4,11 +4,12 @@ import BillingLayout from "@/layouts/Billing";
 import BuyHostCard from "@/billing/buy/hosts/BuyHostCard";
 import BuyServiceCard from "@/billing/buy/services/BuyServiceCard";
 import TabList from "@/components/tab/TabList";
+import HostList from "@/components/billing/hosts/HostList";
 
 const tabs = [
     {
         name: "Хосты",
-        component: <BuyHostCard/>
+        component: <HostList/>
     },
     {
         name: "Услуги",

@@ -1,12 +1,11 @@
-import {ReactElement} from "react";
+import { ReactElement } from "react";
 import AdminLayout from "@/layouts/Admin";
+import ServiceList from "@/admin/services/ServiceList";
 
 
 function Services() {
-    return(
-        <div>
-            asdasd
-        </div>
+    return (
+            <ServiceList/>
     )
 }
 

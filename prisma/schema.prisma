@@ -28,7 +28,8 @@ model User {
   token         VerificationToken?
   balance       Balance?
   info          UserInfo?
-  services      Services[]
+  hosts         OrderHost[]
+  // services      Services[]
 }
 
 model UserInfo{
@@ -70,28 +71,42 @@ model VerificationToken {
 
 //Hosts
 model Host{
-  id       String @id @default(cuid())
-  name     String
-  cpu      String
-  ram      String
-  storage  String
-  vimid    Int
-  login    String
-  password String
-  service  Services?
-}
-//TODO создать отдельный services для пользователя, чтобы указывать период оплаты
-model Services{
-  id          String    @id @default(cuid())
+  id          String @id @default(cuid())
   name        String
-  description String    @db.LongText
-  price       String
-  category    Category 
-  host        Host?     @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  hostId      String?   @unique
-  userId      String?   @unique
-  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cpu         String
+  ram         String
+  storage     String
+  vimid       Int
+  login       String
+  ip          String
+  password    String
+  description String
+  price       Int
+  Order       OrderHost[]
 }
+
+model OrderHost{
+  id        String @id @default(cuid())
+  host      Host   @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rentDate  DateTime @default(now())
+}
+// //TODO создать отдельный services для пользователя, чтобы указывать период оплаты
+// model Services{
+//   id          String    @id @default(cuid())
+//   name        String
+//   description String    @db.LongText
+//   price       String
+//   category    Category 
+//   host        Host?     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+//   hostId      String?   @unique
+//   userId      String?   @unique
+//   user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
 //Cupon
 model Coupons{
