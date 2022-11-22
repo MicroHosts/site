@@ -3,6 +3,7 @@ import CreateHostModal from "@/admin/modals/CreateHostModal";
 import HostCardSkeleton from "@/admin/hosts/HostCardSkeleton";
 import useHost from "@/hooks/admin/useHost";
 import HostCard from "@/admin/hosts/HostCard";
+import EditHostModal from "@/admin/modals/EditHostModal";
 
 export default function HostList() {
     const {hosts, isLoading, isError} = useHost();
@@ -14,7 +15,8 @@ export default function HostList() {
                         className="focus:outline-none text-white cus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-green-600 hover:bg-green-700 focus:ring-green-800">Добавить
                 </button>
             </div>
-            <CreateHostModal open={isOpen} setOpen={setIsOpen}/>
+            <CreateHostModal setOpen={setIsOpen} open={isOpen}/>
+            <EditHostModal/>
             <table
                 className="w-full text-sm text-left text-gray-400">
                 <thead

@@ -1,4 +1,5 @@
 import {toast} from "react-toastify";
+import {useHostStore} from "@/store/host";
 
 export default function HostCard({host}:any) {
     console.log(host)
@@ -26,7 +27,10 @@ export default function HostCard({host}:any) {
             </td>
             <td className="py-4 pl-6">
                 <button type="button"
-                        onClick={notify}
+                        onClick={() => {
+                            useHostStore.setState({host: host })
+                            useHostStore.setState({open: true})
+                        }}
                     className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base">Редактировать
                 </button>
             </td>
