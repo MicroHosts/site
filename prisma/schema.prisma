@@ -88,11 +88,11 @@ model Host{
 }
 
 model OrderHost{
-  id        String @id @default(cuid())
-  host      Host   @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  hostId    String @unique
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  id        String  @id @default(cuid())
+  host      Host?    @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostId    String?  @unique
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   rentDate  DateTime

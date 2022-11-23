@@ -85,6 +85,19 @@ export const deleteHost = async(id: string) => {
     });
 }
 
+export const getAvailableHosts = async() => {
+    return await prisma.host.findMany({
+        where:{
+           Order: null,
+        },
+        select:{
+            id: true,
+            name: true,
+            description: true,
+            price: true,
+        }
+    });
+}
 
 //TODO UpdateHost
 //TODO DeleteHost
