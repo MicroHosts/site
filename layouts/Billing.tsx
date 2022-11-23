@@ -6,18 +6,20 @@ import Image from "next/image";
 import useUser from "@/hooks/useUser";
 import Header from "@/billing/header/Header";
 import { classNames } from "@/utils/utils";
-import {useUserStore} from "@/store/user";
+import {useSetRecoilState} from 'recoil'
+import { userState } from "@/store/user";
 
 
 export default function BillingLayout({children}:any) {
     const { user, isLoading, isError } = useUser();
+    const setUser = useSetRecoilState(userState);
     if (isLoading) {
         return <div>Loading...</div>;
     }
     if(isError){
         return <div>Ошибка</div>;
     }
-    useUserStore.setState({user: user});
+    setUser(user);
     return(
         <div className={styles.container}>
             <Head>

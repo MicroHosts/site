@@ -1,6 +1,6 @@
 export default function ServiceCard() {
     return (
-        <tr className="border-b dark:border-gray-700">
+        <tr className="border-b border-gray-700">
             <th scope="row"
                 className="py-4 px-6 font-medium whitespace-nowrap text-white">
                 Администрирование сервера

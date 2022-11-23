@@ -1,17 +1,13 @@
-export default function HostCardSkeleton() {
+export default function ServiceCard() {
     return (
-        <tr className="border-b border-gray-700 animate-pulse">
+        <tr className="border-b border-gray-700">
             <th scope="row"
                 className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                    <div className="h-2 bg-gray-700 rounded-full">
+                <div className="h-2 bg-gray-700 rounded-full">
                 </div>
             </th>
             <td className="py-4 px-6">
-                <div className="h-2 bg-gray-700 rounded-full">
-                </div>
-            </td>
-            <td className="py-4 px-6">
-                <div className="h-2 bg-gray-700 rounded-full">
+            <div className="h-2 bg-gray-700 rounded-full">
                 </div>
             </td>
             <td className="py-4 pl-6">

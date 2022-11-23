@@ -5,13 +5,12 @@ import Image from "next/image";
 import {classNames} from "@/utils/utils";
 import {signOut} from "next-auth/react";
 import AdminHeader from "@/admin/header/header";
-import {ToastContainer} from "react-toastify";
 
 export default function AdminLayout({children}:any) {
     return(
         <div className={styles.container}>
             <Head>
-                <title>Биллинг</title>
+                <title>Админ-Панель</title>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div>

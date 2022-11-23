@@ -1,5 +1,6 @@
-import create from "zustand";
+import {atom} from "recoil";
 
-export const useUserStore = create((set) => ({
-    user: null,
-}))
+export const userState = atom({
+    key: 'user',
+    default: null,
+});

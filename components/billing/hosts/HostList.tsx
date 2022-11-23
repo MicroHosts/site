@@ -1,11 +1,10 @@
 import useUserServiceHosts from "@/hooks/useUserServiceHosts";
 import HostCard from "./HostCard";
-import {useUserStore} from "@/store/user";
 
 const HostList = () => {
     // @ts-ignore
-    const user = useUserStore((state) => state.user);
-    const {hosts, isLoading, isError} = useUserServiceHosts(user.id);
+    // const user = useUserStore((state) => state.user);
+    const {hosts, isLoading, isError} = useUserServiceHosts("0");
     //todo skeleton loading
     return(
         <div className="overflow-x-auto relative">

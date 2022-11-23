@@ -3,6 +3,7 @@ import TextArea from "@/components/input/textarea";
 import { classNames } from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
 import { MouseEvent, useState } from "react";
+import { mutate } from "swr";
 
 export default function CreateHostModal({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
 
@@ -46,6 +47,10 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
             if(res.status !== 201){
                 setError(json.message);
                 return;
+            }
+            if(res.status === 201){
+                setOpen(false);
+                await mutate('/api/host');
             }
         } else {
             console.log('Не все поля заполнены');

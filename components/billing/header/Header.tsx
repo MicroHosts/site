@@ -2,11 +2,11 @@ import {RiBillFill} from "react-icons/ri";
 import {AiFillInfoCircle, AiFillTag} from "react-icons/ai";
 import {FaUserAlt, FaWallet} from "react-icons/fa";
 import Link from "next/link";
-import {useUserStore} from "@/store/user";
+import {userState} from '@/store/user'
+import {useRecoilValue} from 'recoil'
 
 const Header = () => {
-    // @ts-ignore
-    const user = useUserStore((state) => state.user);
+    const user = useRecoilValue(userState);
     return(
         <div className="md:w-64 w-full">
             <div className="overflow-y-auto py-4 px-3">
@@ -49,7 +49,7 @@ const Header = () => {
                             <FaWallet className="flex-shrink-0 w-6 h-6 transition duration-75 text-gray-400 group-hover:text-white"/>
                             <span className="flex-1 ml-3 whitespace-nowrap">Баланс</span>
                             <span
-                                className="inline-flex justify-center items-center p-3 ml-3 w-10 h-10 text-sm font-medium rounded-full ">{user.balance.balance ? user.balance.balance : 0}р</span>
+                                className="inline-flex justify-center items-center p-3 ml-3 w-10 h-10 text-sm font-medium rounded-full ">{user?.balance.balance ? user?.balance.balance : 0}р</span>
                         </div>
                     </li>
                     <li className="flex justify-center">

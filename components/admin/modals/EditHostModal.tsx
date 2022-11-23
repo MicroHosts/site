@@ -7,10 +7,13 @@ import {FiTrash} from "react-icons/fi";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {editOpen, hostState} from "@/store/host";
 import {mutate} from "swr";
+import {useSetRecoilState} from 'recoil'
+import { deleteStore } from "@/store/delete";
 
 export default function EditHostModal() {
     const [open, setOpen] = useRecoilState(editOpen)
-    const host1 = useRecoilValue(hostState)
+    const host1:any = useRecoilValue(hostState);
+    const setDeleteState = useSetRecoilState(deleteStore);
 
     const [hostName, setHostName] = useState<string>(host1.name);
     const [cpuInfo, setCpuInfo] = useState<string>(host1.cpu);
@@ -171,6 +174,13 @@ export default function EditHostModal() {
                                         Обновить
                                     </button>
                                     <button type="button"
+                                    onClick={() => {
+                                        setDeleteState({open: true, onDelete: () => {
+                                                // deleteHost(host.id)
+                                                setOpen(false)
+                                            }
+                                        })
+                                    }}
                                             className="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                         <FiTrash className="mr-1 -ml-1 w-5 h-5"/>
                                         Удалить
@@ -182,6 +192,5 @@ export default function EditHostModal() {
                 </div>
             </div>
         </Dialog>
-
     )
 }

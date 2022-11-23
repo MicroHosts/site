@@ -119,6 +119,9 @@ export default async function handler(
         }
         const hosts = await getHosts();
         res.status(200).json(hosts);
+    }else if(req.method === "DELETE") {
+        
+        
     }else {
         res.status(500).json({ message: 'Route not valid' });
     }
