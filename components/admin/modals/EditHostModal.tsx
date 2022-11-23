@@ -1,17 +1,17 @@
 import Input from "@/components/input/Input";
 import TextArea from "@/components/input/textarea";
-import { classNames } from "@/utils/utils";
+import {classNames, errorToast, successToast} from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
 import {MouseEvent, useState} from "react";
 import {FiTrash} from "react-icons/fi";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {editOpen, hostState} from "@/store/host";
+import {editHostOpen, hostState} from "@/store/host";
 import {mutate} from "swr";
 import {useSetRecoilState} from 'recoil'
 import { deleteStore } from "@/store/delete";
 
 export default function EditHostModal() {
-    const [open, setOpen] = useRecoilState(editOpen)
+    const [open, setOpen] = useRecoilState(editHostOpen)
     const host1:any = useRecoilValue(hostState);
     const setDeleteState = useSetRecoilState(deleteStore);
 
@@ -54,6 +54,7 @@ export default function EditHostModal() {
             const json = await res.json();
             if(res.status !== 201){
                 setError(json.message);
+                successToast('Хост успешно обновлен');
                 return;
             }
             if(res.status === 201){
@@ -71,7 +72,7 @@ export default function EditHostModal() {
                 <div className="flex min-h-full items-center justify-center p-4 text-center">
                     <Dialog.Panel>
                         <div className=" px-8 mx-auto max-w-2xl py-10 bg-gray-700 rounded-lg">
-                            <h2 className="mb-4 text-xl font-bold text-white">Добавить новый хост</h2>
+                            <h2 className="mb-4 text-xl font-bold text-white">Изменить хост</h2>
                             <div className={classNames(error ? "text-red-600" : "hidden")}>
                                 {error}
                             </div>
@@ -175,9 +176,20 @@ export default function EditHostModal() {
                                     </button>
                                     <button type="button"
                                     onClick={() => {
-                                        setDeleteState({open: true, onDelete: () => {
-                                                // deleteHost(host.id)
+                                        setDeleteState({open: true, onDelete: async() => {
+                                                const res = await fetch(`/api/host?id=${host1.id}`, {
+                                                    method: 'DELETE',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                    },
+                                                })
+                                                if (res.status === 201) {
+                                                    successToast('Хост успешно удалена');
+                                                }else{
+                                                    errorToast('Что-то пошло не так');
+                                                }
                                                 setOpen(false)
+                                                await mutate(`/api/host`)
                                             }
                                         })
                                     }}

@@ -1,6 +1,6 @@
 import {atom} from "recoil";
 
-export const editOpen = atom({
+export const editHostOpen = atom({
     key: 'editOpen',
     default: false,
 });

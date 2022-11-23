@@ -1,9 +1,10 @@
 import Input from "@/components/input/Input";
 import TextArea from "@/components/input/textarea";
-import { classNames } from "@/utils/utils";
+import {classNames, successToast} from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
 import { MouseEvent, useState } from "react";
 import { mutate } from "swr";
+import {toast} from "react-toastify";
 
 export default function CreateHostModal({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
 
@@ -50,13 +51,12 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
             }
             if(res.status === 201){
                 setOpen(false);
+                successToast('Хост успешно создан');
                 await mutate('/api/host');
             }
         } else {
-            console.log('Не все поля заполнены');
             setError('Не все поля заполнены');
         }
-        console.log(hostName, cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption);
     }
 
     return (

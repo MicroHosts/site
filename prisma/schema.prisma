@@ -84,18 +84,18 @@ model Host{
   description String
   price       Int
   status      HostStatus
-  Order       OrderHost[]
+  Order       OrderHost?
 }
 
 model OrderHost{
   id        String @id @default(cuid())
   host      Host   @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  hostId    String
+  hostId    String @unique
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  rentDate  DateTime @default(now())
+  rentDate  DateTime
 }
 
 model Service{
@@ -114,7 +114,7 @@ model OrderService{
   userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  rentDate  DateTime  @default(now())
+  rentDate  DateTime
 }
 // //TODO создать отдельный services для пользователя, чтобы указывать период оплаты
 // model Services{

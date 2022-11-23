@@ -1,10 +1,17 @@
 import { useState } from "react";
 import CreateServiceModal from "../modals/CreateServiceModal";
-import HostCard from "../hosts/HostCard";
 import ServiceCard from "@/admin/services/ServiceCard";
+import useService from "@/hooks/admin/useService";
+import ServiceCardSkeleton from "@/admin/services/ServiceCardSkeleton";
+import {useRecoilValue} from "recoil";
+import {editServiceOpen} from "@/store/service";
+import EditServiceModal from "@/admin/modals/EditServiceModal";
 
 export default function ServiceList() {
     const [isOpen, setIsOpen] = useState(false);
+    const {services, isLoading, isError} = useService();
+    const open = useRecoilValue(editServiceOpen)
+
     return (
         <div className="overflow-x-auto relative w-full">
             <div className="flex justify-center">
@@ -13,6 +20,7 @@ export default function ServiceList() {
                 </button>
             </div>
             <CreateServiceModal open={isOpen} setOpen={setIsOpen}/>
+            {open && <EditServiceModal/>}
             <table
                 className="w-full text-sm text-left text-gray-400">
                 <thead
@@ -30,7 +38,30 @@ export default function ServiceList() {
                     </tr>
                 </thead>
                 <tbody>
-                    <ServiceCard />
+                {isLoading && (
+                    <>
+                        <ServiceCardSkeleton/>
+                        <ServiceCardSkeleton/>
+                        <ServiceCardSkeleton/>
+                        <ServiceCardSkeleton/>
+                    </>
+                )}
+                {isError && (
+                    <tr className="border-b dark:border-gray-700">
+                        <th scope="row"
+                            className="py-4 px-6 font-medium whitespace-nowrap text-white">
+                            Ошибка
+                        </th>
+                        <td className="py-4 px-6">
+                            Ошибка
+                        </td>
+                        <td className="py-4 pl-6">
+                        </td>
+                    </tr>
+                )}
+                {services && services.map((service:any, index:number) => (
+                    <ServiceCard service={service} key={index}/>
+                ))}
                 </tbody>
             </table>
         </div>

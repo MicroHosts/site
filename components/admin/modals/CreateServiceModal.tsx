@@ -1,8 +1,9 @@
 import Input from "@/components/input/Input";
 import TextArea from "@/components/input/textarea";
-import { classNames } from "@/utils/utils";
+import {classNames, successToast} from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
 import { MouseEvent, useState } from "react";
+import {mutate} from "swr";
 
 export default function CreateServiceModal({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
 
@@ -15,7 +16,6 @@ export default function CreateServiceModal({ open, setOpen }: { open: boolean, s
         e.preventDefault();
         if (name && desciption) {
             setError('');
-            console.log('Все поля заполнены');
             const data = {
                 name,
                 desciption,
@@ -29,12 +29,16 @@ export default function CreateServiceModal({ open, setOpen }: { open: boolean, s
                 body: JSON.stringify(data)
             });
             const json = await res.json();
-            if(res.status !== 200){
+            if(res.status !== 201){
                 setError(json.message);
                 return;
             }
+            if(res.status === 201){
+                successToast('Услуга успешно добавлена');
+                setOpen(false);
+                await mutate('/api/service');
+            }
         } else {
-            console.log('Не все поля заполнены');
             setError('Не все поля заполнены');
         }
     }

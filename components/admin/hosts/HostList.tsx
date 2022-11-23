@@ -5,11 +5,11 @@ import useHost from "@/hooks/admin/useHost";
 import HostCard from "@/admin/hosts/HostCard";
 import EditHostModal from "@/admin/modals/EditHostModal";
 import {useRecoilValue} from "recoil";
-import {editOpen} from "@/store/host";
+import {editHostOpen} from "@/store/host";
 
 export default function HostList() {
     const {hosts, isLoading, isError} = useHost();
-    const open = useRecoilValue(editOpen)
+    const open = useRecoilValue(editHostOpen)
 
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -65,7 +65,7 @@ export default function HostList() {
                         </td>
                     </tr>
                 )}
-                {hosts && hosts.map((host, index) => (
+                {hosts && hosts.map((host:any, index:number) => (
                     <HostCard host={host} key={index}/>
                 ))}
                 </tbody>

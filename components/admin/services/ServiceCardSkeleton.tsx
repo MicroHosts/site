@@ -1,4 +1,4 @@
-export default function ServiceCard() {
+export default function ServiceCardSkeleton() {
     return (
         <tr className="border-b border-gray-700">
             <th scope="row"

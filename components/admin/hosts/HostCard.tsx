@@ -1,21 +1,9 @@
-import {toast} from "react-toastify";
 import {useSetRecoilState} from "recoil";
-import {editOpen, hostState} from "@/store/host";
+import {editHostOpen, hostState} from "@/store/host";
 
 export default function HostCard({host}:any) {
-    console.log(host)
     const setHost = useSetRecoilState(hostState);
-    const setEdit = useSetRecoilState(editOpen);
-    const notify = () => toast.error('🦄 Wow so easy!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-    });
+    const setEdit = useSetRecoilState(editHostOpen);
     return (
         <tr className="border-b border-gray-700">
             <th scope="row"

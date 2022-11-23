@@ -1,4 +1,3 @@
-// @ts-ignore
 import Link from "next/link";
 import { signIn, getSession, getCsrfToken } from "next-auth/react";
 import {MouseEvent, ReactElement, useState} from "react";
@@ -30,6 +29,10 @@ const Login = ({csrfToken}:any) => {
         }
         if(data.error){
             setError(data.error)
+            return
+        }
+        if(email === "admin@microhost1.ru"){
+            await Router.push('/admin')
             return
         }
         return Router.push("/billing")

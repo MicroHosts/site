@@ -1,44 +1,25 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createUser} from "@/models/user";
-import {validateEmail} from "@/utils/utils";
-import client from "@/lib/mail";
+import {createService, deleteService, getAllServices, updateService} from "@/models/service";
+import {unstable_getServerSession} from "next-auth";
+import {authOptions} from "@/auth/[...nextauth]";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    const session = await unstable_getServerSession(req, res, authOptions)
+    if(!session){
+        res.status(401).json({ message: "You must be logged in." });
+        return;
+    }
+    if(session.user?.email !== "admin@microhost1.ru"){
+        res.status(401).json({ message: "You must be admin." });
+        return;
+    }
     if (req.method === 'POST') {
-        const { hostName,  cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price } = req.body;
-        if(!password || password.length < 6){
-            res.status(422).json({ message: 'Пароль должен быть больше 6 символов'});
-            return;
-        }
-        if(!login){
-            res.status(422).json({ message: 'Логин не может быть пустым'});
-            return;
-        }
-        if(!ip){
-            res.status(422).json({ message: 'IP не может быть пустым'});
-            return;
-        }
-        if(!idproxmox){
-            res.status(422).json({ message: 'ID Proxmox не может быть пустым'});
-            return;
-        }
-        if(!hostName){
-            res.status(422).json({ message: 'Имя хоста не может быть пустым'});
-            return;
-        }
-        if(!cpuInfo){
-            res.status(422).json({ message: 'Информация о CPU не может быть пустой'});
-            return;
-        }
-        if(!ramInfo){
-            res.status(422).json({ message: 'Информация о RAM не может быть пустой'});
-            return;
-        }
-        if(!storageInfo){
-            res.status(422).json({ message: 'Информация о хранилище не может быть пустой'});
+        const { name, desciption, price } = req.body;
+        if(!name){
+            res.status(422).json({ message: 'Имя не может быть пустым'});
             return;
         }
         if(!desciption){
@@ -54,8 +35,46 @@ export default async function handler(
             res.status(422).json({ message: 'Цена не может быть 0'});
             return;
         }
-        
-    } else {
+        const service = await createService(name, desciption, price1);
+        res.status(201).json({ message: 'Услуга успешно создана'});
+    }else if(req.method === "GET"){
+        const services = await getAllServices();
+        res.status(200).json(services);
+    }else if(req.method === "PUT"){
+        const { name, desciption, price } = req.body;
+        if(!req.query.id){
+            res.status(422).json({ message: 'Не передан id'});
+            return;
+        }
+        const id = req.query.id as string;
+        if(!name){
+            res.status(422).json({ message: 'Имя не может быть пустым'});
+            return;
+        }
+        if(!desciption){
+            res.status(422).json({ message: 'Описание не может быть пустым'});
+            return;
+        }
+        if(!price){
+            res.status(422).json({ message: 'Цена не может быть пустой'});
+            return;
+        }
+        const price1 = parseInt(price);
+        if(price1 === 0){
+            res.status(422).json({ message: 'Цена не может быть 0'});
+            return;
+        }
+        const service = await updateService(id, name, desciption, price1);
+        res.status(201).json({ message: 'Услуга успешно создана'});
+    }else if(req.method === "DELETE"){
+        if(!req.query.id){
+            res.status(422).json({ message: 'Не передан id'});
+            return;
+        }
+        const id = req.query.id as string;
+        const service = await deleteService(id);
+        res.status(201).json({ message: 'Услуга успешно удалена'});
+    }  else {
         res.status(500).json({ message: 'Route not valid' });
     }
 }
