@@ -1,17 +1,17 @@
 import {ReactElement} from "react";
-import BuyHostCard from "@/billing/buy/hosts/BuyHostCard";
-import BuyServiceCard from "@/billing/buy/services/BuyServiceCard";
 import BillingLayout from "@/layouts/Billing";
 import TabList from "@/components/tab/TabList";
+import BuyHostList from "@/components/billing/buy/hosts/BuyHostList";
+import BuyServiceList from "@/components/billing/buy/services/BuyServiceList";
 
 const tabs = [
   {
     name: "Хосты",
-    component: <BuyHostCard/>
+    component: <BuyHostList/>
   },
   {
     name: "Услуги",
-    component: <BuyServiceCard/>
+    component: <BuyServiceList/>
   },
 ]
 

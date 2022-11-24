@@ -1,0 +1,19 @@
+const ServiceCardSkeleton = () => {
+    return (
+        <tr className="border-b border-gray-700 animate-pulse">
+            <th scope="row"
+                className="py-4 px-6 font-medium whitespace-nowrap text-white">
+                <div className="h-2 bg-gray-700 rounded-full">
+                </div>
+            </th>
+            <td className="py-4 px-6">
+                <div className="h-2 bg-gray-700 rounded-full">
+                </div>
+            </td>
+        </tr>
+    )
+}
+
+
+
+export default ServiceCardSkeleton

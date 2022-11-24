@@ -1,15 +1,15 @@
 import { useState } from "react";
 import CreateServiceModal from "../modals/CreateServiceModal";
 import ServiceCard from "@/admin/services/ServiceCard";
-import useService from "@/hooks/admin/useService";
 import ServiceCardSkeleton from "@/admin/services/ServiceCardSkeleton";
 import {useRecoilValue} from "recoil";
 import {editServiceOpen} from "@/store/service";
 import EditServiceModal from "@/admin/modals/EditServiceModal";
+import useData from "@/components/hooks/useData";
 
 export default function ServiceList() {
     const [isOpen, setIsOpen] = useState(false);
-    const {services, isLoading, isError} = useService();
+    const {data, isLoading, isError} = useData("/api/service");
     const open = useRecoilValue(editServiceOpen)
 
     return (
@@ -59,7 +59,7 @@ export default function ServiceList() {
                         </td>
                     </tr>
                 )}
-                {services && services.map((service:any, index:number) => (
+                {data && data.map((service:any, index:number) => (
                     <ServiceCard service={service} key={index}/>
                 ))}
                 </tbody>

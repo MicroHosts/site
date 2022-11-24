@@ -1,37 +1,40 @@
-const BuyHostCard = ({host}:any) => {
-    return(
-        <div className="mt-4 bg-zinc-800 mx-auto rounded">
+const BuyServiceCardSkeleton = () => {
+    return (
+        <div className="mt-4 bg-zinc-800 mx-auto rounded animate-pulse">
             <div className="py-4 px-6 justify-between text-sm flex flex-col md:flex-row">
                 <div>
                     <div className="font-bold text-lg">
-                        {host.name}
+                        <div className="h-2  rounded-full">
+                        </div>
                     </div>
                     <div className="mt-2 text-base">
-                        {host.description}
+                        <div className="h-2  rounded-full">
+                        </div>
                     </div>
                     <div className="font-bold mt-4 md:[&>*]:pr-4 md:[&>*]:pt-0 [&>*]:pt-2 text-sm md:flex-row flex flex-col flex-wrap">
                         <div>
-                            {host.cpu}
+                            <div className="h-2  rounded-full">
+                            </div>
                         </div>
                         <div>
-                            {host.ram}
+                            <div className="h-2  rounded-full">
+                            </div>
                         </div>
                         <div>
-                            {host.storage}
+                            <div className="h-2  rounded-full">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="md:my-auto my-4 text-base">
-                    {host.price} руб / мес
+                    <div className="h-2  rounded-full">
+                    </div>
                 </div>
                 <div className="my-auto">
-                <button type="button"
-                    className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base">Заказать
-                </button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default BuyHostCard
+export default BuyServiceCardSkeleton

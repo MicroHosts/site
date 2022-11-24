@@ -17,7 +17,7 @@ export default function Input(
             type: HTMLInputTypeAttribute,
             id: string,
             placeholder: string,
-            defaultValue?: string
+            defaultValue?: any
         })
 {
     return(

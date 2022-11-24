@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]"
-import { getUserService } from '@/models/service';
+import { getAvaliableService } from '@/models/service';
 
 export default async function handler(
     req: NextApiRequest,
@@ -19,8 +19,8 @@ export default async function handler(
     if(!req.query.id){
         res.status(400).json({ message: "Bad request." });
         return;
-    }
+    };
     const id = req.query.id as string;
-    const services = await getUserService(id);
+    const services = await getAvaliableService(id);
     res.status(200).json(services);
 }

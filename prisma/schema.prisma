@@ -83,7 +83,7 @@ model Host{
   password    String
   description String
   price       Int
-  status      HostStatus
+  // status      HostStatus
   Order       OrderHost?
 }
 
@@ -137,14 +137,14 @@ model Coupons{
   limit   Int
 }
 
-enum HostStatus {
-  ACTIVE
-  RENTED
-  DISABLED
-}
+// enum HostStatus {
+//   ACTIVE
+//   RENTED
+//   DISABLED
+// }
 
 
-enum Category {
-  HOST
-  SERVICE
-}
+// enum Category {
+//   HOST
+//   SERVICE
+// }

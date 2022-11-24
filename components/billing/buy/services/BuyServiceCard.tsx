@@ -1,4 +1,4 @@
-const BuyServiceCard = () => {
+const BuyServiceCard = ({service}: any) => {
     return(
         <div className="mt-4 bg-zinc-800 mx-auto rounded">
             <div className="py-4 px-6 justify-between text-sm flex flex-col md:flex-row">
@@ -15,7 +15,7 @@ const BuyServiceCard = () => {
                 </div>
                 <div className="my-auto">
                     <button type="button"
-                            className="focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base">Купить
+                            className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base">Купить
                     </button>
                 </div>
             </div>

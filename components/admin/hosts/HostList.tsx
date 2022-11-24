@@ -1,14 +1,14 @@
 import { useState } from "react";
 import CreateHostModal from "@/admin/modals/CreateHostModal";
 import HostCardSkeleton from "@/admin/hosts/HostCardSkeleton";
-import useHost from "@/hooks/admin/useHost";
 import HostCard from "@/admin/hosts/HostCard";
 import EditHostModal from "@/admin/modals/EditHostModal";
 import {useRecoilValue} from "recoil";
 import {editHostOpen} from "@/store/host";
+import useData from "@/components/hooks/useData";
 
 export default function HostList() {
-    const {hosts, isLoading, isError} = useHost();
+    const {data, isLoading, isError} = useData("/api/host");
     const open = useRecoilValue(editHostOpen)
 
     const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,7 @@ export default function HostList() {
                         </td>
                     </tr>
                 )}
-                {hosts && hosts.map((host:any, index:number) => (
+                {data && data.map((host:any, index:number) => (
                     <HostCard host={host} key={index}/>
                 ))}
                 </tbody>

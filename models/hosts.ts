@@ -1,4 +1,5 @@
 import prisma from "@/lib/prismadb";
+import { empty } from "@prisma/client/runtime";
 
 
 export const createHost = async(
@@ -26,7 +27,6 @@ export const createHost = async(
             ip: ip,
             description: desciption,
             price: price,
-            status: "ACTIVE",
         },
     });
 }
@@ -95,10 +95,31 @@ export const getAvailableHosts = async() => {
             name: true,
             description: true,
             price: true,
+            cpu: true,
+            ram: true,
+            storage: true,
         }
     });
 }
 
+export const getHostsByUserId = async(userId: string) => {
+    return await prisma.orderHost.findUnique({
+        where:{
+            userId: userId,
+        },
+        select:{
+            id: true,
+            rentDate: true,
+            host: {
+                select: {
+                    name: true,
+                    description: true,
+                    price: true,
+                }
+            }
+        }
+    });
+}
 //TODO UpdateHost
 //TODO DeleteHost
 

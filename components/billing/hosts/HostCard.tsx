@@ -1,4 +1,4 @@
-const HostCard = ({host}:{host:HostUser}) => {
+const HostCard = ({host}:any) => {
     return(
         <tr className="border-b dark:border-gray-700">
             <th scope="row"

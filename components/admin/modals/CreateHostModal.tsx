@@ -4,7 +4,6 @@ import {classNames, successToast} from "@/utils/utils";
 import { Dialog } from "@headlessui/react";
 import { MouseEvent, useState } from "react";
 import { mutate } from "swr";
-import {toast} from "react-toastify";
 
 export default function CreateHostModal({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
 
@@ -24,7 +23,6 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
         e.preventDefault();
         if (hostName && cpuInfo && ramInfo && storageInfo && idproxmox && login && password && ip && desciption) {
             setError('');
-            console.log('Все поля заполнены');
             const data = {
                 hostName,
                 cpuInfo,

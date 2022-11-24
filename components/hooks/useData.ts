@@ -1,6 +1,5 @@
 import useSWR from "swr";
 
-//TODO переделать на global state
 const fetcher = async(url:string) => {
     const res = await fetch(url)
 
@@ -11,14 +10,14 @@ const fetcher = async(url:string) => {
 }
 
 
-function useHost () {
-    const { data, error } = useSWR(`/api/host`, fetcher)
+function useData (url:string) {
+    const { data, error } = useSWR(url, fetcher)
     return {
-        hosts: data,
+        data: data,
         isLoading: !error && !data,
         isError: error
     }
 }
 
 
-export default useHost;
+export default useData;

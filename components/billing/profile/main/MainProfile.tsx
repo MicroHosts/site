@@ -1,10 +1,11 @@
 import { LegacyRef, MouseEvent, useRef, useState, } from "react";
 import useUserInfo from "@/hooks/useUserInfo";
-import {useUserStore} from "@/store/user";
+import {useRecoilValue} from "recoil";
+import { userState } from "@/store/user";
 
 const MainProfile = () => {
-    // @ts-ignore
-    const user = useUserStore((state) => state.user);
+    const user:any = useRecoilValue(userState);
+    //TODO edit userdata
     const {info, isLoading, isError} = useUserInfo(user.id);
     const first_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
