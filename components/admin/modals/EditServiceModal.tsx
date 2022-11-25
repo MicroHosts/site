@@ -28,7 +28,7 @@ export default function EditServiceModal() {
                 desciption,
                 price
             }
-            const res = await fetch(`/api/service?id=`+service.id, {
+            const res = await fetch(`/api/admin/service?id=`+service.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ export default function EditServiceModal() {
                                     <button type="button"
                                             onClick={() => {
                                                 setDeleteState({open: true, onDelete: async() => {
-                                                        const res = await fetch(`/api/service?id=${service.id}`, {
+                                                        const res = await fetch(`/api/admin/service?id=${service.id}`, {
                                                             method: 'DELETE',
                                                             headers: {
                                                                 'Content-Type': 'application/json',

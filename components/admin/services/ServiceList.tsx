@@ -9,7 +9,7 @@ import useData from "@/components/hooks/useData";
 
 export default function ServiceList() {
     const [isOpen, setIsOpen] = useState(false);
-    const {data, isLoading, isError} = useData("/api/service");
+    const {data, isLoading, isError} = useData("/api/admin/service");
     const open = useRecoilValue(editServiceOpen)
 
     return (

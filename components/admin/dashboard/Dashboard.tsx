@@ -1,37 +1,38 @@
 import CardStats from "@/components/cards/CardStats";
 
-export default function Dashboard(){
+export default function Dashboard({incomeInDay, incomeInMonth, ordersInDay}:any) {
+    console.log(incomeInMonth)
     return(
         <div className="flex flex-row justify-center [&>*]:mr-4">
             <CardStats
                 statSubtitle="Доход за день"
-                statTitle="350,897р"
-                statArrow="down"
-                statPercent="3.48"
-                statPercentColor="text-red-500"
+                statTitle={incomeInDay.income+" ₽"}
+                statArrow={incomeInDay.income > 0 ? "up" : "down"}
+                statPercent={incomeInDay.percent+""}
+                statPercentColor={incomeInDay.income > 0 ? "text-emerald-500" : "text-red-500"}
                 statDescripiron="чем вчера"
                 statIconName="far fa-chart-bar"
-                statIconColor="bg-red-500"
+                statIconColor={incomeInDay.income > 0 ? "bg-green-500" : "bg-red-500"}
             />
             <CardStats
                 statSubtitle="Доход за месяц"
-                statTitle="350,897"
-                statArrow="up"
-                statPercent="3.48"
-                statPercentColor="text-emerald-500"
+                statTitle={incomeInMonth.income+" ₽"}
+                statArrow={incomeInMonth.income>0?"up":"down"}
+                statPercent={incomeInMonth.percent+""}
+                statPercentColor={incomeInMonth.income > 0 ? "text-emerald-500" : "text-red-500"}
                 statDescripiron="чем месяц назад"
                 statIconName="far fa-chart-bar"
-                statIconColor="bg-green-500"
+                statIconColor={incomeInMonth.income > 0 ? "bg-green-500" : "bg-red-500"}
             />
             <CardStats
                 statSubtitle="Заказов за день"
-                statTitle="350,897"
-                statArrow="up"
-                statPercent="3.48"
-                statPercentColor="text-emerald-500"
+                statTitle={ordersInDay.orders+""}
+                statArrow={ordersInDay.orders>0?"up":"down"}
+                statPercent={ordersInDay.percent+""}
+                statPercentColor={ordersInDay.orders > 0 ? "text-emerald-500" : "text-red-500"}
                 statDescripiron="чем вчера"
                 statIconName="far fa-chart-bar"
-                statIconColor="bg-blue-500"
+                statIconColor={ordersInDay.orders > 0 ? "bg-green-500" : "bg-red-500"}
             />
         </div>
     )

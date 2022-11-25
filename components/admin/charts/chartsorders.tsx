@@ -1,47 +1,24 @@
 import React from "react";
 import Chart from "chart.js";
 
-export default function ChartOrders() {
+export default function ChartOrders({ orders }: any) {
         React.useEffect(() => {
+            const labels = orders.map((order: any, index: any) => (
+                order.day +" (" +(new Date().getDate()-index)+ "." + (new Date().getMonth() + 1) + ")"
+                ));
+            const data = orders.map((order: any) => order.orders);    
+            console.log(data);
             let config = {
                 type: "bar",
                 data: {
-                    labels: [
-                        (new Date().getDate() - 6) + "." + (new Date().getMonth() + 1),
-                        (new Date().getDate() - 5)+ "." + (new Date().getMonth() + 1),
-                        (new Date().getDate() - 4)+ "." + (new Date().getMonth() + 1),
-                        (new Date().getDate() - 3)+ "." + (new Date().getMonth() + 1),
-                        (new Date().getDate() - 2)+ "." + (new Date().getMonth() + 1),
-                        (new Date().getDate() - 1)+ "." + (new Date().getMonth() + 1),
-                        (new Date().getDate())+ "." + (new Date().getMonth() + 1),
-                        // "Январь",
-                        // "Февраль",
-                        // "Март",
-                        // "Апрель",
-                        // "Май",
-                        // "Июнь",
-                        // "Июль",
-                        // "Август",
-                        // "Сентябрь",
-                        // "Октябрь",
-                        // "Ноябрь",
-                        // "Декабрь",
-                    ],
+                    labels: labels,
                     datasets: [
                         {
                             label: "Оплаченные заказы",
                             backgroundColor: "#4a5568",
                             borderColor: "#4a5568",
-                            data: [1, 2, 5, 6, 7, 8, 10],
+                            data: data,
                             fill: false,
-                            barThickness: 8,
-                        },
-                        {
-                            label: "Неоплаченные заказы",
-                            fill: false,
-                            backgroundColor: "#3182ce",
-                            borderColor: "#3182ce",
-                            data: [0, 5, 0, 0, 0, 2, 1],
                             barThickness: 8,
                         },
                     ],

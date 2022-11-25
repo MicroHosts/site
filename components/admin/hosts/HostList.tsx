@@ -8,7 +8,7 @@ import {editHostOpen} from "@/store/host";
 import useData from "@/components/hooks/useData";
 
 export default function HostList() {
-    const {data, isLoading, isError} = useData("/api/host");
+    const {data, isLoading, isError} = useData("/api/admin/host");
     const open = useRecoilValue(editHostOpen)
 
     const [isOpen, setIsOpen] = useState(false);

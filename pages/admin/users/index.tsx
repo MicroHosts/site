@@ -1,12 +1,11 @@
 import {ReactElement} from "react";
 import AdminLayout from "@/layouts/Admin";
+import UserList from "@/components/admin/users/UserList";
 
 
 function Users() {
     return(
-        <div>
-            asdasd
-        </div>
+        <UserList/>
     )
 }
 

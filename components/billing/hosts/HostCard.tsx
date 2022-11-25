@@ -1,18 +1,23 @@
-const HostCard = ({host}:any) => {
-    return(
+const HostCard = ({ host }: any) => {
+    const date = new Date(host.rentDate)
+    //format dd.mm.yyyy
+    const dateformat = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear()
+    return (
         <tr className="border-b dark:border-gray-700">
             <th scope="row"
                 className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                {host.name}
+                {host.host.name}
             </th>
             <td className="py-4 px-6">
-                {host.price} руб
+                {host.host.price} руб
             </td>
             <td className="py-4 px-6">
-                31.12.12
+                {dateformat}
             </td>
             <td className="py-4 px-6">
-                Войти
+                <button type="button"
+                    className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base text-white">Войти
+                </button>
             </td>
         </tr>
     )

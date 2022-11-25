@@ -171,3 +171,82 @@ export const getPasswordByUserId = async (userId: string) => {
     });
     return password;
 }
+
+
+//Admin
+
+export const getAllUsers = async () => {
+    return await prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            emailVerified: true,
+            blocked: true,
+        }
+    });
+}
+
+export const getUserById = async (id: string) => {
+    return await prisma.user.findUnique({
+        where: {
+            id
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            emailVerified: true,
+            blocked: true,
+            hosts: {
+                select: {
+                    id: true,
+                    host: {
+                        select: {
+                            id: true,
+                            name: true,
+                            vimid: true,
+                            price: true,
+                        }
+                    },
+                    rentDate: true,
+                }
+            },
+            balance: {
+                select: {
+                    amount: true,
+                }
+            },
+            info: {
+                select: {
+                    id: true,
+                    first_name: true,
+                    last_name: true,
+                    second_name: true,
+                    phone_number: true,
+                }
+            },
+            services: {
+                select: {
+                    id: true,
+                    rentDate: true,
+                    service: {
+                        select: {
+                            id: true,
+                            name: true,
+                            price: true,
+                        }
+                    },
+            }
+        }
+    }
+    });
+}
+
+export const getUserAllId = async () => {
+    return await prisma.user.findMany({
+        select: {
+            id: true,
+        }
+    });
+}

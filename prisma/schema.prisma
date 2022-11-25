@@ -28,6 +28,7 @@ model User {
   token         VerificationToken?
   balance       Balance?
   info          UserInfo?
+  blocked       Boolean   @default(false)
   hosts         OrderHost[]
   services      OrderService[]
   // services      Services[]

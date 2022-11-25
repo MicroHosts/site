@@ -44,7 +44,7 @@ export default function EditHostModal() {
                 desciption,
                 price
             }
-            const res = await fetch(`/api/host?id=`+host1.id, {
+            const res = await fetch(`/api/admin/host?id=`+host1.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -177,7 +177,7 @@ export default function EditHostModal() {
                                     <button type="button"
                                     onClick={() => {
                                         setDeleteState({open: true, onDelete: async() => {
-                                                const res = await fetch(`/api/host?id=${host1.id}`, {
+                                                const res = await fetch(`/api/admin/host?id=${host1.id}`, {
                                                     method: 'DELETE',
                                                     headers: {
                                                         'Content-Type': 'application/json',

@@ -35,7 +35,7 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
                 desciption,
                 price
             }
-            const res = await fetch(`/api/host`, {
+            const res = await fetch(`/api/admin/host`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

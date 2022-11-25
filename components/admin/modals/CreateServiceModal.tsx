@@ -21,7 +21,7 @@ export default function CreateServiceModal({ open, setOpen }: { open: boolean, s
                 desciption,
                 price
             }
-            const res = await fetch(`/api/service`, {
+            const res = await fetch(`/api/admin/service`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
