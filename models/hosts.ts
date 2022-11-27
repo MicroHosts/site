@@ -84,7 +84,7 @@ export const deleteHost = async(id: string) => {
 }
 
 export const getAvailableHosts = async() => {
-    return await prisma.host.findMany({
+    const hosts = await prisma.host.findMany({
         where:{
            Order: null,
         },
@@ -98,6 +98,10 @@ export const getAvailableHosts = async() => {
             storage: true,
         }
     });
+    if(!hosts){
+        return []
+    }
+    return hosts.slice(0, 3);
 }
 
 export const getHostsByUserId = async(userId: string) => {

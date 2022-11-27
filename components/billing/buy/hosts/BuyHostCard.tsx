@@ -2,7 +2,7 @@ import { userState } from '@/store/user'
 import {useRecoilValue} from 'recoil'
 
 const BuyHostCard = ({host}:any) => {
-    const user:any = useRecoilValue(userState)
+    const user = useRecoilValue(userState)
     return(
         <div className="mt-4 bg-zinc-800 mx-auto rounded">
             <div className="py-4 px-6 justify-between text-sm flex flex-col md:flex-row">

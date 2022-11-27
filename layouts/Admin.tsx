@@ -6,7 +6,7 @@ import {classNames} from "@/utils/utils";
 import {signOut} from "next-auth/react";
 import AdminHeader from "@/admin/header/header";
 
-export default function AdminLayout({children}:any) {
+export default function AdminLayout({ children }: {children: JSX.Element}) {
     return(
         <div className={styles.container}>
             <Head>

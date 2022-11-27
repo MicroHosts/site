@@ -1,6 +1,7 @@
-const HostCard = ({ host }: any) => {
+import { HostUser } from "@/types/host"
+
+const HostCard = ({ host }: {host:HostUser}) => {
     const date = new Date(host.rentDate)
-    //format dd.mm.yyyy
     const dateformat = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear()
     return (
         <tr className="border-b dark:border-gray-700">

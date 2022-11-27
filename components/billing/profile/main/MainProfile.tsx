@@ -2,10 +2,10 @@ import { LegacyRef, MouseEvent, useRef, useState, } from "react";
 import useUserInfo from "@/hooks/useUserInfo";
 import {useRecoilValue} from "recoil";
 import { userState } from "@/store/user";
+import { successToast } from "@/utils/utils";
 
 const MainProfile = () => {
-    const user:any = useRecoilValue(userState);
-    //TODO edit userdata
+    const user = useRecoilValue(userState);
     const {info, isLoading, isError} = useUserInfo(user.id);
     const first_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
@@ -37,7 +37,7 @@ const MainProfile = () => {
             },
             body: JSON.stringify(data)
         });
-        const json = await res.json();
+        successToast("Данные успешно обновлены");
     }
 
     return(

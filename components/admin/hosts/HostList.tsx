@@ -6,6 +6,7 @@ import EditHostModal from "@/admin/modals/EditHostModal";
 import {useRecoilValue} from "recoil";
 import {editHostOpen} from "@/store/host";
 import useData from "@/components/hooks/useData";
+import { HostUser } from "@/types/host";
 
 export default function HostList() {
     const {data, isLoading, isError} = useData("/api/admin/host");

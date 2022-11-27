@@ -4,8 +4,10 @@ import styles from '@/styles/Home.module.css'
 import VDSCard from "@/components/main/VDSCard";
 import HeaderMain from "@/components/main/HeaderMain";
 import FooterMain from "@/components/main/FooterMain";
-
-export default function Home() {
+import { getAvailableHosts } from '@/models/hosts';
+import Link from 'next/link';
+function Home({hosts}) {
+    console.log(hosts)
     return (
         <div className={styles.container}>
             <Head>
@@ -55,9 +57,9 @@ export default function Home() {
                                         className="border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 text-white border-white md:w-max w-full">
                                         Низкий пинг
                                     </div>
-                                    <div className="mt-6 text-center">
+                                    {/* <div className="mt-6 text-center">
                                         от 380 руб/мес
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -65,17 +67,17 @@ export default function Home() {
                     <div className="text-center text-3xl font-bold mt-12">
                         Тарифы
                     </div>
-                    <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div>
+                    {/* <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div> */}
                     <div className="[&>*]:mt-4">
-                        <VDSCard/>
-                        <VDSCard/>
-                        <VDSCard/>
-                        <VDSCard/>
+                        {hosts.map((host, index) => (
+                            <VDSCard/>
+                        ))}
                     </div>
                     <div className="flex justify-center mt-4">
-                        <button type="button"
+                        <Link type="button"
+                                href="/billing"
                                 className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Посмотреть больше
-                        </button>
+                        </Link>
                     </div>
                     <div className="text-center text-3xl font-bold mt-12">
                         Почему мы?
@@ -134,3 +136,14 @@ export default function Home() {
         </div>
     );
 }
+
+export async function getStaticProps(){
+    const hosts = await getAvailableHosts();
+    return{
+        props:{
+            hosts
+        }
+    }
+}
+
+export default Home;
