@@ -60,7 +60,7 @@ export const getUserService = async(idUser: string) => {
     return await prisma.service.findMany({
         where: {
            Order: {
-                every: {
+                some: {
                     userId: idUser
                 }
            }
@@ -72,7 +72,7 @@ export const getUserService = async(idUser: string) => {
         }
     });
 }
-    
+
 // export const getServiceByUserIdHost = async (userId: string) => {
 //     return await prisma.services.findMany({
 //         where: {
