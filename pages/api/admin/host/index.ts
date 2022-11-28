@@ -7,15 +7,15 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const session = await unstable_getServerSession(req, res, authOptions)
-    if(!session){
-        res.status(401).json({ message: "You must be logged in." });
-        return;
-    }
-    if(session.user?.email !== "admin@microhost1.ru"){
-        res.status(401).json({ message: "You must be admin." });
-        return;
-    }
+    // const session = await unstable_getServerSession(req, res, authOptions)
+    // if(!session){
+    //     res.status(401).json({ message: "You must be logged in." });
+    //     return;
+    // }
+    // if(session.user?.email !== "admin@microhost1.ru"){
+    //     res.status(401).json({ message: "You must be admin." });
+    //     return;
+    // }
     if (req.method === 'POST') {
         const { hostName,  cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price } = req.body;
         if(!password || password.length < 6){
@@ -128,8 +128,9 @@ export default async function handler(
             res.status(200).json(host);
             return;
         }
-        const hosts = await getHosts();
-        res.status(200).json(hosts);
+        let cursor = req.query.cursor ? req.query.cursor : ""
+        const hosts = await getHosts(cursor as string);
+        res.status(200).json({hosts: hosts[1], count: hosts[0]});
     }else if(req.method === "DELETE") {
         if(!req.query.id){
             res.status(422).json({ message: 'ID не может быть пустым'});

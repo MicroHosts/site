@@ -62,10 +62,10 @@ export const updateHost = async(
 }
 
 
-export const getHosts = async() => {
-    return await prisma.host.findMany({
-    });
-}
+// export const getHosts = async() => {
+//     return await prisma.host.findMany({
+//     });
+// }
 
 export const getHostById = async(id: string) => {
     return await prisma.host.findUnique({
@@ -142,4 +142,16 @@ export const removeHost = async(userId: string, hostId: string) => {
                 hostId: hostId,
         }
     });
+}
+
+export const getHosts = async(cursor: string) => {
+    return await prisma.$transaction([
+        prisma.host.count(),
+        prisma.host.findMany({
+            take: 5,
+            cursor: {
+                id: cursor,
+            }
+        })
+    ])
 }
