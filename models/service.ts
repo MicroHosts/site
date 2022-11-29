@@ -73,6 +73,33 @@ export const getUserService = async(idUser: string) => {
     });
 }
 
+export const getServiceById = async(id: string) => {
+    return await prisma.service.findUnique({
+        where: {
+            id: id
+        }
+    });
+}
+
+
+export const getServices = async (page: number, search: string) => {
+    return await prisma.$transaction([
+        prisma.service.count(),
+        prisma.service.findMany({
+            take: 5,
+            skip: (page-1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        })
+    ])
+}
+
 // export const getServiceByUserIdHost = async (userId: string) => {
 //     return await prisma.services.findMany({
 //         where: {

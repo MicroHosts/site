@@ -1,6 +1,6 @@
 import prisma from "@/lib/prismadb";
 
-export const createHost = async(
+export const createHost = async (
     hostName: string,
     cpuInfo: string,
     ramInfo: string,
@@ -29,7 +29,7 @@ export const createHost = async(
     });
 }
 
-export const updateHost = async(
+export const updateHost = async (
     id: string,
     hostName: string,
     cpuInfo: string,
@@ -67,28 +67,28 @@ export const updateHost = async(
 //     });
 // }
 
-export const getHostById = async(id: string) => {
+export const getHostById = async (id: string) => {
     return await prisma.host.findUnique({
-        where:{
+        where: {
             id: id,
         }
     });
 }
 
-export const deleteHost = async(id: string) => {
+export const deleteHost = async (id: string) => {
     return await prisma.host.delete({
-        where:{
+        where: {
             id: id,
         }
     });
 }
 
-export const getAvailableHosts = async() => {
+export const getAvailableHosts = async () => {
     const hosts = await prisma.host.findMany({
-        where:{
-           Order: null,
+        where: {
+            Order: null,
         },
-        select:{
+        select: {
             id: true,
             name: true,
             description: true,
@@ -98,18 +98,18 @@ export const getAvailableHosts = async() => {
             storage: true,
         }
     });
-    if(!hosts){
+    if (!hosts) {
         return []
     }
     return hosts.slice(0, 3);
 }
 
-export const getHostsByUserId = async(userId: string) => {
+export const getHostsByUserId = async (userId: string) => {
     return await prisma.orderHost.findMany({
-        where:{
+        where: {
             userId: userId,
         },
-        select:{
+        select: {
             id: true,
             rentDate: true,
             host: {
@@ -123,7 +123,7 @@ export const getHostsByUserId = async(userId: string) => {
     });
 }
 //TODO BuyHost
-export const buyHost = async(userId: string, hostId: string) => {
+export const buyHost = async (userId: string, hostId: string) => {
     let date = new Date();
     date.setMonth(date.getMonth() + 1);
     return await prisma.orderHost.create({
@@ -135,23 +135,29 @@ export const buyHost = async(userId: string, hostId: string) => {
     });
 }
 
-export const removeHost = async(userId: string, hostId: string) => {
+export const removeHost = async (userId: string, hostId: string) => {
     return await prisma.orderHost.delete({
-        where:{
-                userId: userId,
-                hostId: hostId,
+        where: {
+            userId: userId,
+            hostId: hostId,
         }
     });
 }
 
-export const getHosts = async(cursor: string) => {
+export const getHosts = async (page: number, search: string) => {
     return await prisma.$transaction([
         prisma.host.count(),
         prisma.host.findMany({
             take: 5,
-            cursor: {
-                id: cursor,
-            }
+            skip: (page-1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
         })
     ])
 }

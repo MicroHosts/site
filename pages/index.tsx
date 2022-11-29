@@ -6,7 +6,8 @@ import HeaderMain from "@/components/main/HeaderMain";
 import FooterMain from "@/components/main/FooterMain";
 import { getAvailableHosts } from '@/models/hosts';
 import Link from 'next/link';
-function Home({hosts}) {
+
+function Home({hosts}:any) {
     console.log(hosts)
     return (
         <div className={styles.container}>
@@ -69,8 +70,8 @@ function Home({hosts}) {
                     </div>
                     {/* <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div> */}
                     <div className="[&>*]:mt-4">
-                        {hosts.map((host, index) => (
-                            <VDSCard/>
+                        {hosts.map((host: any, index:number) => (
+                            <VDSCard host={host} key={index}/>
                         ))}
                     </div>
                     <div className="flex justify-center mt-4">

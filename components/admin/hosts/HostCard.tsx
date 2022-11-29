@@ -13,9 +13,6 @@ export default function HostCard({host}:any) {
             <td className="py-4 px-6">
                 {host.price} руб
             </td>
-            <td className="py-4 px-6">
-                Куплено до 01.01.2021
-            </td>
             <td className="py-4 pl-6">
                 <button type="button"
                         onClick={() => {

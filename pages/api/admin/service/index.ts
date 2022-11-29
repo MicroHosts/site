@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createService, deleteService, getAllServices, updateService} from "@/models/service";
+import {createService, deleteService, getAllServices, getServiceById, getServices, updateService} from "@/models/service";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]";
 
@@ -38,8 +38,15 @@ export default async function handler(
         const service = await createService(name, desciption, price1);
         res.status(201).json({ message: 'Услуга успешно создана'});
     }else if(req.method === "GET"){
-        const services = await getAllServices();
-        res.status(200).json(services);
+        if(req.query.id){
+            const host = await getServiceById(req.query.id as string);
+            res.status(200).json(host);
+            return;
+        }
+        let page = req.query.page ? req.query.page : 1
+        const search = req.query.search ? req.query.search : '';
+        const services = await getServices(page as number, search as string);
+        res.status(200).json({services: services[1], count: services[0]});
     }else if(req.method === "PUT"){
         const { name, desciption, price } = req.body;
         if(!req.query.id){
