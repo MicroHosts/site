@@ -18,11 +18,14 @@ export default function BuyHostList() {
                 </>
             )}
             {isError && (
-                <BuyHostCardError/>
+                <BuyHostCardError />
             )}
-            {data && data.map((host: any) => (
-                <BuyHostCard host={host} key={host.id}/>
-            ))}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+                {data && data.map((host: any) => (
+                    <BuyHostCard host={host} key={host.id} />
+                ))}
+
+            </div>
         </>
 
     )

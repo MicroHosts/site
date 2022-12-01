@@ -6,14 +6,11 @@ import Image from "next/image";
 import useUser from "@/hooks/useUser";
 import Header from "@/billing/header/Header";
 import { classNames } from "@/utils/utils";
-import { useSetRecoilState } from 'recoil'
-import { userState } from "@/store/user";
 import Loader from "@/components/loader/Loader";
 
 
-export default function BillingLayout({ children }: any) {
+export default function BillingLayout({ children }: {children: JSX.Element}) {
     const { user, isLoading, isError } = useUser();
-
     if (isLoading) {
         return <Loader/>
 

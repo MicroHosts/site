@@ -7,7 +7,6 @@ export default function ChartOrders({ orders }: any) {
                 order.day +" (" +(new Date().getDate()-index)+ "." + (new Date().getMonth() + 1) + ")"
                 ));
             const data = orders.map((order: any) => order.orders);    
-            console.log(data);
             let config = {
                 type: "bar",
                 data: {

@@ -120,7 +120,7 @@ export default async function handler(
             return;
         }
         const id = req.query.id as string;
-        const host = await updateHost(id, hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
+        await updateHost(id, hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
         res.status(201).json({ message: 'Хост успешно обновлен'});
     }else if(req.method === 'GET') {
         if(req.query.id){
@@ -128,15 +128,17 @@ export default async function handler(
             res.status(200).json(host);
             return;
         }
-        const hosts = await getHosts();
-        res.status(200).json(hosts);
+        let page = req.query.page ? req.query.page : 1
+        const search = req.query.search ? req.query.search : '';
+        const hosts = await getHosts(page as number, search as string);
+        res.status(200).json({hosts: hosts[1], count: hosts[0]});
     }else if(req.method === "DELETE") {
         if(!req.query.id){
             res.status(422).json({ message: 'ID не может быть пустым'});
             return;
         }
         const id = req.query.id as string;
-        const host = await deleteHost(id);
+        await deleteHost(id);
         res.status(201).json({ message: 'Хост успешно удален'});
     }else {
         res.status(500).json({ message: 'Route not valid' });

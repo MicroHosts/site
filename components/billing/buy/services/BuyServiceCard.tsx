@@ -1,17 +1,17 @@
 const BuyServiceCard = ({service}: any) => {
     return(
         <div className="mt-4 bg-zinc-800 mx-auto rounded">
-            <div className="py-4 px-6 justify-between text-sm flex flex-col md:flex-row">
+            <div className="py-4 px-6 justify-between text-sm flex flex-col md:flex-row w-full">
                 <div>
                     <div className="font-bold text-lg">
-                        Администирование сервера Minecraft
+                        {service.name}
                     </div>
-                    <div className="mt-2 text-base">
-                       Мы настроим ваш сервер Minecraft, установим плагины, моды, настроим бекапы и многое другое.
+                    <div className="mt-2 text-base w-full">
+                        {service.description}
                     </div>
                 </div>
-                <div className="md:my-auto my-4 text-base">
-                    390 руб / мес
+                <div className="md:my-auto my-4 text-base mx-4">
+                    {service.price} руб / мес
                 </div>
                 <div className="my-auto">
                     <button type="button"

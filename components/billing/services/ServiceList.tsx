@@ -6,7 +6,7 @@ import ServiceCardError from './ServiceCardError';
 import ServiceCardSkeleton from './ServiceCardSkeleton';
 
 const ServiceList = () => {
-    const user:any = useRecoilValue(userState);
+    const user = useRecoilValue(userState);
     const { data, isLoading, isError } = useUserData("/api/user/service", user.id);
     return(
         <div className="overflow-x-auto relative">

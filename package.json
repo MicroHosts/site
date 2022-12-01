@@ -17,6 +17,7 @@
     "@types/react-dom": "18.0.8",
     "bcrypt": "^5.1.0",
     "chart.js": "^2.9.4",
+    "intercept-stdout": "^0.1.2",
     "next": "13.0.1",
     "next-auth": "^4.16.4",
     "nodemailer": "^6.8.0",

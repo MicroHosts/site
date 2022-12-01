@@ -5,7 +5,6 @@ import UserCardSkeleton from "./UserCardSkeleton";
 
 export default function UserList() {
     const {data, isLoading, isError} = useData("/api/admin/user");
-    console.log(data)
     return (
         <div className="overflow-x-auto relative w-full">
             <table

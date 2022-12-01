@@ -18,6 +18,31 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
+const memoize = (fn) => {
+  let cache = {};
+  return (...args) => {
+    let n = args[0];
+    if (n in cache) {
+      return cache[n];
+    }
+    else {
+      let result = fn(n);
+      cache[n] = result;
+      return result;
+    }
+  }
+}
+
+const mutedConsole = memoize((console) => ({
+  ...console,
+  warn: (...args) => args[0].includes('Duplicate atom key')
+    ? null
+    : console.warn(...args)
+}))
+
+global.console = mutedConsole(global.console);
+
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },

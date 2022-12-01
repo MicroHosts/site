@@ -6,9 +6,8 @@ import {useRecoilValue} from 'recoil'
 import { userState } from "@/store/user";
 
 export default function BuyServiceList() {
-    const user: any = useRecoilValue(userState);
+    const user = useRecoilValue(userState);
     const { data, isLoading, isError } = useUserData("/api/user/avservice", user.id);
-    console.log(data);
     return (
         <>
             {isLoading && (

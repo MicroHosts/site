@@ -1,5 +1,10 @@
-interface HostUser {
+export interface HostUser{
     id: string;
-    name: string;
-    price: number;
+    rentDate: Date;
+    host: {
+        name: string;
+        description: true;
+        price: number;
+    }
 }
+

@@ -1,3 +1,4 @@
+//TODO get avaliable host get and buy host
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]"
