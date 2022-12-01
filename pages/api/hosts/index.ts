@@ -1,7 +1,8 @@
+//TODO get avaliable host get and buy host
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]"
-import { getUserByEmail } from "@/models/user";
+import { getAvailableHosts } from '@/models/hosts';
 
 export default async function handler(
     req: NextApiRequest,
@@ -16,10 +17,7 @@ export default async function handler(
         res.status(405).json({ message: "Method not allowed." });
         return;
     }
-    const user = await getUserByEmail(session.user?.email as string);
-    if (user === null) {
-        res.status(404).json({ message: "User not found." });
-        return;
-    }
-    res.status(201).json(user);
+    const avaliableHosts = await getAvailableHosts();
+    res.status(200).json(avaliableHosts);
+    return;
 }

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]"
 import { getAvaliableService } from '@/models/service';
+import { getUserIdByEmail } from '@/models/user';
 
 export default async function handler(
     req: NextApiRequest,
@@ -16,11 +17,11 @@ export default async function handler(
         res.status(405).json({ message: "Method not allowed." });
         return;
     }
-    if(!req.query.id){
+    const user = await getUserIdByEmail(session.user?.email as string);
+    if(!user){
         res.status(400).json({ message: "Bad request." });
         return;
-    };
-    const id = req.query.id as string;
-    const services = await getAvaliableService(id);
+    }
+    const services = await getAvaliableService(user.id);
     res.status(200).json(services);
 }

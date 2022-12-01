@@ -18,16 +18,7 @@ export default async function handler(
     }
     if (req.method === 'POST') {
         const { name, desciption, price } = req.body;
-        if(!name){
-            res.status(422).json({ message: 'Имя не может быть пустым'});
-            return;
-        }
-        if(!desciption){
-            res.status(422).json({ message: 'Описание не может быть пустым'});
-            return;
-        }
-        if(!price){
-            res.status(422).json({ message: 'Цена не может быть пустой'});
+        if(!validate({ name, desciption, price, res })) {
             return;
         }
         const price1 = parseInt(price);
@@ -35,7 +26,7 @@ export default async function handler(
             res.status(422).json({ message: 'Цена не может быть 0'});
             return;
         }
-        const service = await createService(name, desciption, price1);
+        await createService(name, desciption, price1);
         res.status(201).json({ message: 'Услуга успешно создана'});
     }else if(req.method === "GET"){
         if(req.query.id){
@@ -54,16 +45,7 @@ export default async function handler(
             return;
         }
         const id = req.query.id as string;
-        if(!name){
-            res.status(422).json({ message: 'Имя не может быть пустым'});
-            return;
-        }
-        if(!desciption){
-            res.status(422).json({ message: 'Описание не может быть пустым'});
-            return;
-        }
-        if(!price){
-            res.status(422).json({ message: 'Цена не может быть пустой'});
+        if(!validate({ name, desciption, price, res })) {
             return;
         }
         const price1 = parseInt(price);
@@ -71,7 +53,7 @@ export default async function handler(
             res.status(422).json({ message: 'Цена не может быть 0'});
             return;
         }
-        const service = await updateService(id, name, desciption, price1);
+        await updateService(id, name, desciption, price1);
         res.status(201).json({ message: 'Услуга успешно создана'});
     }else if(req.method === "DELETE"){
         if(!req.query.id){
@@ -79,10 +61,25 @@ export default async function handler(
             return;
         }
         const id = req.query.id as string;
-        const service = await deleteService(id);
+        await deleteService(id);
         res.status(201).json({ message: 'Услуга успешно удалена'});
     }  else {
         res.status(500).json({ message: 'Route not valid' });
     }
 }
 
+
+function validate({ name, desciption, price, res }:any) {
+    if(!name){
+        res.status(422).json({ message: 'Имя не может быть пустым'});
+        return false
+    }
+    if(!desciption){
+        res.status(422).json({ message: 'Описание не может быть пустым'});
+        return false
+    }
+    if(!price){
+        res.status(422).json({ message: 'Цена не может быть пустой'});
+        return false
+    }
+}

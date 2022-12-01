@@ -3,28 +3,13 @@ import {makeid} from "@/utils/utils";
 
 const bcrypt = require('bcrypt');
 
-
-export const getUserByEmail = async (email: string) => {
-    return await prisma.user.findFirst({
-        where: {
-            email
-        },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            emailVerified: true,
-        }
-    });
-}
-
-export const getUserByName = async (name: string | null | undefined) => {
-    if(!name){
+export const getUserByEmail = async (email: string | null | undefined) => {
+    if(!email){
         return null;
     }
     return await prisma.user.findUnique({
         where: {
-            name,
+            email,
         },
         select: {
             id: true,
@@ -175,16 +160,29 @@ export const getPasswordByUserId = async (userId: string) => {
 
 //Admin
 
-export const getAllUsers = async () => {
-    return await prisma.user.findMany({
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            emailVerified: true,
-            blocked: true,
-        }
-    });
+export const getAllUsers = async (page: number, search: string) => {
+    return await prisma.$transaction([
+        prisma.user.count(),
+        prisma.user.findMany({
+            take: 5,
+            skip: (page-1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                emailVerified: true,
+                blocked: true,
+            },
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        })
+    ])
 }
 
 export const getUserById = async (id: string) => {
@@ -247,6 +245,28 @@ export const getUserAllId = async () => {
     return await prisma.user.findMany({
         select: {
             id: true,
+        }
+    });
+}
+
+export const getUserRole = async (email: string) => {
+    return await prisma.user.findUnique({
+        where: {
+            email: email
+        },
+        select: {
+            role: true
+        }
+    });
+}
+
+export const getUserIdByEmail = async (email: string) => {
+    return await prisma.user.findUnique({
+        where: {
+            email: email
+        },
+        select: {
+            id: true
         }
     });
 }
