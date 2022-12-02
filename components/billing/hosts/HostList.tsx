@@ -1,15 +1,19 @@
-import useUserData from "@/components/hooks/useUserData";
 import HostCard from "./HostCard";
-import { useRecoilValue } from 'recoil'
-import { userState } from "@/store/user";
 import HostCardSkeleton from "./HostCardSkeleton";
 import { HostUser } from "@/types/host";
+import useData from "@/components/hooks/useData";
+import Pagination from "@/components/pagination/pagiation";
+import { mutate } from "swr";
+import HostCardError from "./HostCardErrors";
+import usePaginate from "@/components/hooks/usePaginate";
 
 const HostList = () => {
-    const user = useRecoilValue(userState);
-    const { data, isLoading, isError } = useUserData("/api/user/host", user.id);
+    const url = '/api/user/host/';
+    const { data, isLoading, isError } = useData(url);
+    const { pageCount, currentPage, setCurrentPage } = usePaginate(data);
+
     return (
-        <div className="overflow-x-auto relative">
+        <div className="relative w-full">
             <table
                 className="w-full text-sm text-left text-gray-400">
                 <thead
@@ -39,26 +43,24 @@ const HostList = () => {
                         </>
                     )}
                     {isError && (
-                        <tr className="border-b dark:border-gray-700">
-                            <th scope="row"
-                                className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                                Ошибка
-                            </th>
-                            <td className="py-4 px-6">
-                                Ошибка
-                            </td>
-                            <td className="py-4 px-6">
-                                Ошибка
-                            </td>
-                            <td className="py-4 pl-6">
-                            </td>
-                        </tr>
+                        <HostCardError />
                     )}
                     {data && data.map((host: HostUser) => (
                         <HostCard host={host} />
                     ))}
                 </tbody>
             </table>
+            <div className="mt-12">
+                <Pagination pageCount={pageCount} setPage={async (page: number) => {
+                    if (page - 1 < 0) return;
+                    if (page > pageCount) return;
+                    setCurrentPage(page);
+                    await mutate(url, async (data: any) => {
+                        data = await fetch(`${url}?page=${page}`).then(res => res.json());
+                        return data;
+                    }, false);
+                }} currentPage={currentPage} />
+            </div>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { HostUser } from "@/types/host"
 
-const HostCard = ({ host }: {host:HostUser}) => {
+const HostCard = ({ host }: { host: HostUser }) => {
     const date = new Date(host.rentDate)
     const dateformat = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear()
     return (

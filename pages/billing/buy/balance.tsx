@@ -1,19 +1,28 @@
 import Input from "@/components/input/Input"
 import BillingLayout from "@/layouts/Billing"
+import { errorToast, successToast } from "@/utils/utils";
 import Image from "next/image"
 import { ReactElement, useState } from "react"
+import { mutate } from "swr";
 
 function Balance() {
-    const [price, setPrice] = useState(0);
-
-    const onBuy = async() => {
-        const res = await fetch("/api/billing/buy/balance", {
+    const [buyPrice, setBuyPrice] = useState(0);
+    const onBuy = async(price:number) => {
+        //TODO add buy method for freekassa and e.t.c
+        const res = await fetch("/api/buy/balance", {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ price })
         });
         const data = await res.json();
-        if (data.error) {
-        } 
+        if (res.status !== 200) {
+            errorToast(data.message);
+        }else if (res.status === 200) {
+            successToast("Вы успешно пополнили баланс!");
+            await mutate("/api/user");
+        }
     }
 
     return (
@@ -27,8 +36,7 @@ function Balance() {
                             <span className="mr-2 text-5xl font-extrabold">500р</span>
                         </div>
                         <button onClick={() => {
-                            setPrice(500)
-                            onBuy()
+                            onBuy(500)
                         }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                     </div>
                     <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -38,8 +46,7 @@ function Balance() {
                             <span className="mr-2 text-5xl font-extrabold">1500р</span>
                         </div>
                         <button onClick={() => {
-                            setPrice(1500)
-                            onBuy()
+                            onBuy(1500)
                         }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                     </div>
                     <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -49,8 +56,7 @@ function Balance() {
                             <span className="mr-2 text-5xl font-extrabold">5000р</span>
                         </div>
                         <button onClick={() => {
-                            setPrice(5000)
-                            onBuy()
+                            onBuy(5000)
                         }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                     </div>
                     <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -60,23 +66,22 @@ function Balance() {
                             <span className="mr-2 text-5xl font-extrabold">10000р</span>
                         </div>
                         <button onClick={() => {
-                            setPrice(10000)
-                            onBuy()
+                            onBuy(10000)
                         }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                     </div>
                 </div>
             </div>
             <div className="mt-24 flex flex-col">
-                <Input type="text" name="Своя сумма" placeholder="Введите сумму" value={price} onChange={(e) => { 
+                <Input type="text" name="Своя сумма" placeholder="Введите сумму" value={buyPrice} onChange={(e) => { 
                     const value:number = parseInt(e.target.value);
                     if(isNaN(value)) {
-                        setPrice(0);
+                        setBuyPrice(0);
                     }
                     if(Number.isInteger(value)) {
-                        setPrice(value);
+                        setBuyPrice(value);
                     }
                 }} id="number" />
-                <button
+                <button onClick={() => onBuy(buyPrice)}
                     className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить
                 </button>
             </div>

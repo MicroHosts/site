@@ -1,12 +1,12 @@
 import { LegacyRef, MouseEvent, useRef, useState, } from "react";
-import useUserInfo from "@/hooks/useUserInfo";
 import {useRecoilValue} from "recoil";
 import { userState } from "@/store/user";
 import { successToast } from "@/utils/utils";
+import useData from "@/components/hooks/useData";
 
 const MainProfile = () => {
-    const user = useRecoilValue(userState);
-    const {info, isLoading, isError} = useUserInfo(user.id);
+    const apiUrl = '/api/user/info/';
+    const {data, isLoading, isError} = useData(apiUrl);
     const first_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const last_name: LegacyRef<HTMLInputElement>  = useRef(null);
     const second_name: LegacyRef<HTMLInputElement>  = useRef(null);
@@ -30,7 +30,7 @@ const MainProfile = () => {
             second_name: second_name.current.value,
             phone_number: phone.current.value,
         }
-        const res = await fetch(`/api/user/info?id=${info.id}`, {
+        const res = await fetch(`/api/user/info`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ const MainProfile = () => {
                            className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иванов"
                            ref={first_name}
-                           defaultValue={info.first_name}
+                           defaultValue={data.first_name}
                            />
                 </div>
                 <div>
@@ -60,7 +60,7 @@ const MainProfile = () => {
                            className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иван"
                            ref={last_name}
-                           defaultValue={info.last_name}
+                           defaultValue={data.last_name}
                            />
                 </div>
                 <div>
@@ -70,7 +70,7 @@ const MainProfile = () => {
                            className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="Иванович"
                            ref={second_name}
-                           defaultValue={info.second_name}
+                           defaultValue={data.second_name}
                            />
                 </div>
                 <div>
@@ -79,7 +79,7 @@ const MainProfile = () => {
                            className="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                            placeholder="+7 495 1111111" pattern="^\+[0-9]{1,3} [0-9]{1,6} [0-9]{3,10}$"
                            ref={phone}
-                           defaultValue={info.phone_number}
+                           defaultValue={data.phone_number}
                            />
                 </div>
             </div>

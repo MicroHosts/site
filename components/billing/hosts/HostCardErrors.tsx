@@ -1,6 +1,6 @@
-const ServiceCardError = () => {
+const HostCardError = () => {
     return (
-        <tr className="border-b border-gray-700">
+        <tr className="border-b dark:border-gray-700">
             <th scope="row"
                 className="py-4 px-6 font-medium whitespace-nowrap text-white">
                 Ошибка
@@ -8,10 +8,15 @@ const ServiceCardError = () => {
             <td className="py-4 px-6">
                 Ошибка
             </td>
+            <td className="py-4 px-6">
+                Ошибка
+            </td>
+            <td className="py-4 pl-6">
+            </td>
         </tr>
     )
 }
 
 
 
-export default ServiceCardError
+export default HostCardError

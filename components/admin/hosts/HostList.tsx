@@ -9,19 +9,14 @@ import useData from "@/components/hooks/useData";
 import Pagination from "@/components/pagination/pagiation";
 import { mutate } from "swr";
 import Search from "@/components/search/search";
+import usePaginate from "@/components/hooks/usePaginate";
 
 export default function HostList() {
-    const { data, isLoading, isError } = useData("/api/admin/host");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageCount, setPageCount] = useState(1);
+    const url = "/api/admin/host";
+    const { data, isLoading, isError } = useData(url);
+    const {pageCount, currentPage, setCurrentPage} = usePaginate(data);
     const [search, setSearch] = useState("");
     const open = useRecoilValue(editHostOpen)
-
-    useEffect(() => {
-        if (data && data.count) {
-            setPageCount(Math.ceil(data.count / 5));
-        }
-    }, [data]);
 
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -31,15 +26,15 @@ export default function HostList() {
                     className="focus:outline-none text-white cus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-green-600 hover:bg-green-700 focus:ring-green-800">Добавить
                 </button>
             </div>
-            <Search search={search} setSearch={setSearch} onClick={async (e:any) => {
+            <Search search={search} setSearch={setSearch} onClick={async (e: any) => {
                 e.preventDefault();
-                if(search.length > 0) {
-                    await mutate('/api/admin/host', async (data: any) => {
-                        data = await fetch(`/api/admin/host?search=${search}`).then(res => res.json());
+                if (search.length > 0) {
+                    await mutate(url, async (data: any) => {
+                        data = await fetch(`${url}?search=${search}`).then(res => res.json());
                         return data;
                     }, false);
                 } else {
-                    await mutate("/api/admin/host");
+                    await mutate(url);
                 }
             }} />
             <CreateHostModal setOpen={setIsOpen} open={isOpen} />
@@ -96,13 +91,13 @@ export default function HostList() {
                     if (page > pageCount) return;
                     setCurrentPage(page);
                     if (search.length > 0) {
-                        await mutate('/api/admin/host', async (data: any) => {
-                            data = await fetch(`/api/admin/host?page=${page}&search=${search}`).then(res => res.json());
+                        await mutate(url, async (data: any) => {
+                            data = await fetch(`${url}?page=${page}&search=${search}`).then(res => res.json());
                             return data;
                         }, false);
                     } else {
-                        await mutate('/api/admin/host', async (data: any) => {
-                            data = await fetch(`/api/admin/host?page=${page}`).then(res => res.json());
+                        await mutate(url, async (data: any) => {
+                            data = await fetch(`${url}?page=${page}`).then(res => res.json());
                             return data;
                         }, false);
                     }

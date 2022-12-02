@@ -71,6 +71,9 @@ export const getHostById = async (id: string) => {
     return await prisma.host.findUnique({
         where: {
             id: id,
+        },
+        include: {
+            Order: true
         }
     });
 }
@@ -83,7 +86,53 @@ export const deleteHost = async (id: string) => {
     });
 }
 
-export const getAvailableHosts = async () => {
+export const getAvailableHosts = async (page: number) => {
+    return await prisma.$transaction([
+        prisma.host.count({
+            where: {
+                Order: null,
+            },
+        }),
+        prisma.host.findMany({
+            take: 5,
+            skip: (page - 1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                cpu: true,
+                ram: true,
+                storage: true,
+            },
+            where: {
+                Order: null,
+            },
+        })
+    ])
+}
+
+export const getAvailableHostsAll = async () => {
+    return await prisma.host.findMany({
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                cpu: true,
+                ram: true,
+                storage: true,
+            },
+            where: {
+                Order: null,
+            },
+        })
+}
+
+export const getAvaliableMainPageHosts = async () => {
     const hosts = await prisma.host.findMany({
         where: {
             Order: null,
@@ -122,10 +171,11 @@ export const getHostsByUserId = async (userId: string) => {
         }
     });
 }
+
 //TODO BuyHost
-export const buyHost = async (userId: string, hostId: string) => {
+export const buyHost = async (userId: string, hostId: string, month: number) => {
     let date = new Date();
-    date.setMonth(date.getMonth() + 1);
+    date.setMonth(date.getMonth() + month);
     return await prisma.orderHost.create({
         data: {
             userId: userId,
@@ -146,10 +196,16 @@ export const removeHost = async (userId: string, hostId: string) => {
 
 export const getHosts = async (page: number, search: string) => {
     return await prisma.$transaction([
-        prisma.host.count(),
+        prisma.host.count({
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        }),
         prisma.host.findMany({
             take: 5,
-            skip: (page-1) * 5,
+            skip: (page - 1) * 5,
             orderBy: {
                 id: "desc",
             },

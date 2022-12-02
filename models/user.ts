@@ -1,10 +1,10 @@
 import prisma from "@/lib/prismadb";
-import {makeid} from "@/utils/utils";
+import { makeid } from "@/utils/utils";
 
 const bcrypt = require('bcrypt');
 
 export const getUserByEmail = async (email: string | null | undefined) => {
-    if(!email){
+    if (!email) {
         return null;
     }
     return await prisma.user.findUnique({
@@ -41,23 +41,23 @@ export const getUserInfo = async (id: string) => {
     });
 }
 
-export const updateUserInfo = async (id: string, {data}: any) => {
+export const updateUserInfo = async (id: string, { data }: any) => {
     return await prisma.userInfo.update({
         where: {
-            id,
+            userId: id,
         },
-        data:{
+        data: {
             first_name: data.first_name,
             last_name: data.last_name,
             second_name: data.second_name,
             phone_number: data.phone_number,
         },
- })
+    })
 };
 
 export const createUser = async (name: string, email: string, password: string) => {
     const user1 = await getUserByEmail(email);
-    if(user1){
+    if (user1) {
         return null;
     }
     const salt = await bcrypt.genSalt(10);
@@ -120,7 +120,7 @@ export const verifyUser = async (token: string) => {
             }
         })
         await prisma.userInfo.create({
-            data:{
+            data: {
                 user: {
                     connect: {
                         id: verificationToken.userId
@@ -138,7 +138,7 @@ export const verifyUser = async (token: string) => {
             }
         });
         return true;
-    }else if(verificationToken && verificationToken.expires < new Date()){
+    } else if (verificationToken && verificationToken.expires < new Date()) {
         await prisma.verificationToken.delete({
             where: {
                 token: token
@@ -162,10 +162,16 @@ export const getPasswordByUserId = async (userId: string) => {
 
 export const getAllUsers = async (page: number, search: string) => {
     return await prisma.$transaction([
-        prisma.user.count(),
+        prisma.user.count({
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        }),
         prisma.user.findMany({
             take: 5,
-            skip: (page-1) * 5,
+            skip: (page - 1) * 5,
             orderBy: {
                 id: "desc",
             },
@@ -235,9 +241,9 @@ export const getUserById = async (id: string) => {
                             price: true,
                         }
                     },
+                }
             }
         }
-    }
     });
 }
 
@@ -266,7 +272,39 @@ export const getUserIdByEmail = async (email: string) => {
             email: email
         },
         select: {
-            id: true
+            id: true,
+            balance: {
+                select: {
+                    amount: true
+                }
+            }
+        }
+    });
+}
+
+
+export const addBalance = async (userId: string, amount: number) => {
+    return await prisma.balance.update({
+        where: {
+            userId: userId
+        },
+        data: {
+            amount: {
+                increment: amount
+            }
+        }
+    });
+}
+
+export const removeBalance = async (userId: string, amount: number) => {
+    return await prisma.balance.update({
+        where: {
+            userId: userId
+        },
+        data: {
+            amount: {
+                decrement: amount
+            }
         }
     });
 }
