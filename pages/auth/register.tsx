@@ -110,7 +110,7 @@ const Register = () => {
                                     <label htmlFor="terms" className="font-light text-gray-500">Я
                                         принимаю <a
                                             className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                            href="#">условия обработки персональных данных</a></label>
+                                            href="#">условия конфидециальности</a></label>
                                 </div>
                             </div>
                             <button type="submit"

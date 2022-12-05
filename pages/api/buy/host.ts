@@ -47,23 +47,15 @@ export default async function handler(
             to: session.user?.email,
             subject: 'Покупка хостинга',
             text: 'Поздравляем с покупкой хостинга',
-            html: '<p>Поздравляем с покупкой хостинга</p>',
-            amp: `
-            <!doctype html>
-<html ⚡4email>
-<head>
-  <meta charset="utf-8">
-  <style amp4email-boilerplate>body{visibility:hidden}</style>
-  <script async src="https://cdn.ampproject.org/v0.js"></script>
-  <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
-</head>
+            html: `<!doctype html>
+<html>
 <body>
+<p>Поздравляем с покупкой хостинга</p>
 <p>IP 192.168.0.1</p>
 <p>Логин: sshLogin</p>
 <p>Пароль: example</p>
 </body>
-</html>
-`
+</html>`,
 
         }
         await client.sendMail(mailData, function (err, info) {

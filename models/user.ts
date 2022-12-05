@@ -26,6 +26,52 @@ export const getUserByEmail = async (email: string | null | undefined) => {
     });
 }
 
+export const changePasswordByEmail = async (email: string, password: string) => {
+    if (!email) {
+        return null;
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const user = await getUserByEmail(email);
+    if (!user) {
+        return null;
+    }
+    return await prisma.password.update({
+        where: {
+            userId: user.id,
+        },
+        data: {
+            hashed: hash,
+            salt: salt
+        }
+    })
+}
+
+export const checkPasswordAndNewPassword = async (email: string, password: string, newPassword: string) => {
+    if (!password || !newPassword) {
+        return null;
+    }
+    if (password === newPassword) {
+        return null;
+    }
+    const user = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+        include:{
+            password: true,
+        }
+    })
+    if (!user) {
+        return null;
+    }
+    const isMatch = await bcrypt.compare(password, user.password!!.hashed);
+    if (!isMatch) {
+        return null;
+    }
+    return true;
+}
+
 export const getUserInfo = async (id: string) => {
     return await prisma.userInfo.findFirst({
         where: {
@@ -94,6 +140,67 @@ export const createUser = async (name: string, email: string, password: string) 
     return token;
 }
 
+export const createRecovery = async (email: string) => {
+    const user = await getUserByEmail(email);
+    if (!user) {
+        return null;
+    }
+    //check if token exists
+    const token1 = await prisma.recoveryToken.findFirst({
+        where: {
+            userId: user.id
+        }
+    });
+    if (token1) {
+        return token1.token;
+    }
+    const token = makeid(32);
+    await prisma.recoveryToken.create({
+        data: {
+            token: token,
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+            user: {
+                connect: {
+                    id: user.id
+                }
+            }
+        }
+    });
+    return token;
+}
+
+
+export const deleteRecovery = async (token: string) => {
+    return await prisma.recoveryToken.delete({
+        where: {
+            token: token
+        }
+    });
+}
+
+export const verifyRecovery = async (token: string) => {
+    const recoveryToken = await prisma.recoveryToken.findFirst({
+        where: {
+            token: token,
+            expires: {
+                gt: new Date()
+            }
+        },
+        select: {
+            user: {
+                select: {
+                    id: true,
+                    email: true,
+                }
+            }
+        }
+    });
+    if (!recoveryToken) {
+        return null;
+    }
+    return recoveryToken.user;
+}
+
 export const verifyUser = async (token: string) => {
     const verificationToken = await prisma.verificationToken.findUnique({
         where: {
@@ -140,6 +247,40 @@ export const verifyUser = async (token: string) => {
         return true;
     } else if (verificationToken && verificationToken.expires < new Date()) {
         await prisma.verificationToken.delete({
+            where: {
+                token: token
+            }
+        });
+    }
+    return false;
+}
+
+export const changePassword = async (token: string, password: string) => {
+    const recoveryToken = await prisma.recoveryToken.findUnique({
+        where: {
+            token: token
+        }
+    });
+    if (recoveryToken && recoveryToken.expires > new Date()) {
+        const salt = await bcrypt.genSalt(10);
+        const passwordHashed = await bcrypt.hash(password, salt);
+        await prisma.password.update({
+            where: {
+                userId: recoveryToken.userId
+            },
+            data: {
+                salt: salt,
+                hashed: passwordHashed,
+            }
+        });
+        await prisma.recoveryToken.delete({
+            where: {
+                token: token
+            }
+        });
+        return true;
+    } else if (recoveryToken && recoveryToken.expires < new Date()) {
+        await prisma.recoveryToken.delete({
             where: {
                 token: token
             }

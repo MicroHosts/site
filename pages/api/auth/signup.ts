@@ -48,7 +48,7 @@ export default async function handler(
                 console.log(info)
             }
         });
-        res.status(201).json({ message: 'Created user', token: token });
+        res.status(200).json({ message: 'Created user' });
     } else {
         res.status(500).json({ message: 'Route not valid' });
     }
