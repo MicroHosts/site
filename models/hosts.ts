@@ -72,11 +72,53 @@ export const getHostById = async (id: string) => {
         where: {
             id: id,
         },
-        include: {
-            Order: true
-        }
+        select: {
+            id: true,
+            name: true,
+            storage: true,
+            cpu: true,
+            ram: true,
+            description: true,
+            price: true,
+            Order: {
+                select: {
+                    id: true,
+                    rentDate: true,
+
+                }
+            }
+        },
     });
 }
+
+export const getHostByUserId = async (id: string) => {
+    return await prisma.host.findUnique({
+        where: {
+            id: id,
+        },
+        select: {
+            id: true,
+            name: true,
+            storage: true,
+            cpu: true,
+            ram: true,
+            description: true,
+            price: true,
+            Order: {
+                select: {
+                    id: true,
+                    rentDate: true,
+
+                }
+            }
+        },
+    });
+}
+
+
+// export const getHostByIdServer = async(id : string) => {
+//     return await prisma.client
+// }
 
 export const deleteHost = async (id: string) => {
     return await prisma.host.delete({

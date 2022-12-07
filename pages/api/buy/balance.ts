@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { buyHost, getHostById } from "@/models/hosts";
-import client from '@/lib/mail'
 import { addBalance, getUserIdByEmail } from "@/models/user";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
