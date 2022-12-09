@@ -95,6 +95,8 @@ model Host{
   ip          String
   password    String
   description String
+  vnc         String
+  passwordVnc String
   price       Int
   // status      HostStatus
   Order       OrderHost?

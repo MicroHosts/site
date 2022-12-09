@@ -16,6 +16,8 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
     const [password, setPassword] = useState<string>('');
     const [ip, setIP] = useState<string>('');
     const [desciption, setDescription] = useState<string>('');
+    const [vnc, setVNC] = useState<string>('');
+    const [vncPassword, setVNCPassword] = useState<string>('');
     const [price, setPrice] = useState<string>("0");
     const [error, setError] = useState<string>('');
 
@@ -33,7 +35,9 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
                 password,
                 ip,
                 desciption,
-                price
+                price,
+                vnc,
+                vncPassword
             }
             const res = await fetch(`/api/admin/host`, {
                 method: 'POST',
@@ -148,6 +152,24 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
                                                type={"number"}
                                                id={"price"}
                                                placeholder={"390"}
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <Input name={"VNC адрес"}
+                                               value={ip}
+                                               onChange={(e) => setVNC(e.target.value)}
+                                               type={"text"}
+                                               id={"vnc"}
+                                               placeholder={"ws://localhost:5900"}
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <Input name={"Пароль VNC"}
+                                               value={ip}
+                                               onChange={(e) => setVNCPassword(e.target.value)}
+                                               type={"text"}
+                                               id={"passwordvnc"}
+                                               placeholder={"123123"}
                                         />
                                     </div>
                                     <div className="sm:col-span-2">

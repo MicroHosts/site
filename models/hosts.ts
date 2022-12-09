@@ -11,6 +11,8 @@ export const createHost = async (
     ip: string,
     desciption: string,
     price: number,
+    vnc: string,
+    vncPassword: string,
 ) => {
 
     return await prisma.host.create({
@@ -25,6 +27,8 @@ export const createHost = async (
             ip: ip,
             description: desciption,
             price: price,
+            vnc: vnc,
+            passwordVnc: vncPassword,
         },
     });
 }
@@ -227,14 +231,6 @@ export const buyHost = async (userId: string, hostId: string, month: number) => 
     });
 }
 
-export const removeHost = async (userId: string, hostId: string) => {
-    return await prisma.orderHost.delete({
-        where: {
-            userId: userId,
-            hostId: hostId,
-        }
-    });
-}
 
 export const getHosts = async (page: number, search: string) => {
     return await prisma.$transaction([

@@ -17,7 +17,8 @@ export default async function handler(
         return;
     }
     if (req.method === 'POST') {
-        const { hostName, cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price } = req.body;
+        const { hostName, cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price,                 vnc,
+            vncPassword } = req.body;
         if(!validate({ hostName, cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price, res })) {
             return;
         }
@@ -26,7 +27,7 @@ export default async function handler(
         if(!validatePriceAndIDProxmox({ price1, idproxmo1, res })) {
             return;
         }
-        await createHost(hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1);
+        await createHost(hostName, cpuInfo, ramInfo, storageInfo, idproxmo1, login, password, ip, desciption, price1, vnc, vncPassword);
         res.status(201).json({ message: 'Хост успешно создан' });
     } else if (req.method === 'PUT') {
         const { hostName, cpuInfo, ramInfo, storageInfo, idproxmox, login, password, ip, desciption, price } = req.body;
