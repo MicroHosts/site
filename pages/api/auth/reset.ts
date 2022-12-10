@@ -1,7 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {changePassword, createRecovery, deleteRecovery, verifyRecovery} from "@/models/user";
-import {validateEmail} from "@/utils/utils";
-import client from "@/lib/mail";
+import {changePassword, verifyRecovery} from "@/models/user";
 
 export default async function handler(
     req: NextApiRequest,

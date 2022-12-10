@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createRecovery, deleteRecovery} from "@/models/user";
+import {createRecovery} from "@/models/user";
 import {validateEmail} from "@/utils/utils";
 import client from "@/lib/mail";
 

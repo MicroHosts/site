@@ -1,12 +1,16 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createUser} from "@/models/user";
+import {checkAdmin, createAdmin} from "@/models/user";
 import {validateEmail} from "@/utils/utils";
-import client from "@/lib/mail";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    const admin = await checkAdmin()
+    if(admin){
+        res.status(422).json({message: 'Администратор уже существует'})
+        return
+    }
     if (req.method === 'POST') {
         const { username,  email, password } = req.body;
         if (!email || email.length < 6 && !validateEmail(email)) {
@@ -25,29 +29,7 @@ export default async function handler(
             res.status(422).json({ message: 'Имя пользователя должно быть больше 3 символов' });
             return;
         }
-        const token = await createUser(username, email, password);
-        if(!token){
-            res.status(422).json({ message: 'Такой пользователь уже есть' });
-            return;
-        }
-        //Отправить письмо с токеном
-        const mailData ={
-            from: 'no-reply@microhost1.ru',
-            to: email,
-            subject: 'Подтверждение почты',
-            html: `<h1>Подтвердите почту</h1>
-            <p>Для подтверждения перейдите по ссылке</p>
-            <a href="http://localhost:3000/auth/verify?token=${token}">Подтвердить почту</a>
-            `,
-            text: 'Подтвердите почту',
-        }
-        client.sendMail(mailData, (err, info) => {
-            if(err){
-                console.log(err)
-            }else{
-                console.log(info)
-            }
-        });
+        await createAdmin(username, email, password);
         res.status(200).json({ message: 'Created user' });
     } else {
         res.status(500).json({ message: 'Route not valid' });
