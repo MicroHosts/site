@@ -84,6 +84,8 @@ export const getHostById = async (id: string) => {
             ram: true,
             description: true,
             price: true,
+            vnc: true,
+            passwordVnc: true,
             Order: {
                 select: {
                     id: true,
@@ -254,4 +256,20 @@ export const getHosts = async (page: number, search: string) => {
             },
         })
     ])
+}
+
+export const getAllHosts = async () => {
+    return await prisma.host.findMany();
+}
+
+export const checkIsUserHost = async (userId: string, hostId: string) => {
+    return await prisma.orderHost.findFirst({
+        where: {
+            userId: userId,
+            hostId: hostId,
+            rentDate: {
+                gte: new Date(),
+            }
+        }
+    });
 }

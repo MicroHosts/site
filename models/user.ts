@@ -21,7 +21,7 @@ export const getUserByEmail = async (email: string | null | undefined) => {
                     amount: true,
                 }
             },
-
+            role: true,
         },
     });
 }
@@ -449,7 +449,6 @@ export const removeBalance = async (userId: string, amount: number) => {
         }
     });
 }
-
 
 export const createAdmin = async (username: string, email: string, password: string) => {
     const salt = await bcrypt.genSalt(10);

@@ -156,7 +156,7 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
                                     </div>
                                     <div className="">
                                         <Input name={"VNC адрес"}
-                                               value={ip}
+                                               value={vnc}
                                                onChange={(e) => setVNC(e.target.value)}
                                                type={"text"}
                                                id={"vnc"}
@@ -165,9 +165,9 @@ export default function CreateHostModal({ open, setOpen }: { open: boolean, setO
                                     </div>
                                     <div className="">
                                         <Input name={"Пароль VNC"}
-                                               value={ip}
+                                               value={vncPassword}
                                                onChange={(e) => setVNCPassword(e.target.value)}
-                                               type={"text"}
+                                               type={"password"}
                                                id={"passwordvnc"}
                                                placeholder={"123123"}
                                         />

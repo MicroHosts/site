@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateHostModal from "@/admin/modals/CreateHostModal";
 import HostCardSkeleton from "@/admin/hosts/HostCardSkeleton";
 import HostCard from "@/admin/hosts/HostCard";

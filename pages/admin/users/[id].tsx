@@ -8,7 +8,6 @@ import ServiceUserList from "@/components/admin/user/services/ServicesUserList";
 
 
 function Users({ user }: any) {
-    console.log(user)
     return (
         <div className="container mx-auto">
             <div className="flex justify-between flex-col w-full">
@@ -54,7 +53,7 @@ export async function getStaticProps(context: any) {
     }))
     return {
         props: {
-            user: ({...user, 
+            user: ({...user,
             hosts: user?.hosts? hosts : [],
             services: user?.services? services : [],})
         }
