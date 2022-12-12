@@ -1,4 +1,3 @@
-import useUserData from "@/components/hooks/useUserData";
 import BuyServiceCard from "./BuyServiceCard";
 import BuyServiceCardError from "./BuyServiceCardError";
 import BuyServiceCardSkeleton from "./BuyServiceCardSkeleton";

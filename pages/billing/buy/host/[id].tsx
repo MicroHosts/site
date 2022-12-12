@@ -1,8 +1,7 @@
-import Input from "@/components/input/Input"
 import BillingLayout from "@/layouts/Billing"
 import { getAvailableHostsAll, getHostById } from "@/models/hosts";
 import { errorToast, successToast } from "@/utils/utils";
-import { ReactElement, useState } from "react"
+import { ReactElement } from "react"
 import { FaMemory } from "react-icons/fa";
 import { FiCpu } from "react-icons/fi";
 import { MdStorage } from "react-icons/md";

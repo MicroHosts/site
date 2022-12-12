@@ -85,6 +85,7 @@ export const getHostById = async (id: string) => {
             description: true,
             price: true,
             vnc: true,
+            vimid: true,
             passwordVnc: true,
             Order: {
                 select: {
@@ -95,6 +96,25 @@ export const getHostById = async (id: string) => {
             }
         },
     });
+}
+
+export const getHostByOrderHost = async (id: string) => {
+    return await prisma.orderHost.findUnique({
+        where: {
+            id: id,
+        },
+        select: {
+            id: true,
+            rentDate: true,
+            host: {
+                select: {
+                    id: true,
+                    name: true,
+                    vimid: true
+                }
+            }
+        }
+    })
 }
 
 export const getHostByUserId = async (id: string) => {
@@ -165,19 +185,19 @@ export const getAvailableHosts = async (page: number) => {
 
 export const getAvailableHostsAll = async () => {
     return await prisma.host.findMany({
-            select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
-                cpu: true,
-                ram: true,
-                storage: true,
-            },
-            where: {
-                Order: null,
-            },
-        })
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            price: true,
+            cpu: true,
+            ram: true,
+            storage: true,
+        },
+        where: {
+            Order: null,
+        },
+    })
 }
 
 export const getAvaliableMainPageHosts = async () => {

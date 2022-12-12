@@ -24,8 +24,6 @@ const Header = () => {
                            className="flex items-center p-2 text-base font-normal rounded-lg text-white  hover:bg-gray-700">
                             <AiFillTag className="flex-shrink-0 w-6 h-6 ransition duration-75 text-gray-400  group-hover:text-white"/>
                             <span className="flex-1 ml-3 whitespace-nowrap">Заказать</span>
-                            {/* <span
-                            className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full bg-gray-700 text-gray-300">Pro</span> */}
                         </Link>
                     </li>
                     <li>

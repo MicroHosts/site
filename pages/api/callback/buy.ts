@@ -10,7 +10,7 @@ export default async function handler(
     if (req.method === 'POST') {
         const userId = req.body.userId;
         const hostId = req.body.hostId;
-        const buyHost1 = await buyHost(userId, hostId);
+        const buyHost1 = await buyHost(userId, hostId, 1);
         const user = await getUserById(userId);
         const mailData = {
             from: 'no-reply@microhost1.ru',

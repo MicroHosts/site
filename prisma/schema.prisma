@@ -33,6 +33,7 @@ model User {
   blocked       Boolean   @default(false)
   hosts         OrderHost[]
   services      OrderService[]
+  noPayHosts    NoPayOrderHost[]
   // services      Services[]
 }
 
@@ -97,9 +98,11 @@ model Host{
   description String
   vnc         String
   passwordVnc String
+  ready       Boolean @default(false)
   price       Int
   // status      HostStatus
   Order       OrderHost?
+  NoPayOrder  NoPayOrderHost?
 }
 
 model OrderHost{

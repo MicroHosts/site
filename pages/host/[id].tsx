@@ -1,17 +1,11 @@
-'use client';
 import BillingLayout from "@/layouts/Billing"
-import {checkIsUserHost, getAllHosts, getAvailableHostsAll, getHostById, getHosts} from "@/models/hosts";
-import { getUserByEmail } from "@/models/user";
-import { errorToast, successToast } from "@/utils/utils";
-import { unstable_getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
-import {ReactElement, useEffect, useRef, useState} from "react"
-import { FaMemory } from "react-icons/fa";
-import { FiCpu } from "react-icons/fi";
-import { MdStorage } from "react-icons/md";
-import { mutate } from "swr";
-import {VncScreen} from "react-vnc";
+import { getAllHosts, getHostById } from "@/models/hosts";
+import { ReactElement } from "react"
 import dynamic from "next/dynamic";
+import EndHost from "@/components/buttons/EndHost";
+import StartHost from "@/components/buttons/StartHost";
+import RestartHost from "@/components/buttons/RestartHost";
+import StopHost from "@/components/buttons/StopHost";
 
 const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
     loading: () => <p>Loading...</p>,
@@ -19,20 +13,17 @@ const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
 });
 
 function Host({ host }: any) {
-    console.log(host)
-
     return (
         <div>
             <div>
-                Выключить
-                Включить
-                Перезапустить
-                Отключить
+                <StartHost id={host.id} />
+                <RestartHost id={host.id} />
+                <StopHost id={host.id} />
+                <EndHost id={host.id} />
             </div>
-            <DynamicComponent url={host.vnc_url}/>
+            <DynamicComponent url={host.vnc_url} password={host.passwordVnc} />
         </div>
     )
-
 }
 
 Host.getLayout = function getLayout(page: ReactElement) {
@@ -55,37 +46,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: any) {
-    const { req, params } = context;
-    // console.log(context)
-    // const session = await getSession({ req });
-    // console.log(session)
-    // if (!session) {
-    //     return {
-    //         redirect: { destination: "/" },
-    //     };
-    // }
-    // const user = await getUserByEmail(session.user?.email);
-    //
-    // if(user === null) {
-    //     return {
-    //         redirect: { destination: "/" },
-    //     };
-    // }
-    // console.log(params.id)
-    // if(user.role === "ADMIN"){
-    //     const host = await getHostById(params.id);
-    //     return {
-    //         props: {
-    //             host: host
-    //         }
-    //     }
-    // }
-    // const host1 = await checkIsUserHost(user.id, params.id);
-    // if(host1 === null) {
-    //     return {
-    //         redirect: { destination: "/billing" },
-    //     };
-    // }
+    const { params } = context;
     const host = await getHostById(params.id);
     return {
         props: {
