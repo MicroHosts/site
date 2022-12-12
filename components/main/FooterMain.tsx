@@ -39,7 +39,7 @@ export default function FooterMain() {
                         ссылки</h2>
                     <ul className="text-gray-400">
                         <li className="mb-4">
-                            <Link href="/"
+                            <Link href="/terms"
                                 className="hover:underline">Условия пользования</Link>
                         </li>
                         <li className="mb-4">

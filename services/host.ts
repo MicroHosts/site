@@ -29,5 +29,3 @@ export const checkByHost = async (req: NextApiRequest, res: NextApiResponse): Pr
     }
     return false;
 }
-
-export const 

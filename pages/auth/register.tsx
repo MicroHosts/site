@@ -109,8 +109,8 @@ const Register = () => {
                                 <div className="ml-3 text-sm">
                                     <label htmlFor="terms" className="font-light text-gray-500">Я
                                         принимаю <a
-                                            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                            href="#">условия конфидециальности</a></label>
+                                            className="font-medium hover:underline text-primary-500"
+                                            href="#">условия конфидециальности</a> и <Link className="font-medium hover:underline text-primary-500" href="/terms">условия пользования</Link></label>
                                 </div>
                             </div>
                             <button type="submit"

@@ -8,7 +8,6 @@ import { getAvaliableMainPageHosts } from '@/models/hosts';
 import Link from 'next/link';
 
 function Home({ hosts }: any) {
-    console.log(hosts)
     return (
         <div className={styles.container}>
             <Head>
