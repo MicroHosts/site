@@ -20,6 +20,7 @@ export default async function handler(
         return
     }
     await node.qemu.$(host.vimid).status.stop.$post();
+    // await node.qemu.$(host.vimid).vncproxy.$post();
     res.status(200).json({ message: "OK" });
     return
 }

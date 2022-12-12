@@ -13,7 +13,7 @@ export async function getQemuByID(vimID: number) {
             if (qemu.vmid === vimID) {
                 // stop Qemu VM
                 node1 = theNode;
-                continue
+                break
             }
         }
     }
