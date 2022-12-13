@@ -24,6 +24,7 @@ function Host({ host }: any) {
             <DynamicComponent url={host.vnc_url} password={host.passwordVnc} id={host.id}/>
         </div>
     )
+    
 }
 
 Host.getLayout = function getLayout(page: ReactElement) {

@@ -32,7 +32,7 @@ export default function VNCViewer({password, id}:any) : JSX.Element{
     return(
         <>
             {url !== "" &&
-                <VncScreen url={"wss://192.168.0.2:8006/api2/json/nodes/dc1/vncwebsocket?port=5900&vncticket=PVEVNC:6397E089::pFjbLYJqFgw0w93z8bzjFAlzAhaMbghXcThFG4DlPGOdrRlcUOY87N5E8W8qzS8GfaTpDsc7PLEmB/XPl1pqkEmjtP+qRWLZtYrkSkJ17dY0T5UpYarvhTWwzGwFBv8Gn6ms1YgLKup4T6BD749kLpbwcN5KVaCYDansWsUon78g76yMmkRmYhE7hT/BLsIqNy1hXbtukWufKwTQ4aRV7KbDUr0odwpCGU2Uzsn0YbBy5ursx75XXDaJCx6MbNtGqtv9+y1EN4AnlIM+tS6cb5Yn1uRN85qLRe3KeJO96z6ioqJ0a/AwYq8BiFQxEzBpPUyF1ET8vLCP4lp/cN53LA=="}
+                <VncScreen url={"wss://192.168.0.2:5900"}
                            background="#000000"
                            debug
                            style={{
