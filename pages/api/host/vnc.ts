@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getHostById } from '@/models/hosts';
 import { getQemuByID } from '@/utils/util';
 import { checkByHost } from 'services/host';
+import {setCookie} from "cookies-next";
 
 export default async function handler(
     req: NextApiRequest,
@@ -20,8 +21,8 @@ export default async function handler(
         return
     }
     const vncproxy =  await node.qemu.$(host.vimid).vncproxy.$post({"generate-password": false})
-    const vnc = await node.qemu.$(host.vimid).vncwebsocket.$get({vncticket: vncproxy.ticket, port: vncproxy.port})
-    console.log(vnc)
-    res.status(200).json({ message: vnc });
+    console.log(vncproxy)
+    // res.status(200).json({ message: `wss://82.140.114.122:8080/api2/json/nodes/main3/qemu/100/vncwebsocket?port=${vncproxy.port}&vncticket=${encodeURI(vncproxy.ticket)}` });
+    res.status(200).json({ message: `https://82.140.114.122:8080/?console=kvm&novnc=1&node=main3&resize=scale&vmid=${host.vimid}&path=${encodeURI(`/nodes/main3/qemu/${host.vimid}/vncwebsocket?port=${vncproxy.port}&vncticket=${vncproxy.ticket}`)}` });
     return
 }
