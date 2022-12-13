@@ -29,9 +29,9 @@ export default function HeaderMain(){
                 <div className={classNames(open ? "" : "hidden", "w-full md:block md:w-auto")}>
                     <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                         <li>
-                            <a href="#"
+                            <Link href="#"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg"
-                            >Главная</a>
+                            >Главная</Link>
                         </li>
                         <li>
                             <a href="#"

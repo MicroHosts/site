@@ -18,23 +18,31 @@ generator client {
 // }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String   @unique
-  email         String   @unique
-  emailVerified Boolean   @default(false)
-  role          Role      @default(USER)
-  // image         String?
-  // sessions      Session[]
-  password      Password?
-  token         VerificationToken?
-  recovery      RecoveryToken?
-  balance       Balance?
-  info          UserInfo?
-  blocked       Boolean   @default(false)
-  hosts         OrderHost[]
-  services      OrderService[]
-  noPayHosts    NoPayOrderHost[]
-  // services      Services[]
+  id              String    @id @default(cuid())
+  name            String   @unique
+  email           String   @unique
+  emailVerified   Boolean   @default(false)
+  role            Role      @default(USER)
+  password        Password?
+  token           VerificationToken?
+  recovery        RecoveryToken?
+  balance         Balance?
+  info            UserInfo?
+  blocked         Boolean   @default(false)
+  hosts           OrderHost[]
+  services        OrderService[]
+  payments        Payment[]
+  noPayHosts      NoPayOrderHost[]
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  
+  amount    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  paid      Boolean  @default(false) 
 }
 
 model UserInfo{

@@ -19,7 +19,8 @@ export default async function handler(
         res.status(404).json({ message: "Not found" });
         return
     }
-    await node.qemu.$(host.vimid).status.stop.$post();
-    res.status(200).json({ message: "OK" });
+    const vncproxy =  await node.qemu.$(host.vimid).vncproxy.$post({websocket: true, "generate-password": false})
+    console.log(vncproxy)
+    res.status(200).json({ message: `wss://192.168.0.2:${vncproxy.port}`, password: encodeURIComponent(vncproxy.ticket) });
     return
 }

@@ -21,7 +21,7 @@ function Host({ host }: any) {
                 <StopHost id={host.id} />
                 <EndHost id={host.id} />
             </div>
-            <DynamicComponent url={host.vnc_url} password={host.passwordVnc} />
+            <DynamicComponent url={host.vnc_url} password={host.passwordVnc} id={host.id}/>
         </div>
     )
 }

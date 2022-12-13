@@ -51,7 +51,7 @@ export default async function handler(
 <html>
 <body>
 <p>Поздравляем с покупкой хостинга</p>
-<p>IP 192.168.0.1</p>
+<p>IP </p>
 <p>Логин: sshLogin</p>
 <p>Пароль: example</p>
 </body>

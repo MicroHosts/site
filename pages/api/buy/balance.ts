@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addBalance, getUserIdByEmail } from "@/models/user";
+import { getUserIdByEmail } from "@/models/user";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
+import { createPayment } from "@/models/payment";
+const crypto = require('crypto');
 
 export default async function handler(
     req: NextApiRequest,
@@ -19,8 +21,10 @@ export default async function handler(
             res.status(404).json({ message: "Пользователь не найден" });
             return;
         }
-        const balance = await addBalance(user.id, price);
-        res.status(200).json({ message: 'Баланс успешно обновлен' });
+        const payment = await createPayment(user.id, price);
+        var data = `${process.env.PUBLIC_KEY}:${price}:${process.env.PRIVATE_KEY}:RUB:${payment.id}`;
+        const hash = crypto.createHash('md5').update(data).digest("hex");
+        res.status(200).json({ url: `https://pay.freekassa.ru/?m=${process.env.PUBLIC_KEY}&oa=${price}&o=${payment.id}&s=${hash}&currency=RUB` });
     }
 }
 
