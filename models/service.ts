@@ -74,38 +74,7 @@ export const getAvaliableService = async (page:number, idUser: string) => {
     ])
 }
 
-export const getUserService = async (page: number, idUser: string) => {
-    return await prisma.$transaction([
-        prisma.service.count({
-            where: {
-                Order: {
-                    some: {
-                        userId: idUser
-                    }
-                }
-            },
-        }),
-        prisma.service.findMany({
-            take: 10,
-            skip: (page - 1) * 5,
-            orderBy: {
-                id: "desc",
-            },
-            select: {
-                name: true,
-                price: true,
-                description: true,
-            },
-            where: {
-                Order: {
-                    some: {
-                        userId: idUser
-                    }
-                }
-            },
-        })
-    ])
-}
+
 
 export const getServiceById = async (id: string) => {
     return await prisma.service.findUnique({
@@ -139,6 +108,7 @@ export const getServices = async (page: number, search: string) => {
         })
     ])
 }
+
 
 
 // export const getServiceByUserIdHost = async (userId: string) => {

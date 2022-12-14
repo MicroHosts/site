@@ -1,3 +1,5 @@
+import { successToast } from "@/utils/utils";
+
 export default function StopHost({id}: {id:string}) {
 
     const onClick = async() => {
@@ -8,7 +10,7 @@ export default function StopHost({id}: {id:string}) {
             }
         });
         if (res.status === 200) {
-            console.log("OK")
+            successToast("Успешно остановлено")
         }
 
     }

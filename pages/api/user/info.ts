@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]"
-import {getUserIdByEmail, getUserInfo, updateUserInfo} from "@/models/user";
+import {getUserIdByEmail} from "@/models/user";
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -29,4 +30,35 @@ export default async function handler(
     }
     const userInfo = await getUserInfo(user.id);
     res.status(201).json(userInfo);
+}
+
+
+export const updateUserInfo = async (id: string, { data }: any) => {
+    return await prisma.userInfo.update({
+        where: {
+            userId: id,
+        },
+        data: {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            second_name: data.second_name,
+            phone_number: data.phone_number,
+        },
+    })
+};
+
+
+export const getUserInfo = async (id: string) => {
+    return await prisma.userInfo.findFirst({
+        where: {
+            userId: id
+        },
+        select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            second_name: true,
+            phone_number: true,
+        },
+    });
 }

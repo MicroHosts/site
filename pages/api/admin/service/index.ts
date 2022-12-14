@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createService, deleteService, getAllServices, getServiceById, getServices, updateService} from "@/models/service";
+import {createService, deleteService, getServiceById, getServices, updateService} from "@/models/service";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]";
 

@@ -4,15 +4,15 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import useUser from "@/hooks/useUser";
-import Header from "@/billing/header/Header";
+import Header from "@/components/pages/billing/header/Header";
 import { classNames } from "@/utils/utils";
 import Loader from "@/components/loader/Loader";
 
 
-export default function BillingLayout({ children }: {children: JSX.Element}) {
-    const { user, isLoading, isError } = useUser();
+export default function BillingLayout({ children }: { children: JSX.Element }) {
+    const { isLoading, isError } = useUser();
     if (isLoading) {
-        return <Loader/>
+        return <Loader />
 
     }
     if (isError) {

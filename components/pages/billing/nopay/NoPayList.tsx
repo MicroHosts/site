@@ -1,4 +1,9 @@
+import useData from "@/components/hooks/useData";
+
 const NoPayList = () => {
+    const url = '/api/user/nopay/';
+    const { data, isLoading, isError } = useData(url);
+
     return(
         <div className="overflow-x-auto relative">
             <table

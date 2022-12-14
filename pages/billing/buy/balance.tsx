@@ -2,6 +2,7 @@ import Input from "@/components/input/Input"
 import BillingLayout from "@/layouts/Billing"
 import { errorToast, successToast } from "@/utils/utils";
 import Image from "next/image"
+import Router from "next/router";
 import { ReactElement, useState } from "react"
 import { mutate } from "swr";
 
@@ -20,7 +21,7 @@ function Balance() {
         if (res.status !== 200) {
             errorToast(data.message);
         }else if (res.status === 200) {
-            successToast("Вы успешно пополнили баланс!");
+            Router.push(data.url);
             await mutate("/api/user");
         }
     }

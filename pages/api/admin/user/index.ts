@@ -1,8 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createService, deleteService, getAllServices, updateService} from "@/models/service";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]";
-import { getAllUsers } from "@/models/user";
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -25,5 +24,37 @@ export default async function handler(
         res.status(200).json({users: users[1], count: users[0]});
     }else if(req.method === "DELETE"){
     }
+}
+
+
+export const getAllUsers = async (page: number, search: string) => {
+    return await prisma.$transaction([
+        prisma.user.count({
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        }),
+        prisma.user.findMany({
+            take: 5,
+            skip: (page - 1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                emailVerified: true,
+                blocked: true,
+            },
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        })
+    ])
 }
 

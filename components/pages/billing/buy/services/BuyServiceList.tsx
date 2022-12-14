@@ -1,6 +1,6 @@
-import BuyServiceCard from "./BuyServiceCard";
-import BuyServiceCardError from "./BuyServiceCardError";
-import BuyServiceCardSkeleton from "./BuyServiceCardSkeleton";
+import BuyServiceCard from "./card/BuyServiceCard";
+import BuyServiceCardError from "./card/BuyServiceCardError";
+import BuyServiceCardSkeleton from "./card/BuyServiceCardSkeleton";
 import { useRecoilValue } from 'recoil'
 import { userState } from "@/store/user";
 import Pagination from "@/components/pagination/pagiation";

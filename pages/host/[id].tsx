@@ -1,16 +1,17 @@
 import BillingLayout from "@/layouts/Billing"
-import { getAllHosts, getHostById } from "@/models/hosts";
+import { getHostById } from "@/models/hosts";
 import { ReactElement } from "react"
 import dynamic from "next/dynamic";
-import EndHost from "@/components/buttons/EndHost";
-import StartHost from "@/components/buttons/StartHost";
-import RestartHost from "@/components/buttons/RestartHost";
-import StopHost from "@/components/buttons/StopHost";
+import EndHost from "@/components/buttons/host/EndHost";
+import StartHost from "@/components/buttons/host/StartHost";
+import RestartHost from "@/components/buttons/host/RestartHost";
+import StopHost from "@/components/buttons/host/StopHost";
+import prisma from "@/lib/prismadb"
 
-const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
-    loading: () => <p>Loading...</p>,
-    ssr: false,
-});
+// const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
+//     loading: () => <p>Loading...</p>,
+//     ssr: false,
+// });
 
 function Host({ host }: any) {
     return (
@@ -21,10 +22,10 @@ function Host({ host }: any) {
                 <StopHost id={host.id} />
                 <EndHost id={host.id} />
             </div>
-            <DynamicComponent url={host.vnc_url} password={host.passwordVnc} id={host.id}/>
+            {/* <DynamicComponent url={host.vnc_url} password={host.passwordVnc} id={host.id}/> */}
         </div>
     )
-    
+
 }
 
 Host.getLayout = function getLayout(page: ReactElement) {
@@ -54,6 +55,10 @@ export async function getStaticProps(context: any) {
             host: host
         }
     }
+}
+
+const getAllHosts = async () => {
+    return await prisma.host.findMany();
 }
 
 export default Host

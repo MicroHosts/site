@@ -1,6 +1,6 @@
 import {ReactElement} from "react";
 import AdminLayout from "@/layouts/Admin";
-import UserList from "@/components/admin/users/UserList";
+import UserList from "@/pages/admin/users/UserList";
 
 
 function Users() {

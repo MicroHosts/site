@@ -1,13 +1,14 @@
-import useData from '@/components/hooks/useData';
-import usePaginate from '@/components/hooks/usePaginate';
-import Pagination from '@/components/pagination/pagiation';
-import { mutate } from 'swr';
-import ServiceCard from './ServiceCard';
-import ServiceCardError from './ServiceCardError';
-import ServiceCardSkeleton from './ServiceCardSkeleton';
+import HostCard from "./card/HostCard";
+import HostCardSkeleton from "./card/HostCardSkeleton";
+import { HostUser } from "@/types/host";
+import useData from "@/components/hooks/useData";
+import Pagination from "@/components/pagination/pagiation";
+import { mutate } from "swr";
+import HostCardError from "./card/HostCardErrors";
+import usePaginate from "@/components/hooks/usePaginate";
 
-const ServiceList = () => {
-    const url = "/api/user/service"
+const HostList = () => {
+    const url = '/api/user/host/';
     const { data, isLoading, isError } = useData(url);
     const { pageCount, currentPage, setCurrentPage } = usePaginate(data);
 
@@ -19,26 +20,33 @@ const ServiceList = () => {
                     className="text-xs uppercase text-gray-400">
                     <tr>
                         <th scope="col" className="py-3 px-6">
-                            Услуга
+                            Хост
                         </th>
                         <th scope="col" className="py-3 px-6">
-                            Цена
+                            Цена в месяц
+                        </th>
+                        <th scope="col" className="py-3 px-6">
+                            Оплатить до
+                        </th>
+                        <th scope="col" className="py-3 px-6">
+                            Управление
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {isLoading && (
                         <>
-                            <ServiceCardSkeleton />
-                            <ServiceCardSkeleton />
-                            <ServiceCardSkeleton />
+                            <HostCardSkeleton />
+                            <HostCardSkeleton />
+                            <HostCardSkeleton />
+                            <HostCardSkeleton />
                         </>
                     )}
                     {isError && (
-                        <ServiceCardError />
+                        <HostCardError />
                     )}
-                    {data && data.services.map((service: any) => (
-                        <ServiceCard service={service} key={service.id} />
+                    {data && data.map((host: HostUser) => (
+                        <HostCard host={host} />
                     ))}
                 </tbody>
             </table>
@@ -57,4 +65,4 @@ const ServiceList = () => {
     )
 }
 
-export default ServiceList;
+export default HostList;

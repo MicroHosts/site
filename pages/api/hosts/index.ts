@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]"
-import {getAvaliableMainPageHosts, getAvailableHosts, checkIsUserHost} from '@/models/hosts';
+import {getAvaliableMainPageHosts, checkIsUserHost} from '@/models/hosts';
 import {getUserByEmail} from "@/models/user";
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -35,4 +36,33 @@ export default async function handler(
     const avaliableHosts = await getAvailableHosts(page as number);
     res.status(200).json({ hosts: avaliableHosts[1], count: avaliableHosts[0] });
     return;
+}
+
+const getAvailableHosts = async (page: number) => {
+    return await prisma.$transaction([
+        prisma.host.count({
+            where: {
+                Order: null,
+            },
+        }),
+        prisma.host.findMany({
+            take: 5,
+            skip: (page - 1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                cpu: true,
+                ram: true,
+                storage: true,
+            },
+            where: {
+                Order: null,
+            },
+        })
+    ])
 }

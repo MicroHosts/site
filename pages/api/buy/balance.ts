@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getUserIdByEmail } from "@/models/user";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
-import { createPayment } from "@/models/payment";
+import prisma from "@/lib/prismadb";
 const crypto = require('crypto');
 
 export default async function handler(
@@ -28,3 +28,14 @@ export default async function handler(
     }
 }
 
+const createPayment = async (
+    userId: string,
+    price: number,
+) => {
+    return await prisma.payment.create({
+        data: {
+            userId: userId,
+            amount: price,
+        },
+    });
+}

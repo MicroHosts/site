@@ -1,5 +1,8 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {changePassword, verifyRecovery} from "@/models/user";
+import {verifyRecovery} from "@/models/user";
+import prisma from "@/lib/prismadb";
+
+const bcrypt = require('bcrypt');
 
 export default async function handler(
     req: NextApiRequest,
@@ -32,3 +35,37 @@ export default async function handler(
     }
 }
 
+
+export const changePassword = async (token: string, password: string) => {
+    const recoveryToken = await prisma.recoveryToken.findUnique({
+        where: {
+            token: token
+        }
+    });
+    if (recoveryToken && recoveryToken.expires > new Date()) {
+        const salt = await bcrypt.genSalt(10);
+        const passwordHashed = await bcrypt.hash(password, salt);
+        await prisma.password.update({
+            where: {
+                userId: recoveryToken.userId
+            },
+            data: {
+                salt: salt,
+                hashed: passwordHashed,
+            }
+        });
+        await prisma.recoveryToken.delete({
+            where: {
+                token: token
+            }
+        });
+        return true;
+    } else if (recoveryToken && recoveryToken.expires < new Date()) {
+        await prisma.recoveryToken.delete({
+            where: {
+                token: token
+            }
+        });
+    }
+    return false;
+}

@@ -1,6 +1,6 @@
 import {ReactElement} from "react";
-import MainProfile from "@/billing/profile/main/MainProfile";
-import SecureProfile from "@/billing/profile/main/SecureProfile";
+import MainProfile from "@/components/pages/billing/profile/main/MainProfile";
+import SecureProfile from "@/components/pages/billing/profile/main/SecureProfile";
 import BillingLayout from "@/layouts/Billing";
 import TabList from "@/components/tab/TabList";
 

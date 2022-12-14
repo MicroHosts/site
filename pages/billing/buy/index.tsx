@@ -1,8 +1,8 @@
 import {ReactElement} from "react";
 import BillingLayout from "@/layouts/Billing";
 import TabList from "@/components/tab/TabList";
-import BuyHostList from "@/components/billing/buy/hosts/BuyHostList";
-import BuyServiceList from "@/components/billing/buy/services/BuyServiceList";
+import BuyHostList from "@/components/pages/billing/buy/hosts/BuyHostList";
+import BuyServiceList from "@/components/pages/billing/buy/services/BuyServiceList";
 
 const tabs = [
   {

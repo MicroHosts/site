@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]"
-import {changePasswordByEmail, checkPasswordAndNewPassword, getUserByEmail} from '@/models/user';
+import { getUserByEmail } from '@/models/user';
+import prisma from "@/lib/prismadb";
+
+const bcrypt = require('bcrypt');
 
 export default async function handler(
     req: NextApiRequest,
@@ -36,4 +39,51 @@ export default async function handler(
         return;
     }
     res.status(200).json({ message: "Пароль успешно изменен" });
+}
+
+
+export const checkPasswordAndNewPassword = async (email: string, password: string, newPassword: string) => {
+    if (!password || !newPassword) {
+        return null;
+    }
+    if (password === newPassword) {
+        return null;
+    }
+    const user = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+        include: {
+            password: true,
+        }
+    })
+    if (!user) {
+        return null;
+    }
+    const isMatch = await bcrypt.compare(password, user.password!!.hashed);
+    if (!isMatch) {
+        return null;
+    }
+    return true;
+}
+
+export const changePasswordByEmail = async (email: string, password: string) => {
+    if (!email) {
+        return null;
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const user = await getUserByEmail(email);
+    if (!user) {
+        return null;
+    }
+    return await prisma.password.update({
+        where: {
+            userId: user.id,
+        },
+        data: {
+            hashed: hash,
+            salt: salt
+        }
+    })
 }

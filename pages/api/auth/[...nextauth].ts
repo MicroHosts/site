@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { getPasswordByUserId, getUserByEmail } from "@/models/user";
+import { getUserByEmail } from "@/models/user";
+import prisma from "@/lib/prismadb";
 const bcrypt = require('bcrypt');
 
 // @ts-ignore
@@ -60,6 +61,16 @@ const authOptions: NextAuthOptions = {
     //     }
     // }
 }
+
+const getPasswordByUserId = async (userId: string) => {
+    const password = await prisma.password.findUnique({
+        where: {
+            userId: userId
+        }
+    });
+    return password;
+}
+
 export default NextAuth(authOptions)
 
 export {authOptions}

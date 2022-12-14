@@ -4,7 +4,6 @@ import {useSetRecoilState} from 'recoil'
 import { userState } from "@/store/user";
 import { useEffect } from "react";
 
-//TODO переделать на global state
 const fetcher = async(url:string) => {
     const res = await fetch(url)
 

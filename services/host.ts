@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]"
-import { checkIsUserHost, getHostById } from '@/models/hosts';
+import { checkIsUserHost } from '@/models/hosts';
 import { getUserByEmail } from "@/models/user";
 
-//Proxmox control by Host
 export const checkByHost = async (req: NextApiRequest, res: NextApiResponse): Promise<Boolean> => {
     const session = await unstable_getServerSession(req, res, authOptions);
     if (!session) {

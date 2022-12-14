@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]"
-import { getUserService } from '@/models/service';
 import { getUserIdByEmail } from '@/models/user';
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -22,7 +22,27 @@ export default async function handler(
         res.status(400).json({ message: "Bad request." });
         return;
     }
-    const page = req.query.page ? req.query.page : 1
-    const services = await getUserService(page as number, user.id);
-    res.status(200).json({services: services[1], count: services[0]});
+    // const page = req.query.page ? req.query.page : 1
+    const services = await getUserService(user.id);
+    res.status(200).json(services);
+}
+
+//TODO Pagination
+export const getUserService = async (idUser: string) => {
+    return await prisma.orderService.findMany({
+        where: {
+            userId: idUser,
+        },
+        select: {
+            id: true,
+            rentDate: true,
+            service: {
+                select: {
+                    name: true,
+                    description: true,
+                    price: true,
+                }
+            }
+        }
+    });
 }

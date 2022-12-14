@@ -1,8 +1,10 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {addBalance, getUserById} from "@/models/user";
-import { getPaymentById, PaymentPaid } from "@/models/payment";
+import { getPaymentById } from "@/models/payment";
+import prisma from "@/lib/prismadb";
+
 const requestIp = require('request-ip');
 const crypto = require('crypto');
+
 
 export default async function handler(
     req: NextApiRequest,
@@ -80,3 +82,29 @@ export default async function handler(
     }
 }
 
+const PaymentPaid = async (
+    id: string,
+) => {
+    return await prisma.payment.update({
+        where: {
+            id: id,
+        },
+        data: {
+            paid: true,
+        },
+    });
+}
+
+
+export const addBalance = async (userId: string, amount: number) => {
+    return await prisma.balance.update({
+        where: {
+            userId: userId
+        },
+        data: {
+            amount: {
+                increment: amount
+            }
+        }
+    });
+}

@@ -1,10 +1,8 @@
 import { ReactElement } from "react";
 import AdminLayout from "@/layouts/Admin";
-import UserList from "@/components/admin/users/UserList";
-import { getUserAllId, getUserById } from "@/models/user";
-import UserInfo from "@/components/admin/user/UserInfo";
-import HostUserList from "@/components/admin/user/hosts/HostUserList";
-import ServiceUserList from "@/components/admin/user/services/ServicesUserList";
+import UserInfo from "@/pages/admin/user/UserInfo";
+import HostUserList from "@/pages/admin/user/hosts/HostUserList";
+import ServiceUserList from "@/pages/admin/user/services/ServicesUserList";
 
 
 function Users({ user }: any) {
@@ -29,8 +27,12 @@ Users.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getStaticPaths() {
-    const ids = await getUserAllId();
-    console.log(ids)
+    const prisma = require("@/lib/prismadb");
+    const ids = await prisma.user.findMany({
+        select: {
+            id: true,
+        }
+    });
     const paths = ids.map((id: any) => ({
         params: { id: id.id }
     }))
@@ -58,6 +60,64 @@ export async function getStaticProps(context: any) {
             services: user?.services? services : [],})
         }
     }
+}
+
+export const getUserById = async (id: string) => {
+    const prisma = require("@/lib/prismadb");
+    console.log(prisma)
+    return await prisma.user.findUnique({
+        where: {
+            id
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            emailVerified: true,
+            blocked: true,
+            hosts: {
+                select: {
+                    id: true,
+                    host: {
+                        select: {
+                            id: true,
+                            name: true,
+                            vimid: true,
+                            price: true,
+                        }
+                    },
+                    rentDate: true,
+                }
+            },
+            balance: {
+                select: {
+                    amount: true,
+                }
+            },
+            info: {
+                select: {
+                    id: true,
+                    first_name: true,
+                    last_name: true,
+                    second_name: true,
+                    phone_number: true,
+                }
+            },
+            services: {
+                select: {
+                    id: true,
+                    rentDate: true,
+                    service: {
+                        select: {
+                            id: true,
+                            name: true,
+                            price: true,
+                        }
+                    },
+                }
+            }
+        }
+    });
 }
 
 export default Users

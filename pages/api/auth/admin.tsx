@@ -1,6 +1,9 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {checkAdmin, createAdmin} from "@/models/user";
+import {checkAdmin} from "@/models/user";
 import {validateEmail} from "@/utils/utils";
+import prisma from "@/lib/prismadb";
+
+const bcrypt = require('bcrypt');
 
 export default async function handler(
     req: NextApiRequest,
@@ -36,3 +39,22 @@ export default async function handler(
     }
 }
 
+
+export const createAdmin = async (username: string, email: string, password: string) => {
+    const salt = await bcrypt.genSalt(10);
+    const passwordHashed = await bcrypt.hash(password, salt);
+    await prisma.user.create({
+        data: {
+            email: email,
+            name: username,
+            password: {
+                create: {
+                    salt: salt,
+                    hashed: passwordHashed,
+                }
+            },
+            emailVerified: true,
+            role: "ADMIN",
+        }
+    });
+}

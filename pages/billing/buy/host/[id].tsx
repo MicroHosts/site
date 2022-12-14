@@ -1,11 +1,12 @@
 import BillingLayout from "@/layouts/Billing"
-import { getAvailableHostsAll, getHostById } from "@/models/hosts";
+import { getHostById } from "@/models/hosts";
 import { errorToast, successToast } from "@/utils/utils";
 import { ReactElement } from "react"
 import { FaMemory } from "react-icons/fa";
 import { FiCpu } from "react-icons/fi";
 import { MdStorage } from "react-icons/md";
 import { mutate } from "swr";
+import prisma from "@/lib/prismadb"
 
 function BuyHost({ host }: any) {
     const onBuy = async (months: number) => {
@@ -27,6 +28,8 @@ function BuyHost({ host }: any) {
         } else if (res.status === 200) {
             successToast("Вы успешно купили хост!\n Данные отправлены вам на почту");
             await mutate('/api/user')
+            //TODO check
+            await mutate('/api/user/host')
         } else {
             errorToast("Что-то пошло не так");
         }
@@ -113,5 +116,23 @@ export async function getStaticProps(context: any) {
         }
     }
 }
+
+const getAvailableHostsAll = async () => {
+    return await prisma.host.findMany({
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            price: true,
+            cpu: true,
+            ram: true,
+            storage: true,
+        },
+        where: {
+            Order: null,
+        },
+    })
+}
+
 
 export default BuyHost

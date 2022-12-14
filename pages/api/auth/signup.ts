@@ -1,7 +1,10 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createUser} from "@/models/user";
-import {validateEmail} from "@/utils/utils";
+import {getUserByEmail} from "@/models/user";
+import {makeid, validateEmail} from "@/utils/utils";
 import client from "@/lib/mail";
+import prisma from "@/lib/prismadb";
+
+const bcrypt = require('bcrypt');
 
 export default async function handler(
     req: NextApiRequest,
@@ -54,3 +57,43 @@ export default async function handler(
     }
 }
 
+
+
+const createUser = async (name: string, email: string, password: string) => {
+    const user1 = await getUserByEmail(email);
+    if (user1) {
+        return null;
+    }
+    const salt = await bcrypt.genSalt(10);
+    const passwordHashed = await bcrypt.hash(password, salt);
+    const user = await prisma.user.create({
+        data: {
+            name: name,
+            email: email,
+        }
+    });
+    await prisma.password.create({
+        data: {
+            salt: salt,
+            hashed: passwordHashed,
+            user: {
+                connect: {
+                    id: user.id
+                }
+            }
+        }
+    });
+    const token = makeid(32);
+    await prisma.verificationToken.create({
+        data: {
+            token: token,
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+            user: {
+                connect: {
+                    id: user.id
+                }
+            }
+        }
+    });
+    return token;
+}

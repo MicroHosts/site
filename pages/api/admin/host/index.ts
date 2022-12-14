@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createHost, deleteHost, getHostById, getHosts, updateHost } from "@/models/hosts";
+import { getHostById } from "@/models/hosts";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -123,4 +124,103 @@ function validatePriceAndIDProxmox({ price1, idproxmo1, res }: any) {
         return false;
     }
     return true;
+}
+
+
+const getHosts = async (page: number, search: string) => {
+    return await prisma.$transaction([
+        prisma.host.count({
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        }),
+        prisma.host.findMany({
+            take: 5,
+            skip: (page - 1) * 5,
+            orderBy: {
+                id: "desc",
+            },
+            where: {
+                name: {
+                    contains: search,
+                }
+            },
+        })
+    ])
+}
+
+
+const deleteHost = async (id: string) => {
+    return await prisma.host.delete({
+        where: {
+            id: id,
+        }
+    });
+}
+
+const createHost = async (
+    hostName: string,
+    cpuInfo: string,
+    ramInfo: string,
+    storageInfo: string,
+    idproxmox: number,
+    login: string,
+    password: string,
+    ip: string,
+    desciption: string,
+    price: number,
+    vnc: string,
+    vncPassword: string,
+) => {
+
+    return await prisma.host.create({
+        data: {
+            name: hostName,
+            cpu: cpuInfo,
+            ram: ramInfo,
+            storage: storageInfo,
+            vimid: idproxmox,
+            login: login,
+            password: password,
+            ip: ip,
+            description: desciption,
+            price: price,
+            vnc: vnc,
+            passwordVnc: vncPassword,
+        },
+    });
+}
+
+const updateHost = async (
+    id: string,
+    hostName: string,
+    cpuInfo: string,
+    ramInfo: string,
+    storageInfo: string,
+    idproxmox: number,
+    login: string,
+    password: string,
+    ip: string,
+    desciption: string,
+    price: number,
+) => {
+    return await prisma.host.update({
+        where: {
+            id: id,
+        },
+        data: {
+            name: hostName,
+            cpu: cpuInfo,
+            ram: ramInfo,
+            storage: storageInfo,
+            vimid: idproxmox,
+            login: login,
+            password: password,
+            ip: ip,
+            description: desciption,
+            price: price,
+        },
+    });
 }

@@ -1,4 +1,3 @@
-
 import { MouseEvent, ReactElement, useState } from "react"
 import { checkAdmin } from "@/models/user";
 import AuthLayout from "@/layouts/Auth";

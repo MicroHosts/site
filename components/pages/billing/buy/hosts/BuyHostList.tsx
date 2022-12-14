@@ -2,9 +2,9 @@ import useData from "@/components/hooks/useData"
 import usePaginate from "@/components/hooks/usePaginate";
 import Pagination from "@/components/pagination/pagiation";
 import { mutate } from "swr";
-import BuyHostCard from "./BuyHostCard";
-import BuyHostCardError from "./BuyHostCardError";
-import BuyHostCardSkeleton from "./BuyHostSkeleton";
+import BuyHostCard from "./card/BuyHostCard";
+import BuyHostCardError from "./card/BuyHostCardError";
+import BuyHostCardSkeleton from "./card/BuyHostSkeleton";
 
 export default function BuyHostList() {
     const url = "/api/hosts";

@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { buyHost, getHostById } from "@/models/hosts";
 import client from '@/lib/mail'
-import { getUserIdByEmail, removeBalance } from "@/models/user";
+import { getUserIdByEmail } from "@/models/user";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -16,6 +16,22 @@ export default async function handler(
     }
     if (req.method === 'POST') {
         const { hostid, mounth } = req.body
+        if(!mounth){
+            res.status(400).json({ message: "Не указан срок аренды" });
+            return;
+        }
+        if(!hostid){
+            res.status(400).json({ message: "Не указан ID хоста" });
+            return;
+        }
+        if(mounth > 12){
+            res.status(400).json({ message: "Срок аренды не может быть больше 12 месяцев" });
+            return;
+        }
+        if(mounth < 1){
+            res.status(400).json({ message: "Срок аренды не может быть меньше 1 месяца" });
+            return;
+        }
         const user = await getUserIdByEmail(session.user!.email!);
         if (!user) {
             res.status(404).json({ message: "Пользователь не найден" });
@@ -51,20 +67,56 @@ export default async function handler(
 <html>
 <body>
 <p>Поздравляем с покупкой хостинга</p>
-<p>IP </p>
-<p>Логин: sshLogin</p>
-<p>Пароль: example</p>
+<p>IP ${host.ip}</p>
+<p>Логин: ${host.login}</p>
+<p>Пароль: ${host.password}</p>
 </body>
 </html>`,
 
         }
-        await client.sendMail(mailData, function (err, info) {
-            if (err)
-                console.log(err)
-            else
-                console.log(info);
+        await client.sendMail(mailData, function (err: any, info: any) {
+            // if (err)
+            //     console.log(err)
+            // else
+            //     console.log(info);
         });
         res.status(200).json({ message: 'Хост успешно куплен' });
     }
 }
 
+
+export const removeBalance = async (userId: string, amount: number) => {
+    return await prisma.balance.update({
+        where: {
+            userId: userId
+        },
+        data: {
+            amount: {
+                decrement: amount
+            }
+        }
+    });
+}
+
+const getHostById = async (id: string) => {
+    return await prisma.host.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            Order: true
+        }
+    });
+}
+
+const buyHost = async (userId: string, hostId: string, month: number) => {
+    let date = new Date();
+    date.setMonth(date.getMonth() + month);
+    return await prisma.orderHost.create({
+        data: {
+            userId: userId,
+            hostId: hostId,
+            rentDate: date,
+        },
+    });
+}

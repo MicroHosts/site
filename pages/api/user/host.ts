@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]"
-import { getHostsByUserId } from '@/models/hosts';
 import { getUserByEmail } from '@/models/user';
+import prisma from "@/lib/prismadb";
 
 export default async function handler(
     req: NextApiRequest,
@@ -28,4 +28,24 @@ export default async function handler(
         return;
     }
     res.status(200).json(host);
+}
+
+//TODO Pagination
+const getHostsByUserId = async (userId: string) => {
+    return await prisma.orderHost.findMany({
+        where: {
+            userId: userId,
+        },
+        select: {
+            id: true,
+            rentDate: true,
+            host: {
+                select: {
+                    name: true,
+                    description: true,
+                    price: true,
+                }
+            }
+        }
+    });
 }

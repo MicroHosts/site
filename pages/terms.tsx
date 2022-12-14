@@ -1,10 +1,7 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-import VDSCard from "@/components/main/VDSCard";
-import HeaderMain from "@/components/main/HeaderMain";
-import FooterMain from "@/components/main/FooterMain";
-import Link from 'next/link';
+import HeaderMain from "@/components/pages/main/HeaderMain";
+import FooterMain from "@/components/pages/main/FooterMain";
 
 function Privacy() {
     return (

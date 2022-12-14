@@ -2,8 +2,8 @@ import NoPayList from "@/billing/nopay/NoPayList";
 import { ReactElement} from "react";
 import BillingLayout from "@/layouts/Billing";
 import TabList from "@/components/tab/TabList";
-import HostList from "@/components/billing/hosts/HostList";
-import ServiceList from "@/components/billing/services/ServiceList";
+import HostList from "@/components/pages/billing/hosts/HostList";
+import ServiceList from "@/components/pages/billing/services/ServiceList";
 
 const tabs = [
     {
