@@ -1,7 +1,9 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {createService, deleteService, getServiceById, getServices, updateService} from "@/models/service";
+import {deleteService, getServiceById, getServices, updateService} from "@/models/service";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]";
+import prisma from "@/lib/prismadb";
+import {getUserByEmail} from "@/models/user";
 
 export default async function handler(
     req: NextApiRequest,
@@ -12,8 +14,13 @@ export default async function handler(
         res.status(401).json({ message: "You must be logged in." });
         return;
     }
-    if(session.user?.email !== "admin@microhost1.ru"){
-        res.status(401).json({ message: "You must be admin." });
+    const user = await getUserByEmail(session.user?.email);
+    if(!user) {
+        res.status(401).json({ message: "You must be logged in." });
+        return;
+    }
+    if(user.role !== "ADMIN") {
+        res.status(401).json({ message: "You must be logged in." });
         return;
     }
     if (req.method === 'POST') {
@@ -68,6 +75,16 @@ export default async function handler(
     }
 }
 
+const createService = async (name: string, description: string, price: number) => {
+    return await prisma.service.create({
+        data: {
+            name,
+            description,
+            price,
+        }
+    });
+}
+
 
 function validate({ name, desciption, price, res }:any) {
     if(!name){
@@ -82,4 +99,5 @@ function validate({ name, desciption, price, res }:any) {
         res.status(422).json({ message: 'Цена не может быть пустой'});
         return false
     }
+    return true
 }

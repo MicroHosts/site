@@ -2,15 +2,7 @@
 import prisma from "@/lib/prismadb";
 
 
-export const createService = async (name: string, description: string, price: number) => {
-    return await prisma.service.create({
-        data: {
-            name,
-            description,
-            price,
-        }
-    });
-}
+
 
 export const getAllServices = async () => {
     return await prisma.service.findMany();
@@ -57,6 +49,7 @@ export const getAvaliableService = async (page:number, idUser: string) => {
                 id: "desc",
             },
             select: {
+                id: true,
                 name: true,
                 price: true,
                 description: true,

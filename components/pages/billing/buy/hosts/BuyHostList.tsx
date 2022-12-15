@@ -25,7 +25,7 @@ export default function BuyHostList() {
             {isError && (
                 <BuyHostCardError />
             )}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                 {data && data.hosts.map((host: any) => (
                     <BuyHostCard host={host} key={host.id} />
                 ))}

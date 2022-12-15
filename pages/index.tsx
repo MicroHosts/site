@@ -25,7 +25,7 @@ function Home({ hosts }: any) {
                         </div>
                         <Image src="/hero1.svg" alt={"hero"} width={1000} height={500} className="md:w-2/4 mx-auto mt-4" />
                     </div>
-                    <div className="pt-12">
+                    <div className="pt-12" id={"services"}>
                         <div className="text-center text-4xl font-bold">
                             Наши услуги
                         </div>
@@ -64,7 +64,7 @@ function Home({ hosts }: any) {
                             </div>
                         </div>
                     </div>
-                    <div className="text-center text-3xl font-bold mt-12">
+                    <div className="text-center text-3xl font-bold mt-12" id="tarifs">
                         Тарифы
                     </div>
                     {/* <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div> */}

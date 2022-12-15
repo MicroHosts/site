@@ -14,9 +14,7 @@ export const getHostById = async (id: string) => {
             ram: true,
             description: true,
             price: true,
-            vnc: true,
             vimid: true,
-            passwordVnc: true,
             Order: {
                 select: {
                     id: true,

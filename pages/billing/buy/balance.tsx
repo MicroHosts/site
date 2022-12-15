@@ -9,7 +9,6 @@ import { mutate } from "swr";
 function Balance() {
     const [buyPrice, setBuyPrice] = useState(0);
     const onBuy = async(price:number) => {
-        //TODO add buy method for freekassa and e.t.c
         const res = await fetch("/api/buy/balance", {
             method: "POST",
             headers: {
@@ -21,7 +20,7 @@ function Balance() {
         if (res.status !== 200) {
             errorToast(data.message);
         }else if (res.status === 200) {
-            Router.push(data.url);
+            await Router.push(data.url);
             await mutate("/api/user");
         }
     }
@@ -73,7 +72,7 @@ function Balance() {
                 </div>
             </div>
             <div className="mt-24 flex flex-col">
-                <Input type="text" name="Своя сумма" placeholder="Введите сумму" value={buyPrice} onChange={(e) => { 
+                <Input type="text" name="Своя сумма" placeholder="Введите сумму" value={buyPrice} onChange={(e) => {
                     const value:number = parseInt(e.target.value);
                     if(isNaN(value)) {
                         setBuyPrice(0);

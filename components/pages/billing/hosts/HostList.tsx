@@ -31,6 +31,9 @@ const HostList = () => {
                         <th scope="col" className="py-3 px-6">
                             Управление
                         </th>
+                        <th scope="col" className="py-3 px-6">
+                            Продление
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +49,7 @@ const HostList = () => {
                         <HostCardError />
                     )}
                     {data && data.map((host: HostUser) => (
-                        <HostCard host={host} />
+                        <HostCard host={host} key={host.id}/>
                     ))}
                 </tbody>
             </table>

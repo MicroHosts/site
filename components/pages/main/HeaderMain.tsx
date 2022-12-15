@@ -8,12 +8,12 @@ export default function HeaderMain(){
     return(
         <nav className="px-2 sm:px-4 py-2.5">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
-                <a href="https://microhost1.ru/" className="flex items-center">
+                <Link href="/" className="flex items-center">
                     <Image className="w-12 h-12 mr-2"
                            src="/logo.svg" alt="logo" width={400} height={400}/>
                     <span
                         className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
-                </a>
+                </Link>
                 <button data-collapse-toggle="navbar-default" type="button"
                         className="inline-flex items-center p-2 ml-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
                         aria-controls="navbar-default" aria-expanded="false"
@@ -29,25 +29,30 @@ export default function HeaderMain(){
                 <div className={classNames(open ? "" : "hidden", "w-full md:block md:w-auto")}>
                     <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                         <li>
-                            <Link href="#"
+                            <Link href="/"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg"
                             >Главная</Link>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="#services"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
-                                О нас</a>
+                                Услуги</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="#tarifs"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
                                 Тарифы</a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="#about"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
-                                Мониторинг</a>
+                                О нас</a>
                         </li>
+                        {/*<li>*/}
+                        {/*    <a href="#"*/}
+                        {/*       className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">*/}
+                        {/*        Мониторинг</a>*/}
+                        {/*</li>*/}
                     </ul>
                 </div>
                 <div className={classNames(open ? "" : "hidden", "w-full md:block md:w-auto")}>

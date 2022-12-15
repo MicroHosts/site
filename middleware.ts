@@ -23,7 +23,6 @@ export async function middleware(req: NextRequest){
         return NextResponse.rewrite(new URL('/auth/login', req.url))
     }
     if (req.nextUrl.pathname.startsWith('/host')) {
-        console.log(req)
         const user = await fetch(`http://localhost:3000/api/user`,{
             headers: req.headers
         })

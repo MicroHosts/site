@@ -39,11 +39,11 @@ model User {
 model Payment {
   id        String   @id @default(cuid())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  
+  userId    String
   amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  paid      Boolean  @default(false) 
+  paid      Boolean  @default(false)
 }
 
 model UserInfo{
@@ -105,8 +105,8 @@ model Host{
   ip          String
   password    String
   description String
-  vnc         String
-  passwordVnc String
+//  vnc         String
+//  passwordVnc String
   ready       Boolean @default(false)
   price       Int
   // status      HostStatus

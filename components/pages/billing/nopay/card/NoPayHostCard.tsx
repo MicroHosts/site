@@ -1,6 +1,6 @@
-import { HostUser } from "@/types/host"
 
-const NoPayerHostCard = ({ host }: { host: HostUser }) => {
+
+const NoPayHostCard = ({ host }: any) => {
     const date = new Date(host.rentDate)
     const dateformat = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear()
     return (
@@ -9,6 +9,9 @@ const NoPayerHostCard = ({ host }: { host: HostUser }) => {
                 className="py-4 px-6 font-medium whitespace-nowrap text-white">
                 {host.host.name}
             </th>
+            <td className="py-4 px-6">
+                Хост
+            </td>
             <td className="py-4 px-6">
                 {host.host.price} руб
             </td>
@@ -26,4 +29,4 @@ const NoPayerHostCard = ({ host }: { host: HostUser }) => {
 
 
 
-export default NoPayerHostCard
+export default NoPayHostCard

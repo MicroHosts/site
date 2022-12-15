@@ -56,6 +56,9 @@ export default function HostList() {
                         <th scope="col" className="py-3 px-6">
                             Управление
                         </th>
+                        <th scope="col" className="py-3 px-6">
+                            Продлить
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

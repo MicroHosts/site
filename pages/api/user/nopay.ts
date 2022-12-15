@@ -31,10 +31,7 @@ export default async function handler(
 const getNoPayServices = async (idUser: string) => {
     return await prisma.orderService.findMany({
         where: {
-            userId: idUser,
-            rentDate: {
-                gte: new Date(),
-            }
+            userId: idUser
         },
         select: {
             id: true,
@@ -55,9 +52,6 @@ const getNoPayHosts = async (userId: string) => {
     return await prisma.noPayOrderHost.findMany({
         where: {
             userId: userId,
-            rentDate: {
-                gte: new Date(),
-            }
         },
         select: {
             id: true,

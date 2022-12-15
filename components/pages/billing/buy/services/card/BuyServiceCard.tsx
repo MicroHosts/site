@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const BuyServiceCard = ({service}: any) => {
     return(
         <div className="mt-4 bg-zinc-800 mx-auto rounded">
@@ -14,9 +16,9 @@ const BuyServiceCard = ({service}: any) => {
                     {service.price} руб / мес
                 </div>
                 <div className="my-auto">
-                    <button type="button"
+                    <Link href={`/billing/buy/service/${service.id}`}
                             className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base">Купить
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

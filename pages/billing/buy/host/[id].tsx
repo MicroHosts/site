@@ -41,9 +41,6 @@ function BuyHost({ host }: any) {
                 <div className="md:flex-1 px-4">
                     <div className="flex flex-row">
                         <h2 className="mb-2 leading-tight tracking-tight font-bold text-white text-2xl md:text-3xl">{host.name}</h2>
-                        {/* <div className="rounded-lg bg-blue-500 flex py-2 px-3 ml-4">
-                            <span className="font-bold text-white-600 text-3xl">{host.price}р</span>
-                        </div> */}
                     </div>
                     <div className="flex items-center space-x-4 my-4">
                         <ul role="list" className="space-y-5 my-7">
@@ -65,18 +62,18 @@ function BuyHost({ host }: any) {
 
                     <p className="text-white">{host.description}</p>
                     <div className="flex flex-col mt-12">
-                        <button type="button" onClick={() => {
-                            onBuy(1)
+                        <button type="button" onClick={async() => {
+                            await onBuy(1)
                         }}
                             className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на месяц {host.price} рублей
                         </button>
-                        <button type="button" onClick={() => {
-                            onBuy(6)
+                        <button type="button" onClick={async() => {
+                            await onBuy(6)
                         }}
                             className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на 6 месяцев {host.price * 6} рублей
                         </button>
-                        <button type="button" onClick={() => {
-                            onBuy(12)
+                        <button type="button" onClick={async () => {
+                            await onBuy(12)
                         }}
                             className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на 1 год {host.price * 12} рублей
                         </button>
@@ -103,7 +100,7 @@ export async function getStaticPaths() {
     }))
     return {
         paths: paths,
-        fallback: false, // can also be true or 'blocking'
+        fallback: 'blocking', // can also be true or 'blocking'
     }
 }
 
@@ -113,7 +110,8 @@ export async function getStaticProps(context: any) {
     return {
         props: {
             host: host
-        }
+        },
+        revalidate: 10
     }
 }
 

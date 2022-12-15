@@ -41,6 +41,7 @@ const getHostsByUserId = async (userId: string) => {
             rentDate: true,
             host: {
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                     price: true,

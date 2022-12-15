@@ -1,8 +1,8 @@
 import BuyServiceCard from "./card/BuyServiceCard";
 import BuyServiceCardError from "./card/BuyServiceCardError";
 import BuyServiceCardSkeleton from "./card/BuyServiceCardSkeleton";
-import { useRecoilValue } from 'recoil'
-import { userState } from "@/store/user";
+// import { useRecoilValue } from 'recoil'
+// import { userState } from "@/store/user";
 import Pagination from "@/components/pagination/pagiation";
 import usePaginate from "@/components/hooks/usePaginate";
 import useData from "@/components/hooks/useData";
@@ -10,7 +10,7 @@ import { mutate } from "swr";
 
 export default function BuyServiceList() {
     const url = "/api/services";
-    const user = useRecoilValue(userState);
+    // const user = useRecoilValue(userState);
     const { data, isLoading, isError } = useData(url);
     const { pageCount, currentPage, setCurrentPage } = usePaginate(data);
 
