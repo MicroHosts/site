@@ -1,5 +1,4 @@
 import BillingLayout from "@/layouts/Billing"
-import { getHostById } from "@/models/hosts";
 import { errorToast, successToast } from "@/utils/utils";
 import { ReactElement } from "react"
 import { FaMemory } from "react-icons/fa";
@@ -7,17 +6,19 @@ import { FiCpu } from "react-icons/fi";
 import { MdStorage } from "react-icons/md";
 import { mutate } from "swr";
 import prisma from "@/lib/prismadb"
+import { getSession } from "next-auth/react";
+import { getUserByEmail } from "@/models/user";
 
 function ExtendHost({ host }: any) {
     const onBuy = async (months: number) => {
-        const res = await fetch("/api/buy/host", {
+        const res = await fetch("/api/extend/host", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(
                 {
-                    hostid: host.id,
+                    orderId: host.id,
                     mounth: months
                 }
             )
@@ -26,7 +27,7 @@ function ExtendHost({ host }: any) {
         if (res.status !== 200) {
             errorToast(data.message);
         } else if (res.status === 200) {
-            successToast("Вы успешно купили хост!\n Данные отправлены вам на почту");
+            successToast("Вы продлили хост!");
             await mutate('/api/user')
             //TODO check
             await mutate('/api/user/host')
@@ -95,26 +96,59 @@ ExtendHost.getLayout = function getLayout(page: ReactElement) {
 
 export async function getServerSideProps(context:any){
     const {params, req} = context;
-
-
+    const session = await getSession({req})
+    if(!session){
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            }
+        }
+    }
+    const user = await getUserByEmail(session.user?.email);
+    if(!user){
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            }
+        }
+    }
+    const host = await getHost(params.id, user.id);
+    if(!host){
+        return {
+            redirect: {
+                destination: '/billing',
+                permanent: false,
+            }
+        }
+    }
+    return {
+        props: {
+            host: host
+        }
+    }
 }
 
-const getHosts = async () => {
-    return await prisma.host.findMany({
+const getHost = async (id: string, idUser: string) => {
+    return await prisma.orderHost.findFirst({
+        where: {
+            id: id,
+            userId: idUser
+        },
         select: {
             id: true,
-            name: true,
-            description: true,
-            price: true,
-            cpu: true,
-            ram: true,
-            storage: true,
-        },
-        where: {
-            NOT: {
-                Order: null,
+            host: {
+                select: {
+                    name: true,
+                    description: true,
+                    price: true,
+                    cpu: true,
+                    ram: true,
+                    storage: true,
+                }
             }
-        },
+        }
     })
 }
 

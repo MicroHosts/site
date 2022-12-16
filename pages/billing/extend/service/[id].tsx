@@ -107,6 +107,7 @@ const getServiceByUserId = async (id: string, userId: string) => {
     return await prisma.orderService.findFirst({
         where: {
             id: id,
+            userId: userId
         },
         select: {
             id: true,
