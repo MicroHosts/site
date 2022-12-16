@@ -45,9 +45,9 @@ const NoPayList = () => {
                 {isError && (
                     <NoPayCardError />
                 )}
-                {data && data.services.map((service: any) => (
+                {/* {data && data.services.map((service: any) => (
                     <NoPayServiceCard service={service} key={service.id}/>
-                ))}
+                ))} */}
                 {data && data.hosts.map((host: HostUser) => (
                     <NoPayHostCard host={host} key={host.id}/>
                 ))}

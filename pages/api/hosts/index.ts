@@ -43,6 +43,8 @@ const getAvailableHosts = async (page: number) => {
         prisma.host.count({
             where: {
                 Order: null,
+                NoPayOrder: null,
+                ready: true
             },
         }),
         prisma.host.findMany({
@@ -62,6 +64,8 @@ const getAvailableHosts = async (page: number) => {
             },
             where: {
                 Order: null,
+                NoPayOrder: null,
+                ready: true
             },
         })
     ])

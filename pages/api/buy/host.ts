@@ -16,21 +16,32 @@ export default async function handler(
     }
     if (req.method === 'POST') {
         const { hostid, mounth } = req.body
-        if(!mounth){
+        if (!mounth) {
             res.status(400).json({ message: "Не указан срок аренды" });
             return;
         }
-        if(!hostid){
+        if (!hostid) {
             res.status(400).json({ message: "Не указан ID хоста" });
             return;
         }
-        if(mounth > 12){
-            res.status(400).json({ message: "Срок аренды не может быть больше 12 месяцев" });
-            return;
-        }
-        if(mounth < 1){
-            res.status(400).json({ message: "Срок аренды не может быть меньше 1 месяца" });
-            return;
+        let month = 1;
+        let procent = 100;
+        switch(mounth){
+            case 1:
+                month = 1;
+                procent = 100;
+                break;
+            case 2:
+                month = 6;
+                procent = 95;
+                break;
+            case 3:
+                month = 12;
+                procent = 90;
+                break;
+            default:
+                month = 1;
+                break;
         }
         const user = await getUserIdByEmail(session.user!.email!);
         if (!user) {
@@ -41,7 +52,7 @@ export default async function handler(
             res.status(400).json({ message: "Не указан ID хоста" });
             return;
         }
-        const month = req.body.mounth ? req.body.mounth : 1;
+
         const host = await getHostById(hostid as string);
         if (!host) {
             res.status(404).json({ message: "Хост не найден." });
@@ -51,7 +62,7 @@ export default async function handler(
             res.status(400).json({ message: "Хост не доступен для покупки." });
             return;
         }
-        const price1 = host.price * month;
+        const price1 = (host.price * month * procent) / 100;
         if (price1 > user.balance?.amount!) {
             res.status(400).json({ message: "Не хватает денег." });
             return;

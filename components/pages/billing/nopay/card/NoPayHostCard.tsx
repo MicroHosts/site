@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 
 const NoPayHostCard = ({ host }: any) => {
@@ -19,9 +20,10 @@ const NoPayHostCard = ({ host }: any) => {
                 {dateformat}
             </td>
             <td className="py-4 px-6">
-                <button type="button"
+                <Link type="button"
+                      href={`/billing/extend/host/${host.id}`}
                     className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800 text-base text-white">Оплатить
-                </button>
+                </Link>
             </td>
         </tr>
     )

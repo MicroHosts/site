@@ -24,6 +24,9 @@ const ServiceList = () => {
                         <th scope="col" className="py-3 px-6">
                             Цена
                         </th>
+                        <th scope="col" className="py-3 px-6">
+                            Оплатить до
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

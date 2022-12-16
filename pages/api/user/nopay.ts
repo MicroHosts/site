@@ -22,30 +22,33 @@ export default async function handler(
         res.status(400).json({ message: "Bad request." });
         return;
     }
-    const nopayServices = await getNoPayServices(user.id);
+    // const nopayServices = await getNoPayServices(user.id);
     const nopayHosts = await getNoPayHosts(user.id);
-    res.status(200).json({services: nopayServices, hosts: nopayHosts});
+    res.status(200).json({hosts: nopayHosts});
 }
 
 
-const getNoPayServices = async (idUser: string) => {
-    return await prisma.orderService.findMany({
-        where: {
-            userId: idUser
-        },
-        select: {
-            id: true,
-            rentDate: true,
-            service: {
-                select: {
-                    name: true,
-                    description: true,
-                    price: true,
-                }
-            }
-        }
-    });
-}
+// const getNoPayServices = async (idUser: string) => {
+//     return await prisma.orderService.findMany({
+//         where: {
+//             userId: idUser,
+//             rentDate: {
+//                 lte: new Date()
+//             }
+//         },
+//         select: {
+//             id: true,
+//             rentDate: true,
+//             service: {
+//                 select: {
+//                     name: true,
+//                     description: true,
+//                     price: true,
+//                 }
+//             }
+//         }
+//     });
+// }
 
 
 const getNoPayHosts = async (userId: string) => {

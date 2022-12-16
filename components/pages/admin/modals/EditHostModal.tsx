@@ -58,7 +58,7 @@ export default function EditHostModal() {
                 return;
             }
             if(res.status === 201){
-                await mutate('/api/host');
+                await mutate('/api/admin/host');
                 setOpen(false);
             }
         } else {

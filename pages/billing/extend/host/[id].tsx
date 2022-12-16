@@ -1,4 +1,5 @@
 import BillingLayout from "@/layouts/Billing"
+import { getHostById } from "@/models/hosts";
 import { errorToast, successToast } from "@/utils/utils";
 import { ReactElement } from "react"
 import { FaMemory } from "react-icons/fa";
@@ -6,10 +7,8 @@ import { FiCpu } from "react-icons/fi";
 import { MdStorage } from "react-icons/md";
 import { mutate } from "swr";
 import prisma from "@/lib/prismadb"
-import { getSession } from "next-auth/react";
-import { getUserByEmail } from "@/models/user";
 
-function BuyHost({ host }: any) {
+function ExtendHost({ host }: any) {
     const onBuy = async (months: number) => {
         const res = await fetch("/api/buy/host", {
             method: "POST",
@@ -63,20 +62,20 @@ function BuyHost({ host }: any) {
 
                     <p className="text-white">{host.description}</p>
                     <div className="flex flex-col mt-12">
-                        <button type="button" onClick={async() => {
+                    <button type="button" onClick={async () => {
                             await onBuy(1)
                         }}
-                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на месяц {host.price} рублей
+                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Продлить на месяц {host.service.price} рублей
                         </button>
-                        <button type="button" onClick={async() => {
+                        <button type="button" onClick={async () => {
                             await onBuy(2)
                         }}
-                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на 6 месяцев {Math.round((host.price * 6 * 95)/100)} рублей -5%
+                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Продлить на 6 месяцев {Math.round((host.service.price * 6 * 90)/100)} рублей - 10%
                         </button>
                         <button type="button" onClick={async () => {
                             await onBuy(3)
                         }}
-                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить на 1 год {Math.round((host.price * 12 * 90)/100)} рублей - 10%
+                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Продлить на 1 год {Math.round((host.service.price * 12 * 80)/100)} рублей - 20%
                         </button>
                     </div>
                 </div>
@@ -86,7 +85,7 @@ function BuyHost({ host }: any) {
 
 }
 
-BuyHost.getLayout = function getLayout(page: ReactElement) {
+ExtendHost.getLayout = function getLayout(page: ReactElement) {
     return (
         <BillingLayout>
             {page}
@@ -94,80 +93,30 @@ BuyHost.getLayout = function getLayout(page: ReactElement) {
     )
 }
 
-export async function getServerSideProps(context: any) {
-    const { params, req } = context;
-    const session = await getSession({ req });
+export async function getServerSideProps(context:any){
+    const {params, req} = context;
 
-    if (!session) {
-        return {
-            redirect: { destination: "/" },
-        };
-    }
-    const user = await getUserByEmail(session.user?.email);
-    if(!user){
-        return {
-            redirect: { destination: "/" },
-        };
-    }
-    const host = await getHostById(params.id);
-    if(!host){
-        return {
-            redirect: { destination: "/billing/buy" },
-        };
-    }
-    return {
-        props: {
-            host: host
-        }
-    }
+
 }
 
-
-const getHostById = async (id: string) => {
-    return await prisma.host.findFirst({
-        where: {
-            id: id,
-            Order: null,
-            NoPayOrder: null,
-            ready: true
-        },
+const getHosts = async () => {
+    return await prisma.host.findMany({
         select: {
             id: true,
             name: true,
-            storage: true,
-            cpu: true,
-            ram: true,
             description: true,
             price: true,
-            vimid: true,
-            Order: {
-                select: {
-                    id: true,
-                    rentDate: true,
-
-                }
+            cpu: true,
+            ram: true,
+            storage: true,
+        },
+        where: {
+            NOT: {
+                Order: null,
             }
         },
-    });
+    })
 }
 
 
-// const getAvailableHostsAll = async () => {
-//     return await prisma.host.findMany({
-//         select: {
-//             id: true,
-//             name: true,
-//             description: true,
-//             price: true,
-//             cpu: true,
-//             ram: true,
-//             storage: true,
-//         },
-//         where: {
-//             Order: null,
-//         },
-//     })
-// }
-
-
-export default BuyHost
+export default ExtendHost

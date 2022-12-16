@@ -14,29 +14,29 @@ export default async function handler(
         return;
     }
     if (req.method === 'POST') {
-        const { serviceid, mounth } = req.body
-        if(!mounth){
+        const { orderId, mounth } = req.body
+        if (!mounth) {
             res.status(400).json({ message: "Не указан срок аренды" });
             return;
         }
-        if(!serviceid){
+        if (!orderId) {
             res.status(400).json({ message: "Не указан Сервиса хоста" });
             return;
         }
         let month = 1;
         let procent = 100;
-        switch(mounth){
+        switch (mounth) {
             case 1:
                 month = 1;
                 procent = 100;
                 break;
             case 2:
                 month = 6;
-                procent = 95;
+                procent = 90;
                 break;
             case 3:
                 month = 12;
-                procent = 90;
+                procent = 80;
                 break;
             default:
                 month = 1;
@@ -47,18 +47,18 @@ export default async function handler(
             res.status(404).json({ message: "Пользователь не найден" });
             return;
         }
-        const service = await getServiceById(serviceid as string, user.id);
+        const service = await getOrderId(orderId as string, user.id);
         if (!service) {
             res.status(404).json({ message: "Сервис не найден." });
             return;
         }
-        const price1 = (service.price * month * procent) / 100;
+        const price1 = (service.service.price * month * procent) / 100;
         if (price1 > user.balance?.amount!) {
             res.status(400).json({ message: "Не хватает денег." });
             return;
         }
         await removeBalance(user.id, price1);
-        await buyService(user.id, serviceid, mounth);
+        await extendService(orderId, month, service.rentDate);
         res.status(200).json({ message: 'Сервер успешно куплен' });
     }
 }
@@ -73,35 +73,30 @@ export const removeBalance = async (userId: string, amount: number) => {
             amount: {
                 decrement: amount
             }
-        }
+        },
     });
 }
 
-const getServiceById = async (id: string, idUser: string) => {
-    return await prisma.service.findFirst({
+const getOrderId = async (id: string, idUser: string) => {
+    return await prisma.orderService.findFirst({
         where: {
             id: id,
-            Order: {
-                every: {
-                    NOT: {
-                        userId: idUser
-                    }
-                }
-            }
+            userId: idUser
         },
         include: {
-            Order: true
+            service: true
         }
     });
 }
 
-const buyService = async (userId: string, serviceId: string, month: number) => {
-    let date = new Date();
+const extendService = async (orderId: string, month: number, currentMonth: Date) => {
+    let date = currentMonth;
     date.setMonth(date.getMonth() + month);
-    return await prisma.orderService.create({
+    return await prisma.orderService.update({
+        where: {
+            id: orderId,
+        },
         data: {
-            userId: userId,
-            serviceId: serviceId,
             rentDate: date,
         },
     });

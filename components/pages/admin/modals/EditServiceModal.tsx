@@ -43,7 +43,7 @@ export default function EditServiceModal() {
             if(res.status === 201){
                 successToast('Услуга успешно обнавлена');
                 setOpen(false);
-                await mutate('/api/service');
+                await mutate('/api/admin/service');
             }
         } else {
             setError('Не все поля заполнены');

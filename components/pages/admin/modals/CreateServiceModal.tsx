@@ -36,7 +36,7 @@ export default function CreateServiceModal({ open, setOpen }: { open: boolean, s
             if(res.status === 201){
                 successToast('Услуга успешно добавлена');
                 setOpen(false);
-                await mutate('/api/service');
+                await mutate('/api/admin/service');
             }
         } else {
             setError('Не все поля заполнены');

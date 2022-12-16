@@ -38,6 +38,7 @@ export const getUserService = async (idUser: string) => {
             rentDate: true,
             service: {
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                     price: true,
