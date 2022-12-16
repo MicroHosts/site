@@ -3,13 +3,14 @@ import AdminLayout from "@/layouts/Admin";
 import UserInfo from "@/pages/admin/user/UserInfo";
 import HostUserList from "@/pages/admin/user/hosts/HostUserList";
 import ServiceUserList from "@/pages/admin/user/services/ServicesUserList";
-
+import {getSession} from "next-auth/react";
+import prisma from "@/lib/prismadb";
 
 function Users({ user }: any) {
     return (
         <div className="container mx-auto">
             <div className="flex justify-between flex-col w-full">
-                <UserInfo user={user}/>
+                {/*<UserInfo user={user}/>*/}
                 <HostUserList hosts={user.hosts} />
                 <ServiceUserList services={user.services} />
             </div>
@@ -26,24 +27,18 @@ Users.getLayout = function getLayout(page: ReactElement) {
     )
 }
 
-export async function getStaticPaths() {
-    const prisma = require("@/lib/prismadb");
-    const ids = await prisma.user.findMany({
-        select: {
-            id: true,
-        }
-    });
-    const paths = ids.map((id: any) => ({
-        params: { id: id.id }
-    }))
-    return {
-        paths: paths,
-        fallback: false, // can also be true or 'blocking'
-    }
-}
 
-export async function getStaticProps(context: any) {
-    const { params } = context;
+export async function getServerSideProps(context: any){
+    const { params, req } = context;
+    const session = await getSession({ req });
+    if(!session){
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false,
+            },
+        }
+    }
     const user = await getUserById(params.id);
     const hosts = user?.hosts.map((host) => ({
         ...host,
@@ -62,9 +57,7 @@ export async function getStaticProps(context: any) {
     }
 }
 
-export const getUserById = async (id: string) => {
-    const prisma = require("@/lib/prismadb");
-    console.log(prisma)
+const getUserById = async (id: string) => {
     return await prisma.user.findUnique({
         where: {
             id

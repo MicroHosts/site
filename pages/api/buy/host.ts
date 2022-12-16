@@ -91,6 +91,14 @@ export default async function handler(
             // else
             //     console.log(info);
         });
+        const message =
+            `Купили хост ${host.name} \n\n`+
+            `На ${month} месяцев за ${price1} рублей`;
+        const ret = await fetch(
+            `https://api.telegram.org/bot${process.env.TELEGRAMBOT_TOKEN}/sendMessage?chat_id=${process.env.TELEGRAMBOT_CHATID}&text=${message}`
+        );
+        console.log(ret.status)
+        console.log(await ret.json())
         res.status(200).json({ message: 'Хост успешно куплен' });
     }
 }

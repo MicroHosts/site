@@ -26,6 +26,29 @@ export const getHostById = async (id: string) => {
     });
 }
 
+export const getHostByIdWithOutRent = async (id: string) => {
+    return await prisma.host.findUnique({
+        where: {
+            id: id,
+        },
+        select: {
+            id: true,
+            name: true,
+            storage: true,
+            cpu: true,
+            ram: true,
+            description: true,
+            price: true,
+            vimid: true,
+            Order: {
+                select: {
+                    id: true,
+                }
+            }
+        },
+    });
+}
+
 export const getHostByOrderHost = async (id: string) => {
     return await prisma.orderHost.findUnique({
         where: {

@@ -22,7 +22,7 @@ export default async function handler(
             return;
         }
         const payment = await createPayment(user.id, price);
-        var data = `${process.env.PUBLIC_KEY}:${price}:${process.env.PRIVATE_KEY}:RUB:${payment.id}`;
+        const data = `${process.env.PUBLIC_KEY}:${price}:${process.env.PRIVATE_KEY}:RUB:${payment.id}`;
         const hash = crypto.createHash('md5').update(data).digest("hex");
         res.status(200).json({ url: `https://pay.freekassa.ru/?m=${process.env.PUBLIC_KEY}&oa=${price}&o=${payment.id}&s=${hash}&currency=RUB` });
     }

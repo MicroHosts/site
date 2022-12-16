@@ -1,5 +1,5 @@
 import BillingLayout from "@/layouts/Billing"
-import { getHostById } from "@/models/hosts";
+import {getHostById, getHostByIdWithOutRent} from "@/models/hosts";
 import { ReactElement, useEffect } from "react"
 // import dynamic from "next/dynamic";
 import EndHost from "@/components/buttons/host/EndHost";
@@ -8,6 +8,7 @@ import RestartHost from "@/components/buttons/host/RestartHost";
 import StopHost from "@/components/buttons/host/StopHost";
 import prisma from "@/lib/prismadb"
 import Router from "next/router";
+import {getSession} from "next-auth/react";
 
 // const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
 //     loading: () => <p>Loading...</p>,
@@ -48,22 +49,25 @@ Host.getLayout = function getLayout(page: ReactElement) {
     )
 }
 
-export async function getStaticPaths() {
-    const ids = await getAllHosts();
-    const paths = ids.map((id: any) => ({
-        params: { id: id.id }
-    }))
-    return {
-        paths: paths,
-        fallback: false, // can also be true or 'blocking'
+export async function getServerSideProps(context: any){
+    const { params, req } = context;
+    const session = await getSession({ req });
+    if(!session){
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false,
+            },
+        }
     }
-}
-
-export async function getStaticProps(context: any) {
-    const { params } = context;
-    const host = await getHostById(params.id);
-    if(!host) return {
-        notFound: true
+    const host = await getHostByIdWithOutRent(params.id);
+    if(!host){
+        return {
+            redirect: {
+                destination: '/billing/',
+                permanent: false,
+            },
+        }
     }
     return {
         props: {
@@ -72,8 +76,6 @@ export async function getStaticProps(context: any) {
     }
 }
 
-const getAllHosts = async () => {
-    return await prisma.host.findMany();
-}
+
 
 export default Host

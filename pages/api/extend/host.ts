@@ -20,7 +20,7 @@ export default async function handler(
             return;
         }
         if (!orderId) {
-            res.status(400).json({ message: "Не указан ID сервиса" });
+            res.status(400).json({ message: "Не указан Сервиса хоста" });
             return;
         }
         let month = 1;
@@ -47,19 +47,19 @@ export default async function handler(
             res.status(404).json({ message: "Пользователь не найден" });
             return;
         }
-        const service = await getOrderId(orderId as string, user.id);
-        if (!service) {
-            res.status(404).json({ message: "Сервис не найден." });
+        const host = await getOrderId(orderId as string, user.id);
+        if (!host) {
+            res.status(404).json({ message: "Хост не найден." });
             return;
         }
-        const price1 = (service.service.price * month * procent) / 100;
+        const price1 = (host.host!!.price * month * procent) / 100;
         if (price1 > user.balance?.amount!) {
             res.status(400).json({ message: "Не хватает денег." });
             return;
         }
         await removeBalance(user.id, price1);
-        await extendService(orderId, month, service.rentDate);
-        res.status(200).json({ message: 'Услгула успешно продлена' });
+        await extendHost(orderId, month, host.rentDate);
+        res.status(200).json({ message: 'Сервер успешно продлен' });
     }
 }
 
@@ -78,21 +78,21 @@ export const removeBalance = async (userId: string, amount: number) => {
 }
 
 const getOrderId = async (id: string, idUser: string) => {
-    return await prisma.orderService.findFirst({
+    return await prisma.orderHost.findFirst({
         where: {
             id: id,
             userId: idUser
         },
         include: {
-            service: true
+           host: true
         }
     });
 }
 
-const extendService = async (orderId: string, month: number, currentMonth: Date) => {
+const extendHost = async (orderId: string, month: number, currentMonth: Date) => {
     let date = currentMonth;
     date.setMonth(date.getMonth() + month);
-    return await prisma.orderService.update({
+    return await prisma.orderHost.update({
         where: {
             id: orderId,
         },
