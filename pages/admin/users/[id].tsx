@@ -10,7 +10,7 @@ function Users({ user }: any) {
     return (
         <div className="container mx-auto">
             <div className="flex justify-between flex-col w-full">
-                {/*<UserInfo user={user}/>*/}
+                <UserInfo user={user}/>
                 <HostUserList hosts={user.hosts} />
                 <ServiceUserList services={user.services} />
             </div>

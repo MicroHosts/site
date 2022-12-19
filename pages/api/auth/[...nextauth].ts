@@ -1,10 +1,10 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth, {NextAuthOptions} from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { getUserByEmail } from "@/models/user";
+import {getUserByEmail} from "@/models/user";
 import prisma from "@/lib/prismadb";
+
 const bcrypt = require('bcrypt');
 
-// @ts-ignore
 const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/login',
@@ -29,6 +29,9 @@ const authOptions: NextAuthOptions = {
                     if(!user?.emailVerified){
                         throw new Error("Почта не подтверждена");
                     }
+                    if(!user.blocked){
+                        throw new Error("Пользователь заблокирован");
+                    }
                     const password = await getPasswordByUserId(user.id);
                     if (password === null){
                         throw new Error("Пароль не найден");
@@ -47,28 +50,19 @@ const authOptions: NextAuthOptions = {
     ],
     jwt: {
         secret: process.env.NEXTAUTH_SECRET,
-        maxAge: 14 * 24 * 60 * 60, // 14 days
+        maxAge:  30 * 60 ,
     },
     session:{
         strategy: "jwt",
     },
-    // callbacks: {
-    //     async session({session, user, token}) {
-    //         if(user.email === "admin@microhost1.ru"){
-    //             session.user.role = "admin";
-    //         }
-    //         return session;
-    //     }
-    // }
 }
 
 const getPasswordByUserId = async (userId: string) => {
-    const password = await prisma.password.findUnique({
+    return await prisma.password.findUnique({
         where: {
             userId: userId
         }
     });
-    return password;
 }
 
 export default NextAuth(authOptions)

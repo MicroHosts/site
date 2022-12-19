@@ -1,3 +1,5 @@
+import {errorToast, successToast} from "@/utils/utils";
+
 export default function HostUserList({hosts}:any) {
     return (
         <div className="overflow-x-auto relative w-full">
@@ -61,7 +63,11 @@ function HostCard({host}:any) {
                                     'Content-Type': 'application/json',
                                 }
                             })
-                            console.log(res.status)
+                            if(res.status === 200) {
+                                successToast('Успешно забрали хост')
+                            }else{
+                                errorToast('Ошибка')
+                            }
                         }}
                     className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-red-800 text-base">Забрать
                 </button>

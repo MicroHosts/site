@@ -25,39 +25,31 @@ export default async function handler(
 
     if (req.method === 'POST') {
         const {id} = req.query
-        const host = await getHostById(id as string);
-        if(!host){
-            res.status(404).json({ message: "Host not found." });
+        const user = await getUserById(id as string);
+        if(!user){
+            res.status(404).json({ message: "User not found." });
             return;
         }
-        await takeHost(id as string, host.host.id);
-        res.status(200).json({ message: "Host taken." });
+        await banUser(id as string, !user.blocked);
+        res.status(200).json({ message: "User banned." });
     }
 }
 
-const getHostById = async (id: string) => {
-    return await prisma.orderHost.findUnique({
+const getUserById = async (id: string) => {
+    return await prisma.user.findUnique({
         where: {
             id: id,
         },
-        include: {
-            host: true
-        }
     })
 }
 
-const takeHost = async (orderId: string, hostId: string) => {
-    await prisma.orderHost.delete({
+const banUser = async (userId: string, blocked: boolean) => {
+    await prisma.user.update({
         where: {
-            id: orderId,
-        }
-    })
-    await prisma.host.update({
-        where: {
-            id: hostId,
+            id: userId,
         },
         data: {
-            ready: false
+            blocked: blocked
         }
     })
 }

@@ -1,7 +1,7 @@
 import BillingLayout from "@/layouts/Billing"
 import {getHostById, getHostByIdWithOutRent} from "@/models/hosts";
 import { ReactElement, useEffect } from "react"
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 import EndHost from "@/components/buttons/host/EndHost";
 import StartHost from "@/components/buttons/host/StartHost";
 import RestartHost from "@/components/buttons/host/RestartHost";
@@ -35,7 +35,7 @@ function Host({ host }: any) {
                 <StopHost id={host.id} />
                 <EndHost id={host.id} />
             </div>
-            {/* <DynamicComponent url={host.vnc_url} password={host.passwordVnc} id={host.id}/> */}
+             {/*<DynamicComponent url={host.vnc_url} id={host.id}/>*/}
         </div>
     )
 

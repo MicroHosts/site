@@ -34,9 +34,9 @@ export const IncomeInDay = async () => {
     );
     const lastDay = await IncomeInLastDay();
     let percent = (100*lastDay)/income;
-    if(lastDay === 0){
+    if(lastDay === 0 || income === 0){
         percent = 100;
-    } 
+    }
     if(income < lastDay){
         percent = -percent;
     }
@@ -76,7 +76,7 @@ export const IncomeInLastDay = async () => {
         income += service.service.price;
     }
     );
-    
+
     return income;
 }
 
@@ -115,9 +115,9 @@ export const IncomeInMonth = async () => {
     );
     const lastMounth = await IncomeInLastMonth();
     let percent = (100*lastMounth)/income;
-    if(lastMounth === 0){
+    if(lastMounth === 0 || income === 0){
         percent = 100;
-    } 
+    }
     if(income < lastMounth){
         percent = -percent;
     }
@@ -178,7 +178,7 @@ export const OrdersInDay = async () => {
     });
     const lastDay = await OrdersInLastDay();
     let percent = (100*lastDay)/(hosts.length + services.length);
-    if(lastDay === 0){
+    if(lastDay === 0 || (hosts.length + services.length) === 0){
         percent = 100;
     }
     if((hosts.length + services.length) < lastDay){

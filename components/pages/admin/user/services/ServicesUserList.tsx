@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {errorToast, successToast} from "@/utils/utils";
 
 export default function ServiceUserList({services}:any) {
     return(
@@ -51,13 +52,17 @@ function ServiceCard({service}:any) {
             <td className="py-4 pl-6">
                 <button type="button"
                     onClick={async() => {
-                        const res = await fetch(`/api/admin/user/services/${service.id}/take`, {
+                        const res = await fetch(`/api/admin/user/service/${service.id}/take`, {
                           method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             }
                         })
-                        console.log(res.status)
+                        if(res.status === 200) {
+                            successToast('Услуга успешно забрана')
+                        }else{
+                            errorToast('Ошибка')
+                        }
                     }}
                     className="focus:ring-4 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-red-800 text-base">Забрать
                 </button>

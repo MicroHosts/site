@@ -18,6 +18,7 @@ export const getUserByEmail = async (email: string | null | undefined) => {
                     amount: true,
                 }
             },
+            blocked: true,
             role: true,
         },
     });

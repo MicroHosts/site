@@ -12,7 +12,7 @@ export default async function handler(
 ) {
     if (req.method === 'POST') {
         const { username,  email, password } = req.body;
-        if (!email || email.length < 6 && !validateEmail(email)) {
+        if (!validateEmail(email)) {
             res.status(422).json({ message: 'Некорректный email' });
             return;
         }
