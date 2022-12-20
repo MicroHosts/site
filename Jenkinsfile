@@ -40,7 +40,7 @@
         }
         stage('Dangling Images') {
             steps {
-                sh 'docker stop $(docker ps -q) || docker rm $(docker ps -a -q) || docker rmi $(docker images -q -f dangling=true)'
+                sh 'docker rmi $(docker images -q -f dangling=true)'
             }
         }
      }
