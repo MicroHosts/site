@@ -18,24 +18,26 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const memoize = (fn) => {
+const memoize = (fn: any) => {
   let cache = {};
-  return (...args) => {
+  return (...args: any) => {
     let n = args[0];
     if (n in cache) {
+      //@ts-ignore
       return cache[n];
     }
     else {
       let result = fn(n);
+      //@ts-ignore
       cache[n] = result;
       return result;
     }
   }
 }
-
+//@ts-ignore
 const mutedConsole = memoize((console) => ({
   ...console,
-  warn: (...args) => args[0].includes('Duplicate atom key')
+  warn: (...args: any) => args[0].includes('Duplicate atom key')
     ? null
     : console.warn(...args)
 }))
@@ -62,16 +64,16 @@ export default function App({
           pauseOnHover
           theme="dark"
         />
-        <MyApp Component={Component} pageProps={pageProps}/>
+        <MyApp Component={Component} pageProps={pageProps} />
       </SessionProvider>
 
     </RecoilRoot>
   )
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }:any) {
   const { open } = useRecoilValue(deleteStore)
-  const getLayout = Component.getLayout ?? ((page) => page)
+  const getLayout = Component.getLayout ?? ((page:any) => page)
   return (
     <>
       {getLayout(<Component {...pageProps} />)}

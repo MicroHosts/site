@@ -59,6 +59,7 @@ export default async function handler(
         }
         await removeBalance(user.id, price1);
         await extendHost(orderId, month, host.rentDate);
+        await logExpend(host.host!!.name, user.id, price1, month, host.rentDate);
         res.status(200).json({ message: 'Сервер успешно продлен' });
     }
 }
@@ -98,6 +99,21 @@ const extendHost = async (orderId: string, month: number, currentMonth: Date) =>
         },
         data: {
             rentDate: date,
+        },
+    });
+}
+
+const logExpend = async (name: string, userId: string, price: number, month: number, currentMonth: Date) => {
+    let date = currentMonth;
+    date.setMonth(date.getMonth() + month);
+    return await prisma.buyList.create({
+        data: {
+            name: `Продление хоста ${name}`,
+            userId: userId,
+            price: price,
+            rentDate: date,
+            status: "EXPEND",
+            type: "HOST",
         },
     });
 }

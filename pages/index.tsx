@@ -137,7 +137,7 @@ function Home({ hosts }: any) {
     );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const hosts = await getAvaliableMainPageHosts();
     return {
         props: {

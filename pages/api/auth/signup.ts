@@ -44,12 +44,7 @@ export default async function handler(
             `,
             text: 'Подтвердите почту',
         }
-        client.sendMail(mailData, (err, info) => {
-            if(err){
-                console.log(err)
-            }else{
-                console.log(info)
-            }
+        client.sendMail(mailData, (err:any, info:any) => {
         });
         res.status(200).json({ message: 'Created user' });
     } else {

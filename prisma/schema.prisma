@@ -34,6 +34,7 @@ model User {
   payments        Payment[]
   noPayHosts      NoPayOrderHost[]
   noPayServices   NoPayOrderService[]
+  buyList         BuyList[]
 }
 
 model Payment {
@@ -166,6 +167,29 @@ model NoPayOrderService{
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   rentDate  DateTime
+}
+
+model BuyList{
+  id        String    @id @default(cuid())
+  name      String
+  status    BuyStatus
+  price     Int
+  type      BuyType
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  rentDate  DateTime
+}
+
+enum BuyStatus {
+  BUY
+  EXPEND
+}
+
+enum BuyType {
+  HOST
+  SERVICE
 }
 
 //Cupon

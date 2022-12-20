@@ -24,11 +24,11 @@ export const IncomeInDay = async () => {
         }
     });
     let income = 0;
-    hosts.forEach(host => {
-        income += host.host.price;
+    hosts.forEach((host:any) => {
+        income += host.host!!.price;
     }
     );
-    services.forEach(service => {
+    services.forEach((service:any) => {
         income += service.service.price;
     }
     );
@@ -68,11 +68,11 @@ export const IncomeInLastDay = async () => {
         }
     });
     let income = 0;
-    hosts.forEach(host => {
-        income += host.host.price;
+    hosts.forEach((host:any) => {
+        income += host.host!!.price;
     }
     );
-    services.forEach(service => {
+    services.forEach((service:any) => {
         income += service.service.price;
     }
     );
@@ -105,11 +105,11 @@ export const IncomeInMonth = async () => {
         }
     });
     let income = 0;
-    hosts.forEach(host => {
-        income += host.host.price;
+    hosts.forEach((host:any) => {
+        income += host.host!!.price;
     }
     );
-    services.forEach(service => {
+    services.forEach((service:any) => {
         income += service.service.price;
     }
     );
@@ -148,11 +148,11 @@ export const IncomeInLastMonth = async () => {
         }
     });
     let income = 0;
-    hosts.forEach(host => {
-        income += host.host.price;
+    hosts.forEach((host:any) => {
+        income += host.host!!.price;
     }
     );
-    services.forEach(service => {
+    services.forEach((service:any) => {
         income += service.service.price;
     }
     );

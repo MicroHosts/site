@@ -110,7 +110,7 @@ Index.getLayout = function getLayout(page: ReactElement) {
 }
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const admin = await checkAdmin()
     if (admin) {
         return {

@@ -59,6 +59,7 @@ export default async function handler(
         }
         await removeBalance(user.id, price1);
         await buyService(user.id, serviceid, mounth);
+        await logBuy(service.name, user.id, price1, month, new Date());
         res.status(200).json({ message: 'Сервер успешно куплен' });
     }
 }
@@ -103,6 +104,21 @@ const buyService = async (userId: string, serviceId: string, month: number) => {
             userId: userId,
             serviceId: serviceId,
             rentDate: date,
+        },
+    });
+}
+
+const logBuy = async (name: string, userId: string, price: number, month: number, currentMonth: Date) => {
+    let date = currentMonth;
+    date.setMonth(date.getMonth() + month);
+    return await prisma.buyList.create({
+        data: {
+            name: `Продление сервиса ${name}`,
+            userId: userId,
+            price: price,
+            rentDate: date,
+            status: "BUY",
+            type: "SERVICE",
         },
     });
 }

@@ -97,8 +97,7 @@ export default async function handler(
         const ret = await fetch(
             `https://api.telegram.org/bot${process.env.TELEGRAMBOT_TOKEN}/sendMessage?chat_id=${process.env.TELEGRAMBOT_CHATID}&text=${message}`
         );
-        console.log(ret.status)
-        console.log(await ret.json())
+        await logBuy(host.name, user.id, price1, month, new Date());
         res.status(200).json({ message: 'Хост успешно куплен' });
     }
 }
@@ -136,6 +135,21 @@ const buyHost = async (userId: string, hostId: string, month: number) => {
             userId: userId,
             hostId: hostId,
             rentDate: date,
+        },
+    });
+}
+
+const logBuy = async (name: string, userId: string, price: number, month: number, currentMonth: Date) => {
+    let date = currentMonth;
+    date.setMonth(date.getMonth() + month);
+    return await prisma.buyList.create({
+        data: {
+            name: `Продление хоста ${name}`,
+            userId: userId,
+            price: price,
+            rentDate: date,
+            status: "BUY",
+            type: "HOST",
         },
     });
 }

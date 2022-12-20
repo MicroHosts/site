@@ -1,5 +1,5 @@
 import React from "react";
-import Chart from "chart.js";
+const Chart = require("chart.js");
 
 export default function ChartOrders({ orders }: any) {
         React.useEffect(() => {
@@ -83,7 +83,9 @@ export default function ChartOrders({ orders }: any) {
                     },
                 },
             };
+            //@ts-ignore
             let ctx = document.getElementById("bar-chart").getContext("2d");
+            //@ts-ignore
             window.myBar = new Chart(ctx, config);
         }, []);
 

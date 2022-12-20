@@ -30,12 +30,7 @@ export default async function handler(
             `,
             text: 'Восстановление аккаунта',
         }
-        client.sendMail(mailData, (err, info) => {
-            if(err){
-                console.log(err)
-            }else{
-                console.log(info)
-            }
+        client.sendMail(mailData, (err:any, info:any) => {
         });
         res.status(200).json({ message: 'На вашу почту был отправлено письмо для восстановления аккаунта' });
     } else {

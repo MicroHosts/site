@@ -30,7 +30,7 @@ export default async function handler(
             res.status(404).json({ message: "Host not found." });
             return;
         }
-        await takeHost(id as string, host.host.id);
+        await takeHost(id as string, host.host!!.id);
         res.status(200).json({ message: "Host taken." });
     }
 }
