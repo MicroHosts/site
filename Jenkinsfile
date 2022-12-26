@@ -33,7 +33,7 @@
                 sh '''
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t rsa,dsa -p 22 185.200.243.214 >> ~/.ssh/known_hosts
-                    ssh -p 22 root@185.200.243.214 'cd ./site && docker compose pull site && docker compose down site && docker compose up -d site'
+                    ssh -p 22 static12@185.200.243.214 'cd ./site && docker compose pull site && docker compose down site && docker compose up -d site'
                     '''
                 }
             }
