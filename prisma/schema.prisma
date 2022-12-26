@@ -37,6 +37,11 @@ model User {
   buyList         BuyList[]
 }
 
+model AdminIPS {
+  id              String    @id @default(cuid())
+  ip              String    @unique
+}
+
 model Payment {
   id        String   @id @default(cuid())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

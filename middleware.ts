@@ -17,6 +17,12 @@ export async function middleware(req: NextRequest){
         if(data.role !== 'ADMIN'){
             return NextResponse.rewrite(new URL('/auth/login', req.url));
         }
+        const check = await fetch(`http://localhost:3000/api/admin/check`,{
+            headers: req.headers
+        })
+        if(check.status !== 201){
+            return NextResponse.rewrite(new URL('/auth/login', req.url));
+        }
         return NextResponse.next();
     }
     if (req.nextUrl.pathname.startsWith('/billing') && !session) {

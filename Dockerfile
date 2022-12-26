@@ -18,29 +18,23 @@ RUN \
 
 # 2. Rebuild the source code only when needed
 FROM deps AS builder
-RUN export NODE_ENV=production
 WORKDIR /app
-RUN yarn
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV PRISMA_BINARIES_MIRROR http://prisma-builds.s3-eu-west-1.amazonaws.com
 RUN yarn run prisma generate
 RUN yarn build
 
 
-# 3. Production image, copy all the files and run next
-FROM deps as prod-build
-ENV PRISMA_BINARIES_MIRROR http://prisma-builds.s3-eu-west-1.amazonaws.com
-RUN yarn install --production
-COPY prisma prisma
-RUN cp -R node_modules prod_node_modules
 FROM deps as prod
 
+
+COPY --from=builder /app/public ./public
 # RUN addgroup -g 1001 -S nodejs
 # RUN adduser -S nextjs -u 1001
-COPY --from=prod-build /app/prod_node_modules /app/node_modules
-COPY --from=builder  /app/.next /app/.next
-COPY --from=builder  /app/public /app/public
-COPY --from=builder  /app/prisma /app/prisma
-USER nextjs
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+#USER nextjs
 
 EXPOSE 3000
 
