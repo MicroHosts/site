@@ -3,8 +3,8 @@
  pipeline {
      agent any
      environment {
-        registry = "registry.hyneo.ru/microhost-site"
         registryCredential = "nexusadmin"
+        registry = "registry.hyneo.ru/microhost-site"
         dockerImage = ''
      }
 
