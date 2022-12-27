@@ -4,7 +4,7 @@
      agent any
      environment {
         registryCredential = "nexusadmin"
-        registry = "192.168.88.246/microhost-site"
+        registry = "microhost-site"
         dockerImage = ''
      }
 
