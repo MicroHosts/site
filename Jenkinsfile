@@ -4,7 +4,7 @@
      agent any
      environment {
         registryCredential = "nexusadmin"
-        registry = "registry.hyneo.ru/microhost-site"
+        registry = "192.168.88.246/microhost-site"
         dockerImage = ''
      }
 
@@ -19,7 +19,7 @@
          stage('Push registry nexus'){
              steps{
                  script{
-                     docker.withRegistry('https://registry.hyneo.ru', registryCredential ) {
+                     docker.withRegistry('http://192.168.88.246:8123', registryCredential ) {
                          dockerImage.push()
                          dockerImage.push('latest')
                      }
