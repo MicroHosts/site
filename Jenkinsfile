@@ -37,10 +37,5 @@
 //                 }
 //             }
 //         }
-        stage('Dangling Images') {
-            steps {
-                sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
-            }
-        }
      }
 }
