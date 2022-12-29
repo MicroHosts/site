@@ -42,6 +42,6 @@ EXPOSE 3000
 ENV PORT 3000
 ENV PRISMA_BINARIES_MIRROR http://prisma-builds.s3-eu-west-1.amazonaws.com
 RUN yarn run prisma generate
-RUN yarn run prisma db push
+#RUN yarn run prisma db push
 #CMD ["yarn", "run", "prisma", "db", "push"]
 CMD ["yarn", "start"]
