@@ -29,17 +29,19 @@ RUN yarn build
 FROM deps as prod
 
 
-COPY --from=builder /app/public ./public
+COPY --from=deps /app/node_modules ./node_modules
 # RUN addgroup -g 1001 -S nodejs
 # RUN adduser -S nextjs -u 1001
 #COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/ ./.next/
+COPY --from=builder  /app/prisma /app/prisma
 #USER nextjs
 
 EXPOSE 3000
 
 ENV PORT 3000
 ENV PRISMA_BINARIES_MIRROR http://prisma-builds.s3-eu-west-1.amazonaws.com
-RUN yarn prisma generate
-CMD ["yarn", "run", "prisma", "db", "push"]
+RUN yarn run prisma generate
+RUN yarn run prisma db push
+#CMD ["yarn", "run", "prisma", "db", "push"]
 CMD ["yarn", "start"]
