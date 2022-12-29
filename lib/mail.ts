@@ -8,10 +8,10 @@ declare global {
 
 const client = globalThis.mail || nodemailer.createTransport({
     port: 465,
-    host: "post.novadev.ru",
+    host: process.env.MAIL_HOST,
     auth: {
-        user: 'no-reply@microhost1.ru',
-        pass: '25,#,GIoGrUDI',
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
     },
     secure: true,
 })
