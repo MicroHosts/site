@@ -39,5 +39,7 @@ COPY --from=builder /app/.next/ ./.next/
 EXPOSE 3000
 
 ENV PORT 3000
+ENV PRISMA_BINARIES_MIRROR http://prisma-builds.s3-eu-west-1.amazonaws.com
+RUN yarn prisma generate
 CMD ["yarn", "run", "prisma", "db", "push"]
 CMD ["yarn", "start"]
