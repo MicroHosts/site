@@ -34,6 +34,7 @@ COPY --from=deps /app/node_modules ./node_modules
 # RUN adduser -S nextjs -u 1001
 #COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/ ./.next/
+COPY --from=builder /app/public/ ./public/
 COPY --from=builder  /app/prisma /app/prisma
 #USER nextjs
 
