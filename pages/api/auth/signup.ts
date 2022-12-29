@@ -66,6 +66,7 @@ const createUser = async (name: string, email: string, password: string) => {
         data: {
             name: name,
             email: email,
+            blocked: false
         }
     });
     await prisma.password.create({

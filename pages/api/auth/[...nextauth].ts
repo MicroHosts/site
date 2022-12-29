@@ -29,7 +29,7 @@ const authOptions: NextAuthOptions = {
                     if(!user?.emailVerified){
                         throw new Error("Почта не подтверждена");
                     }
-                    if(!user.blocked){
+                    if(user.blocked){
                         throw new Error("Пользователь заблокирован");
                     }
                     const password = await getPasswordByUserId(user.id);
