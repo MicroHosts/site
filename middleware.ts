@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest){
         if(!session){
             return NextResponse.rewrite(new URL('/auth/login', req.url));
         }
-        const user = await fetch(`http://localhost:3000/api/user`,{
+        const user = await fetch(`https://microhost1.ru/api/user`,{
             headers: req.headers
         })
         if(user.status !== 201){
@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest){
         if(data.role !== 'ADMIN'){
             return NextResponse.rewrite(new URL('/auth/login', req.url));
         }
-        const check = await fetch(`http://localhost:3000/api/admin/check`,{
+        const check = await fetch(`https://microhost1.ru/api/admin/check`,{
             headers: req.headers
         })
         if(check.status !== 201){
@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest){
         return NextResponse.rewrite(new URL('/auth/login', req.url))
     }
     if (req.nextUrl.pathname.startsWith('/host')) {
-        const user = await fetch(`http://localhost:3000/api/user`,{
+        const user = await fetch(`https://microhost1.ru/api/user`,{
             headers: req.headers
         })
         if(user.status !== 201){
@@ -42,7 +42,7 @@ export async function middleware(req: NextRequest){
         }
         const id = req.nextUrl.pathname.split('/')[2]
         if(!id){
-            const host1 =await fetch(`http://localhost:3000/api/hosts?id=${id}`,{
+            const host1 =await fetch(`https://microhost1.ru/api/hosts?id=${id}`,{
                 headers: req.headers
             })
             if(host1 === null) {

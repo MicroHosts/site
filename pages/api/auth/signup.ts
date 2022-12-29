@@ -40,11 +40,12 @@ export default async function handler(
             subject: 'Подтверждение почты',
             html: `<h1>Подтвердите почту</h1>
             <p>Для подтверждения перейдите по ссылке</p>
-            <a href="http://localhost:3000/auth/verify?token=${token}">Подтвердить почту</a>
+            <a href="https://microhost1.ru/auth/verify?token=${token}">Подтвердить почту</a>
             `,
             text: 'Подтвердите почту',
         }
         client.sendMail(mailData, (err:any, info:any) => {
+            console.log(err)
         });
         res.status(200).json({ message: 'Created user' });
     } else {
