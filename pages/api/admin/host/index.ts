@@ -4,7 +4,7 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/auth/[...nextauth]";
 import prisma from "@/lib/prismadb";
 import {getUserByEmail} from "@/models/user";
-import {checkAdmin} from "@/utils/util";
+import {checkAdmin} from "@/utils/user";
 
 export default async function handler(
     req: NextApiRequest,

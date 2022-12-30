@@ -4,8 +4,7 @@ import ServiceList from "@/admin/services/ServiceList";
 import HostList from "@/admin/hosts/HostList";
 import TabList from "@/components/tab/TabList";
 import {getSession} from "next-auth/react";
-import {checkAdmin} from "@/utils/util";
-import {IncomeInDay, IncomeInMonth, OrdersInDay, OrdersInWeek} from "@/models/stats";
+import {checkAdmin} from "@/utils/user";
 
 const tabs = [
     {

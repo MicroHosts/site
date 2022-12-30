@@ -2,7 +2,7 @@ import {ReactElement} from "react";
 import AdminLayout from "@/layouts/Admin";
 import UserList from "@/pages/admin/users/UserList";
 import {getSession} from "next-auth/react";
-import {checkAdmin} from "@/utils/util";
+import {checkAdmin} from "@/utils/user";
 
 
 function Users() {

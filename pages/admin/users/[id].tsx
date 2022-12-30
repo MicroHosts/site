@@ -5,7 +5,7 @@ import HostUserList from "@/pages/admin/user/hosts/HostUserList";
 import ServiceUserList from "@/pages/admin/user/services/ServicesUserList";
 import {getSession} from "next-auth/react";
 import prisma from "@/lib/prismadb";
-import {checkAdmin} from "@/utils/util";
+import {checkAdmin} from "@/utils/user";
 
 function Users({ user }: any) {
     return (

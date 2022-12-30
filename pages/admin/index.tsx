@@ -6,8 +6,7 @@ import { IncomeInDay, IncomeInMonth, OrdersInDay, OrdersInWeek } from "@/models/
 import dynamic from "next/dynamic";
 import BuyList from "@/components/pages/admin/buylogs/list/BuyList";
 import {getSession} from "next-auth/react";
-import {getUserByEmail} from "@/models/user";
-import {checkAdmin} from "@/utils/util";
+import {checkAdmin} from "@/utils/user";
 
 const DynamicComponent = dynamic(() => import('@/admin/charts/chartsorders'), {
     loading: () => <p>Loading...</p>,
