@@ -4,6 +4,7 @@ import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "@/auth/[...nextauth]";
 import prisma from "@/lib/prismadb";
 import {getUserByEmail} from "@/models/user";
+import {checkAdmin} from "@/utils/util";
 
 export default async function handler(
     req: NextApiRequest,
@@ -14,12 +15,8 @@ export default async function handler(
         res.status(401).json({ message: "You must be logged in." });
         return;
     }
-    const user = await getUserByEmail(session.user?.email);
-    if(!user) {
-        res.status(401).json({ message: "You must be logged in." });
-        return;
-    }
-    if(user.role !== "ADMIN") {
+    const check = await checkAdmin(session, req);
+    if(!check){
         res.status(401).json({ message: "You must be logged in." });
         return;
     }

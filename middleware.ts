@@ -7,16 +7,16 @@ export async function middleware(req: NextRequest){
         if(!session){
             return NextResponse.rewrite(new URL('/auth/login', req.url));
         }
-        const user = await fetch(`https://microhost1.ru/api/user`,{
-            headers: req.headers
-        })
-        if(user.status !== 201){
-            return NextResponse.rewrite(new URL('/auth/login', req.url));
-        }
-        const data = await user.json();
-        if(data.role !== 'ADMIN'){
-            return NextResponse.rewrite(new URL('/auth/login', req.url));
-        }
+        // const user = await fetch(`http://localhost:3000/api/user`,{
+        //     headers: req.headers
+        // })
+        // if(user.status !== 201){
+        //     return NextResponse.rewrite(new URL('/auth/login', req.url));
+        // }
+        // const data = await user.json();
+        // if(data.role !== 'ADMIN'){
+        //     return NextResponse.rewrite(new URL('/auth/login', req.url));
+        // }
         // const check = await fetch(`https://microhost1.ru/api/admin/check`,{
         //     headers: req.headers
         // })

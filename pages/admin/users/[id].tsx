@@ -5,6 +5,7 @@ import HostUserList from "@/pages/admin/user/hosts/HostUserList";
 import ServiceUserList from "@/pages/admin/user/services/ServicesUserList";
 import {getSession} from "next-auth/react";
 import prisma from "@/lib/prismadb";
+import {checkAdmin} from "@/utils/util";
 
 function Users({ user }: any) {
     return (
@@ -38,6 +39,12 @@ export async function getServerSideProps(context: any){
                 permanent: false,
             },
         }
+    }
+    const check = await checkAdmin(session, req);
+    if(!check){
+        return {
+            redirect: { destination: "/" },
+        };
     }
     const user = await getUserById(params.id);
     const hosts = user?.hosts.map((host) => ({
