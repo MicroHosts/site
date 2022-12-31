@@ -23,7 +23,7 @@ export async function checkAdmin(session:any, req: any): Promise<Boolean>{
 const checkIp = async (ip: string) => {
     return await prisma.adminIPS.findUnique({
         where: {
-            id: ip
+            ip: ip
         },
         select: {
             id: true,
