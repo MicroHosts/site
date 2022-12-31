@@ -12,6 +12,7 @@ export async function checkAdmin(session:any, req: any): Promise<Boolean>{
         return false;
     }
     const ip = requestIp.getClientIp(req)
+    console.log(ip)
     const allow = await checkIp(ip);
     if(!allow){
         return false;

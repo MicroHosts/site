@@ -1,5 +1,5 @@
 import BillingLayout from "@/layouts/Billing"
-import {getHostById, getHostByIdWithOutRent} from "@/models/hosts";
+import {checkIsUserHost, getHostById, getHostByIdWithOutRent} from "@/models/hosts";
 import { ReactElement, useEffect } from "react"
 import dynamic from "next/dynamic";
 import EndHost from "@/components/buttons/host/EndHost";
@@ -9,6 +9,7 @@ import StopHost from "@/components/buttons/host/StopHost";
 import prisma from "@/lib/prismadb"
 import Router from "next/router";
 import {getSession} from "next-auth/react";
+import {getUserByEmail} from "../../models/user";
 
 // const DynamicComponent = dynamic(() => import('@/components/vnc/VNCViewer'), {
 //     loading: () => <p>Loading...</p>,
@@ -58,6 +59,26 @@ export async function getServerSideProps(context: any){
                 destination: '/auth/login',
                 permanent: false,
             },
+        }
+    }
+    const user = await getUserByEmail(session.user?.email);
+    if(!user){
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false,
+            },
+        }
+    }
+    if(user.role !== "ADMIN"){
+        const host1 = await checkIsUserHost(user.id, params.id as string);
+        if(host1 === null) {
+            return {
+                redirect: {
+                    destination: '/billing/',
+                    permanent: false,
+                },
+            }
         }
     }
     const host = await getHostByIdWithOutRent(params.id);
