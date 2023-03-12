@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import { FC } from "react";
 
 export default function AuthLayout({ children }: {children: JSX.Element}) {
     return (

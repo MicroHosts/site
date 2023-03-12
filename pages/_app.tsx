@@ -6,9 +6,7 @@ import { ReactElement, ReactNode } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from "react-toastify";
 import { RecoilRoot } from "recoil";
-import DeleteModal from '@/components/modal/DeleteModal';
 import { useRecoilValue } from "recoil";
-import { deleteStore } from '@/store/delete';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -72,12 +70,10 @@ export default function App({
 }
 
 function MyApp({ Component, pageProps }:any) {
-  const { open } = useRecoilValue(deleteStore)
   const getLayout = Component.getLayout ?? ((page:any) => page)
   return (
     <>
       {getLayout(<Component {...pageProps} />)}
-      {open && <DeleteModal />}
     </>
 
   )

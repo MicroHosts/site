@@ -7,7 +7,6 @@ import {getCsrfToken, getSession} from "next-auth/react";
 import Router from "next/router";
 
 const Register = () => {
-    const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [passwordConfirm, setPasswordConfirm] = useState<string>('')
@@ -24,10 +23,6 @@ const Register = () => {
             setError('Пароли не совпадают')
             return
         }
-        if(username.length < 3){
-            setError('Имя пользователя должно быть больше 3 символов')
-            return
-        }
         if(password.length < 6){
             setError('Пароль должен быть больше 6 символов')
             return
@@ -40,25 +35,25 @@ const Register = () => {
             setError('Некорректный email')
             return
         }
-        const res = await fetch('/api/auth/signup', {
+        const res = await fetch('/api/auth/createUser', {
             headers:{
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify({
-                email, username, password
+                email, password
             },
             )
         })
         let data = await res.json()
-        if(res.status == 422){
+        if(res.status != 200){
             setError(data.message);
+            return
         }
         if(res.status == 200){
             setError('')
-            console.log(data)
         }
-        return Router.push("/auth/checkmail")
+        return Router.push("https://churkahost.float-zone.com:4083/")
     }
 
     return (
@@ -70,13 +65,6 @@ const Register = () => {
                             {error}
                         </div>
                         <div className="space-y-4 md:space-y-6">
-                            <Input name={"Имя пользователя"}
-                                   value={username}
-                                   onChange={(e) => setUsername(e.target.value)}
-                                   type={"text"}
-                                   id={"username"}
-                                   placeholder={"Имя пользователя"}
-                            />
                             <Input name={"Ваша почта"}
                                        value={email}
                                        onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +79,7 @@ const Register = () => {
                                    id={"password"}
                                    placeholder={"••••••••"}
                             />
-                            <Input name={"Пароль"}
+                            <Input name={"Повторный пароль"}
                                    value={passwordConfirm}
                                    onChange={(e) => setPasswordConfirm(e.target.value)}
                                    type={"password"}
@@ -118,9 +106,13 @@ const Register = () => {
                                     className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">Зарегистрироваться
                             </button>
                             <p className="text-sm font-light  text-gray-400">
-                                У вас уже есть аккаунт? <Link href="/auth/login"
+                                У вас уже есть аккаунт? <Link href="https://churkahost.float-zone.com:4083/"
                                                               className="font-medium hover:underline text-primary-500">Войти</Link>
                             </p>
+                            {/*<p className="text-sm font-light  text-gray-400">*/}
+                            {/*    Забыли пароль? <Link href="/auth/recovery"*/}
+                            {/*                                  className="font-medium hover:underline text-primary-500">Войти</Link>*/}
+                            {/*</p>*/}
                         </div>
                     </div>
     )
@@ -135,21 +127,5 @@ Register.getLayout = function getLayout(page: ReactElement) {
     )
 }
 
-export async function getServerSideProps(context:any) {
-    const { req } = context;
-    const session = await getSession({ req });
-
-    if (session) {
-        return {
-            redirect: { destination: "/" },
-        };
-    }
-
-    return {
-        props: {
-            csrfToken: await getCsrfToken(context),
-        },
-    };
-}
 
 export default Register;

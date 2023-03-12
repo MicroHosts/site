@@ -1,13 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
-import VDSCard from "@/components/pages/main/VDSCard";
 import HeaderMain from "@/components/pages/main/HeaderMain";
 import FooterMain from "@/components/pages/main/FooterMain";
-import { getAvaliableMainPageHosts } from '@/models/hosts';
-import Link from 'next/link';
 
-function Home({ hosts }: any) {
+function Home() {
     return (
         <div className={styles.container}>
             <Head>
@@ -64,21 +61,21 @@ function Home({ hosts }: any) {
                             </div>
                         </div>
                     </div>
-                    <div className="text-center text-3xl font-bold mt-12" id="tarifs">
-                        Тарифы
-                    </div>
-                    {/* <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div> */}
-                    <div className="[&>*]:mt-4">
-                        {hosts.map((host: any, index: number) => (
-                            <VDSCard host={host} key={index} />
-                        ))}
-                    </div>
-                    <div className="flex justify-center mt-4">
-                        <Link type="button"
-                            href="/billing"
-                            className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Посмотреть больше
-                        </Link>
-                    </div>
+                    {/*<div className="text-center text-3xl font-bold mt-12" id="tarifs">*/}
+                    {/*    Тарифы*/}
+                    {/*</div>*/}
+                    {/*/!* <div className="text-center text-xl mt-4">Процессор - Intel Xeon E5-2667v2</div> *!/*/}
+                    {/*<div className="[&>*]:mt-4">*/}
+                    {/*    /!*{hosts.map((host: any, index: number) => (*!/*/}
+                    {/*    /!*    <VDSCard host={host} key={index} />*!/*/}
+                    {/*    /!*))}*!/*/}
+                    {/*</div>*/}
+                    {/*<div className="flex justify-center mt-4">*/}
+                    {/*    <Link type="button"*/}
+                    {/*        href="/billing"*/}
+                    {/*        className="focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-xl text-sm px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Посмотреть больше*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
                     <div className="text-center text-3xl font-bold mt-12">
                         Почему мы?
                     </div>
@@ -137,13 +134,5 @@ function Home({ hosts }: any) {
     );
 }
 
-export async function getServerSideProps() {
-    const hosts = await getAvaliableMainPageHosts();
-    return {
-        props: {
-            hosts
-        }
-    }
-}
 
 export default Home;
