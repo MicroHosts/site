@@ -38,11 +38,11 @@ export default function HeaderMain(){
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
                                 Услуги</a>
                         </li>
-                        <li>
-                            <a href="#tarifs"
-                               className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
-                                Тарифы</a>
-                        </li>
+                        {/*<li>*/}
+                        {/*    <a href="#tarifs"*/}
+                        {/*       className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">*/}
+                        {/*        Тарифы</a>*/}
+                        {/*</li>*/}
                         <li>
                             <a href="#about"
                                className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 md:text-lg">
