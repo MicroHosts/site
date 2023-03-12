@@ -47,7 +47,7 @@ export default function FooterMain() {
                                 конфиденциальности</Link>
                         </li>
                         <li className="mb-4">
-                            <Link href="" className="hover:underline">Группа
+                            <Link href="https://vk.com/microhost" className="hover:underline">Группа
                                 ВКонтакте</Link>
                         </li>
                     </ul>
