@@ -47,9 +47,9 @@ export default async function handler(
             return;
         }
         await PaymentPaid(MERCHANT_ORDER_ID);
-        const formData = new FormData();
+        var formData = new URLSearchParams();
         formData.append("uid", getPayment.userId);
-        formData.append("amt", getPayment.amount);
+        formData.append("amt", getPayment.amount+"");
         const m = new Date();
         formData.append("date", ("0" + m.getUTCDate()).slice(-2) +"/"+("0" + (m.getUTCMonth()+1)).slice(-2)+"/"+ m.getUTCFullYear());
         formData.append("time", ("0" + m.getUTCHours()).slice(-2) + ":" +
