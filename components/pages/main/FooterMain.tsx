@@ -13,7 +13,7 @@ export default function FooterMain() {
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap text-white">MicroHost</span>
                         </Link>
-                        <span className="text-smtext-gray-400 mt-4">© 2022 MicroHost
+                        <span className="text-smtext-gray-400 mt-4">© 2022-2023 MicroHost
                         </span>
                         <span className="text-smtext-gray-400 mt-4">НПД Немцов Игорь Андреевич
                         </span>
