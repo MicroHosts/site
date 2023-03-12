@@ -1,12 +1,9 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react";
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from "react-toastify";
-import { RecoilRoot } from "recoil";
-import { useRecoilValue } from "recoil";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -48,8 +45,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <RecoilRoot>
-      <SessionProvider session={session}>
+    <>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -63,9 +59,7 @@ export default function App({
           theme="dark"
         />
         <MyApp Component={Component} pageProps={pageProps} />
-      </SessionProvider>
-
-    </RecoilRoot>
+  </>
   )
 }
 

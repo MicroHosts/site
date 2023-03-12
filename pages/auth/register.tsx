@@ -3,7 +3,6 @@ import {LegacyRef, MouseEvent, ReactElement, useRef, useState} from "react";
 import {classNames, validateEmail} from "@/utils/utils";
 import AuthLayout from "@/layouts/Auth";
 import Input from "@/components/input/Input";
-import {getCsrfToken, getSession} from "next-auth/react";
 import Router from "next/router";
 
 const Register = () => {
@@ -45,7 +44,9 @@ const Register = () => {
             },
             )
         })
+
         let data = await res.json()
+
         if(res.status != 200){
             setError(data.message);
             return

@@ -38,6 +38,7 @@ export default async function handler(
         }
         )
     const json = await response.json();
+    console.log(json)
     if(json.error){
         const error = json.error[0]
         if(error === "The Email Address already exists"){
