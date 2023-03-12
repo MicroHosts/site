@@ -60,7 +60,7 @@ function Index() {
                                         <span className="mr-2 text-5xl font-extrabold">500р</span>
                                     </div>
                                     <button onClick={() => {
-                                        onBuy(500)
+                                        setBuyPrice(500)
                                     }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                                 </div>
                                 <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -70,7 +70,7 @@ function Index() {
                                         <span className="mr-2 text-5xl font-extrabold">1500р</span>
                                     </div>
                                     <button onClick={() => {
-                                        onBuy(1500)
+                                        setBuyPrice(1500)
                                     }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                                 </div>
                                 <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -80,7 +80,7 @@ function Index() {
                                         <span className="mr-2 text-5xl font-extrabold">5000р</span>
                                     </div>
                                     <button onClick={() => {
-                                        onBuy(5000)
+                                        setBuyPrice(5000)
                                     }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                                 </div>
                                 <div className="flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 bg-gray-800 text-white">
@@ -90,7 +90,7 @@ function Index() {
                                         <span className="mr-2 text-5xl font-extrabold">10000р</span>
                                     </div>
                                     <button onClick={() => {
-                                        onBuy(10000)
+                                        setBuyPrice(10000)
                                     }} className="mt-4 md:ml-0 ml-4 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg md:text-lg px-5 py-2.5 mr-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none">Купить</button>
                                 </div>
                             </div>
