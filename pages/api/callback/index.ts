@@ -56,6 +56,7 @@ export default async function handler(
             ("0" + m.getUTCMinutes()).slice(-2) + ":" +
             ("0" + m.getUTCSeconds()).slice(-2))
         formData.append("gateway", "freekassa");
+        formData.append("addtransaction", "Submit");
 
 
         const response = await fetch(`${process.env.HOST}/index.php?act=addtransaction&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
