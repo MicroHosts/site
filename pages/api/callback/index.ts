@@ -46,6 +46,7 @@ export default async function handler(
             res.status(401).json({ message: "Unauthorized." });
             return;
         }
+        console.log("Заказ оплачен " +MERCHANT_ORDER_ID)
         await PaymentPaid(MERCHANT_ORDER_ID);
         var formData = new URLSearchParams();
         formData.append("uid", getPayment.userId);
