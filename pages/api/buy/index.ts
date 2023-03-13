@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prismadb";
-import FormData from "form-data";
 const crypto = require('crypto');
 
 export default async function handler(
@@ -19,7 +18,7 @@ export default async function handler(
         }
         var formData  = new URLSearchParams();
         formData.append("email", email);
-        const response = await fetch(`https://churkahost.float-zone.com:4085/index.php?act=users&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
+        const response = await fetch(`${process.env.HOST}/index.php?act=users&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
             {
                 method: "POST",
                 //     headers:{

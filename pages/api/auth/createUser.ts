@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import FormData from 'form-data';
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -45,7 +44,7 @@ export default async function handler(
     params.append("num_ipv4", "5");
     params.append("txt_service_period", "1");
     params.append("allowed_virts[]", "kvm");
-    const response = await fetch(`https://churkahost.float-zone.com:4085/index.php?act=adduser&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
+    const response = await fetch(`${process.env.HOST}/index.php?act=adduser&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
         {
         method: "POST",
         body: params

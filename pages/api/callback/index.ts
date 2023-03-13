@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import { getPaymentById } from "@/models/payment";
 import prisma from "@/lib/prismadb";
-import FormData from "form-data";
 
 const requestIp = require('request-ip');
 const crypto = require('crypto');
@@ -59,7 +58,7 @@ export default async function handler(
         formData.append("gateway", "freekassa");
 
 
-        const response = await fetch(`https://churkahost.float-zone.com:4085/index.php?act=addtransaction&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
+        const response = await fetch(`${process.env.HOST}/index.php?act=addtransaction&api=json&adminapikey=${process.env.API_KEY}&adminapipass=${process.env.KEY_PASS}`,
             {
                 method: "POST",
                 //     headers:{
