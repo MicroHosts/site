@@ -54,7 +54,7 @@ const Register = () => {
         if(res.status == 200){
             setError('')
         }
-        return Router.push("https://churkahost.float-zone.com:4083/")
+        return Router.push("https://official-microsoft-support.tech:4083")
     }
 
     return (
@@ -107,7 +107,7 @@ const Register = () => {
                                     className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">Зарегистрироваться
                             </button>
                             <p className="text-sm font-light  text-gray-400">
-                                У вас уже есть аккаунт? <Link href="https://churkahost.float-zone.com:4083/"
+                                У вас уже есть аккаунт? <Link href="https://official-microsoft-support.tech:4083"
                                                               className="font-medium hover:underline text-primary-500">Войти</Link>
                             </p>
                             {/*<p className="text-sm font-light  text-gray-400">*/}
