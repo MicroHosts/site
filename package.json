@@ -16,7 +16,7 @@
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "bcrypt": "^5.1.0",
-    "cookies-next": "^2.1.1",
+    "cookies-next": "^4.3.0",
     "intercept-stdout": "^0.1.2",
     "next": "13.0.1",
     "nodemailer": "^6.8.0",
